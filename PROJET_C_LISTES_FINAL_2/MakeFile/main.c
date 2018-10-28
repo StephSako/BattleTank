@@ -8,7 +8,7 @@ int choix_y = 103;
 alors que la true map est juste la représentation graphique de la map en temps réèl dans le terminal */
 
 int main(){
-	init_terminal(); // On initialise le terminal
+	init_terminal(); // On initialise les paramètres du terminal
 
 	int CM_activated = 0; // Permet de savoir quel choix le joueur a fait dans le menu et ainsi lancer le bon mode
 
