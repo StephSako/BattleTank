@@ -1,4 +1,4 @@
-// Import de bibliothèques
+/***********************************************************Imports des bibliothèques**********************************************************/
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-// Définitions de couleurs d'affichage
+/***********************************************************Définitions des couleurs d'affichage************************************************/
 #define NORMAL  "\x1B[0m"
 #define RED  "\x1B[31m"
 #define REDCLIGNOTANT  "\x1B[5;31m"
@@ -21,6 +21,8 @@
 #define CYAN  "\x1B[36m"
 #define WHITE  "\x1B[37m"
 #define BLACK  "\x1B[30m"
+
+/***********************************************************Variables globales******************************************************************/
 
 // Dimensions de la map
 #define LONGUEURMAP 37
@@ -42,7 +44,7 @@
 
 #define NBCOUPSABIMENT 3 // Nombre de coups pour les blindages faibles se détruisent, et les blindages moyens et forts rétrogradent
 
-/***********************************************************Variables globales**************************************************************/
+/***********************************************************Variables globales des carrosseries*************************************************/
 
 // On déclare les carrosseries de tank du joueur
 char **carrosserieWTH; char **carrosserieWTG; char **carrosserieWTD; char **carrosserieWTB;
@@ -52,7 +54,7 @@ char **carrosserieSTH; char **carrosserieSTG; char **carrosserieSTD; char **carr
 char *PATHMAP = "../Modèle/Fichiers_texte_map/map"; // Chemin de la map
 char *PATHMENU = "../Modèle/Fichiers_texte_menu/main_menu"; // Chemin du menu principal
 
-/**********************************************************Structure du tank du joueur******************************************************/
+/**********************************************************Structure du tank du joueur**********************************************************/
 
 // LIste chaînée des structures des tanks
 struct TANK{
@@ -76,14 +78,15 @@ struct TANK *head;
 // Tableau indiquant le nombre de tanks faibles, moyens et forts
 int *repartitionTankEnnemis;
 
-/*************************************************************************************************************************************/
+/***********************************************************************************************************************************************/
 
 // Structure des obus
 typedef struct{
 	int pos_x;
 	int pos_y;
 	char direction;
-	char provenance; // P : joueur, W : tank ennemi faible, M : // moyen, S : // fort
+	int provenance; // 0 : tank ennemi faible, 1 : tank ennemi moyen, 2 : tank ennemi fort
+	char camp;
 } OBUS;
 
 // Pointeur sur l'objet OBUS
@@ -92,9 +95,8 @@ typedef OBUS * OBUSP;
 // Tableau de pointeurs d'obus permettant de les fair déplacer tous en même temps par accoups
 OBUSP *TabPointeursObus;
 
-/*************************************************************************************************************************************/
-
-// Fonction qui permet d'attendre sans bloquer le programme
+/***********************************************************************************************************************************************/
+// Fonction qui permet de mettre un délai sans bloquer le programme
 void delay(int NbSecondes){
 	int seuil = 0;
 	while(seuil <= NbSecondes){
@@ -102,3 +104,7 @@ void delay(int NbSecondes){
 		if (n == 5) seuil++;
 	}
 }
+
+/***********************************************************Variable du pioupiou****************************************************************/
+
+int pioupiouAlive = 1;

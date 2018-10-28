@@ -152,14 +152,30 @@ void animation_bullet(char **mat, OBUSP obusP, char car){
 		DeleteObusPTab(obusP);									// On supprime l'obus dans le tableau de pointeurs d'obus 															pour ne plus le traiter
 		system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3"); 	// On joue un bruitage à l'aide d'un script (execute en 															background)
 	}
+	else if (mat[obusP->pos_x][obusP->pos_y] == 'B' && obusP->camp == 'E'){		// Un tank ENNEMI a tiré sur la bombe à protéger
+		pioupiouAlive = 0;
+		effacer_obus_terminal(obusP);
+		mat[obusP->pos_x][obusP->pos_y] = ' ';
+		DeleteObusPTab(obusP);
+		system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosionFin.mp3");
+	}
 	// Briques non destructibles
 	else if 	(mat[obusP->pos_x][obusP->pos_y] == 'X' ||
 			mat[obusP->pos_x][obusP->pos_y] == 'P' ||
 			mat[obusP->pos_x][obusP->pos_y] == 'E' ||
-			mat[obusP->pos_x][obusP->pos_y] == 'Y') DeleteObusPTab(obusP); // On supprime l'obus du tableau de pointeurs 
+			mat[obusP->pos_x][obusP->pos_y] == 'Y')
+			
+			// Un tank ENNEMI SUPERARME tire sur un bloc dur
+			if (mat[obusP->pos_x][obusP->pos_y] == 'P' && obusP->provenance == 2 && obusP->camp == 'E'){
+				effacer_obus_terminal(obusP);
+				mat[obusP->pos_x][obusP->pos_y] = ' ';
+				DeleteObusPTab(obusP);
+				system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
+			}
+			else DeleteObusPTab(obusP); // On supprime l'obus du tableau de pointeurs 
 			
 	else{ // Gestion des collisions avec les tanks ennemis
-		AttaquerTank(mat, obusP); // On cherche le tank et on l'attaque s'il y en a eu un de touché, sinon rien => bordure de la map
+		AttaquerTank(mat, obusP); // On cherche le tank et on l'attaque s'il y en a eu un de touché
 		DeleteObusPTab(obusP); // On supprime l'obus qui a percuté un obstacle
 	}
 }
@@ -168,7 +184,8 @@ void shot_creator(struct TANK *joueurP){
 	if (firstEmptyIndexObusTab() < NBOBUSALLOWED){ // Si on n'atteint pas le nombre d'obus tires maximum à l'ecran
 					
 		OBUSP obus = malloc(sizeof(OBUS)); // On declare un NOUVEAU pointeur de l'obus cree	
-		obus->provenance = 'P';	
+		obus->provenance = joueurP->blindage;
+		obus->camp = joueurP->camp;	
 		// On deplace l'obus dans le terminal / la fake map
 		switch(joueurP->direction){ // On initialise les attributs de l'obus tire en fonction des attributs du tank
 			case 'A':

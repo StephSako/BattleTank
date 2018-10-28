@@ -57,7 +57,7 @@ int main(){
 		// On initialise les carrosseries des tanks
 		init_carrosseries();
 
-		// On initialise la répartition des différents types de tanks ennemis						// ATTENTION
+		// On initialise la répartition des différents types de tanks ennemis
 		repartitionTankEnnemis = allocation_dyn_tab_repar_tank_ennemis(); // 20 tanks au total, soit ...
 		repartitionTankEnnemis[0] = NBTANKWEAKFACILE; // ... 8 tanks faibles
 		repartitionTankEnnemis[1] = NBTANKMEDIUMFACILE; // ... 7 tanks moyens
@@ -70,12 +70,9 @@ int main(){
 		struct TANK *joueurP = creer_tank_joueur(&head, 30, 30, 'A', 2, 0, 'P', 1); // On créé et initialise le TANKP du JOUEUR
 		
 		// On créer 3 tanks ennemis													// ATTENTION
-		creer_tank_ennemis(&head, 4, 1, 'B', 2, 0, 'E', 1);
-		creer_tank_ennemis(&head, 30, 138, 'B', 1, 0, 'E', 1);
-		creer_tank_ennemis(&head, 11, 44, 'B', 0, 0, 'E', 1);
-		/*creer_tank_ennemis(&head, 30, 90, 'B', 2, 0, 'E', 1);
-		creer_tank_ennemis(&head, 10, 100, 'B', 1, 0, 'E', 1);
-		creer_tank_ennemis(&head, 10, 130, 'B', 0, 0, 'E', 1);*/
+		creer_tank_ennemis(&head, 4, 1, 'B', 0, 1);
+		creer_tank_ennemis(&head, 30, 138, 'B', 0, 1);
+		creer_tank_ennemis(&head, 11, 44, 'B', 0, 1);
 
 		// Chargement de la true_map
 		char **true_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAP);
@@ -91,7 +88,7 @@ int main(){
 		int nbRand;  // Nombre aléatoire qui se réinitialise pour que les tanks ennemis se déplacent chaque seconde
 
 		char entr;	
-		while ((entr = key_pressed()) != 'q'){
+		while ((entr = key_pressed()) != 'q' && NbEnnemisTanksToCreate() > 0 && pioupiouAlive == 1){
 		
 			shot_cleaner(fake_map); // On efface tous les obus sur le terminal
 

@@ -20,22 +20,24 @@ struct TANK *creer_tank_joueur(struct TANK** head, int pos_x, int pos_y, char di
 	return (*head);
 }
 
-void creer_tank_ennemis(struct TANK **head, int pos_x, int pos_y, char direction, int blindage_origine, int nb_impacts, char camp, int etat){
+void creer_tank_ennemis(struct TANK **head, int pos_x, int pos_y, char direction, int nb_impacts, int etat){
 
 	// Création du nouvel élément
 	struct TANK *newEnnemyTank = (struct TANK*) malloc(sizeof(struct TANK)); // On créé notre tank ennemi
 
-	/*int type = rand()%(2);																	// ATTENTION
+	int blindage_origine = rand()%(3);
 
-	while(repartitionTankEnnemis[type] <= 0) type = rand()%(2); // On vérifie qu'il reste assez du type de tank à créér
-	repartitionTankEnnemis[type]--; // On décrémente puisqu'un tank va être créé de ce type*/
+	// On vérifie la disponibilité des blindages de tanks restants
+	while(repartitionTankEnnemis[blindage_origine] <= 0) blindage_origine = rand()%(3);
+	repartitionTankEnnemis[blindage_origine]--; // On décrémente puisqu'un tank va être créé de ce blindage
 
 	// On initialise chaque attributs du tank ennemi
 	newEnnemyTank->pos_x = pos_x; newEnnemyTank->pos_y = pos_y; newEnnemyTank->direction = direction;
 	newEnnemyTank->blindage = blindage_origine; newEnnemyTank->blindage_origine = blindage_origine; newEnnemyTank->nb_impacts = nb_impacts;
-	newEnnemyTank->camp = camp; newEnnemyTank->etat = etat;
+	newEnnemyTank->camp = 'E'; newEnnemyTank->etat = etat;
 	
-	switch(blindage_origine){ // Selon le type du tank
+	// On selectionne la bonne carrosserie selon le blindage d'origine
+	switch(blindage_origine){
 		case(0): // Tank ennemi faible
 			switch(direction){ // Selon la direction du tank ennemi
 				case('A'): newEnnemyTank->carrosserie = carrosserieWTH; break;
@@ -151,4 +153,15 @@ void deplacer_tank_joueur_terminal(char **fake_map, struct TANK **joueurP){
 
 		default : break;
 	}
+}
+
+int NbEnnemisTanksToCreate(){
+
+	int nbTankToCreate = 0;
+
+	for (int i = 0; i < 3; i++){
+		nbTankToCreate = nbTankToCreate + repartitionTankEnnemis[i];
+	}
+	
+	return nbTankToCreate;
 }
