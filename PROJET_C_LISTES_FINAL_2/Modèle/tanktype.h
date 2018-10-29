@@ -53,6 +53,12 @@ int NBOBUSALLOWED; // Nombre d'obus autorisé à apparaitre sur la map selon le 
 int choix_x = 10;
 int choix_y = 103;
 
+// Mode de jeu
+int mode = 0; 	/* MODE TERMINAL FACILE => 11
+			MODE TERMINAL DIFFICILE => 12
+			MODE TERMINAL FACILE => 21
+			MODE TERMINAL DIFFICILE => 22*/
+
 /***********************************************************Variables globales des carrosseries*************************************************/
 
 // On déclare les carrosseries de tank du joueur
@@ -60,7 +66,7 @@ char **carrosserieWTH; char **carrosserieWTG; char **carrosserieWTD; char **carr
 char **carrosserieMTH; char **carrosserieMTG; char **carrosserieMTD; char **carrosserieMTB;
 char **carrosserieSTH; char **carrosserieSTG; char **carrosserieSTD; char **carrosserieSTB;
 
-char *PATHMAP = "../Modèle/Fichiers_texte_map/map"; // Chemin de la map
+char *PATHMAPTERMINAL = "../Modèle/Fichiers_texte_map/map"; // Chemin de la map
 char *PATHMAPGRAPHIQUE = "../Modèle/Fichiers_texte_map/map_graphique"; // Chemin de la map
 char **true_map; // Tableau contenant la map soit terminal ou graphique à afficher
 
