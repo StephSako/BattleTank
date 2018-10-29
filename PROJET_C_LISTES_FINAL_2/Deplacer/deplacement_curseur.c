@@ -60,6 +60,26 @@ void init_terminal(){
 	TabPointeursObus = allocation_dyn_tab(NBOBUSALLOWED); // Allocation dynamique du tableau de pointeurs d'obus
 }
 
+void fin_win(){
+	system("clear");
+	afficher_message(15, 60, "Vous avez perdu ...");
+	fflush(stdout);
+	system("sleep 1");
+	system("setterm -cursor on");
+	system("stty echo");
+	system("clear");
+}
+
+void fin_game_over(){
+	system("clear");
+	afficher_message(15, 60, "Vous avez gagné !!");
+	fflush(stdout);
+	system("sleep 1");
+	system("setterm -cursor on");
+	system("stty echo");
+	system("clear");
+}
+
 void quit_terminal(){
 	system("clear");
 	afficher_message(15, 60, "Vous quittez le jeu ...");

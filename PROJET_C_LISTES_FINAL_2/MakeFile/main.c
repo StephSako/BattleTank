@@ -107,7 +107,7 @@ int main(){
 		head = NULL;
 
 		// On créé le tank du joueur
-		struct TANK *joueurP = creer_tank_joueur(fake_map, &head, 30, 30, 'A'); // On créé et initialise le TANKP du JOUEUR
+		struct TANK *joueur = creer_tank_joueur(fake_map, &head, 30, 30, 'A'); // On créé et initialise le TANKP du JOUEUR
 		
 		// On créer 3 tanks ennemis													// ATTENTION
 		creer_tank_ennemis(fake_map, &head, 4, 2, 'B');
@@ -115,7 +115,7 @@ int main(){
 		creer_tank_ennemis(fake_map, &head, 18, 40, 'B');
 
 		// On place le joueur sur le terminal et dans la fake map
-		affichage_tank_terminal(joueurP);
+		affichage_tank_terminal(joueur);
 		
 		int intervalleTirTankEnnemis = 0;
 		int nbRand;  // Nombre aléatoire qui se réinitialise pour que les tanks ennemis se déplacent chaque seconde
@@ -123,18 +123,18 @@ int main(){
 		char entr;
 		
 		// Si le joueur ne quitte pas, qu'il reste des tanks à générer, que la bombe n'a pas explosé et que le joueur est encore vivant
-		while ((entr = key_pressed()) != 'q' && NbEnnemisTanksToCreate() > 0 && pioupiouAlive == 1 && joueurP->etat > 0){
+		while ((entr = key_pressed()) != 'q' && NbEnnemisTanksToCreate() > 0 && pioupiouAlive == 1 && joueur->etat > 0){
 		
 			shot_cleaner(fake_map); // On efface tous les obus sur le terminal
 
 			// Gestion des déplacements du joueur
 			if (entr == 'A' || entr == 'B' || entr == 'C' || entr =='D'){
-				joueurP->direction = entr; // Mise à jour de la position du joueur
-				deplacer_tank_joueur_terminal(fake_map, &joueurP); // On déplace le tank du joueur dans le terminal/fake map
+				joueur->direction = entr; // Mise à jour de la position du joueur
+				deplacer_tank_joueur_terminal(fake_map, &joueur); // On déplace le tank du joueur dans le terminal/fake map
 			}
 
 			// Gestion des tirs du joueur
-			else if (entr == 'x') shot_creator(joueurP); // On créé un obus et on l'ajoute dans le tableau de pointeurs d'obus
+			else if (entr == 'x') shot_creator(joueur); // On créé un obus et on l'ajoute dans le tableau de pointeurs d'obus
 
 			shot_manager(fake_map); // On réalise le déplacement de tous les obus par accoups
 			
@@ -148,6 +148,9 @@ int main(){
 			delay(87000); // Frequence d'affichage de toute la map (deplacement tank, tirs obus, ...)
 		}
 	}
+	
+	/*if (NbEnnemisTanksToCreate() == 0) fin_win();
+	else if (pioupiouAlive == 1 || joueur->etat > 0) fin_game_over();*/
 	
 	quit_terminal(); // On nettoie le terminal et on remet ses bons paramètres
 	return 0;
