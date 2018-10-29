@@ -44,6 +44,10 @@
 
 #define NBCOUPSABIMENT 3 // Nombre de coups pour les blindages faibles se détruisent, et les blindages moyens et forts rétrogradent
 
+// Position du selecteur de choix dans le menu
+int choix_x = 10;
+int choix_y = 103;
+
 /***********************************************************Variables globales des carrosseries*************************************************/
 
 // On déclare les carrosseries de tank du joueur
@@ -53,10 +57,12 @@ char **carrosserieSTH; char **carrosserieSTG; char **carrosserieSTD; char **carr
 
 char *PATHMAP = "../Modèle/Fichiers_texte_map/map"; // Chemin de la map
 char *PATHMENU = "../Modèle/Fichiers_texte_menu/main_menu"; // Chemin du menu principal
+char *PATHMENUTERMINAL = "../Modèle/Fichiers_texte_menu/main_menu_mode_terminal"; // Chemin du menu terminal
+char *PATHMENUGRAPHIQUE = "../Modèle/Fichiers_texte_menu/main_menu_mode_graphique"; // Chemin du menu graphique
 
 /**********************************************************Structure du tank du joueur**********************************************************/
 
-// LIste chaînée des structures des tanks
+// Liste chaînée des structures des tanks
 struct TANK{
 	int pos_x;
 	int pos_y;
@@ -73,7 +79,7 @@ struct TANK{
 	struct TANK *suivant;
 };
 
-struct TANK *head;
+struct TANK *head; // Création de la liste
 
 // Tableau indiquant le nombre de tanks faibles, moyens et forts
 int *repartitionTankEnnemis;

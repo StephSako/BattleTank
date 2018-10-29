@@ -1,16 +1,15 @@
 #include "../TankEnnemis/TankEnnemis.h"
 
-// Position du selecteur de choix dans le menu
-int choix_x = 10;
-int choix_y = 103;
-
 /* La fake_map est comme un calque permettant de gérer en background les collisions avec les tanks et les obus
 alors que la true map est juste la représentation graphique de la map en temps réèl dans le terminal */
 
 int main(){
 	init_terminal(); // On initialise les paramètres du terminal
 
-	int CM_activated = 0; // Permet de savoir quel choix le joueur a fait dans le menu et ainsi lancer le bon mode
+	int mode = 0; 	/* MODE TERMINAL -facile => 11
+				MODE TERMINAL -difficile => 12
+				MODE TERMINAL -facile => 21
+				MODE TERMINAL -difficile => 22*/
 
 	// Chargement du menu
 	afficher_fichier(PATHMENU);
@@ -21,28 +20,62 @@ int main(){
 	char key;
 	while((key = key_pressed()) != 'q'){
 		if (key == 'A' || key == 'B'){ // Naviguer dans le menu = HAUT / BAS
-			effacer_choix(choix_x, choix_y);		
-			if (key == 'A' && choix_x != 10) choix_x = choix_x-5;
-			else if (key == 'B' && choix_x != 20) choix_x = choix_x+5;
+			effacer_choix(choix_x, choix_y);
+			
+			// Choix des modes terminal/graphique		
+			if (key == 'A' && choix_x != 10 && choix_y == 103) choix_x = choix_x - 5;
+			else if (key == 'B' && choix_x != 20 && choix_y == 103) choix_x = choix_x + 5;			
+			// Choix des modes facile/difficile
+			else if (key == 'A' && choix_x == 12 && choix_y == 121) choix_x = choix_x - 2;
+			else if (key == 'B' && choix_x == 10 && choix_y == 121) choix_x = choix_x + 2;
+			else if (key == 'A' && choix_x == 17 && choix_y == 121) choix_x = choix_x - 2;
+			else if (key == 'B' && choix_x == 15 && choix_y == 121) choix_x = choix_x + 2;
+			
 			deplacement_choix(choix_x, choix_y);
 		}
 		else if (key == '\n'){ // Valider un choix dans le menu = ENTREE
 			system("clear");
 			
-			if (choix_x == 10){
-				CM_activated = 1;	
-				break;
+			if (choix_x == 10 && choix_y == 103){
+				choix_y = choix_y + 18;
+				afficher_fichier(PATHMENUTERMINAL);
+				deplacement_choix(choix_x, choix_y);
 			}			
-			else if (choix_x == 15) afficher_message(15, 60, "MODE GRAPHIQUE NON DEVELOPPE\n");
-			else if (choix_x == 20)	break;
+			else if (choix_x == 15 && choix_y == 103){
+				choix_y = choix_y + 18;
+				afficher_fichier(PATHMENUGRAPHIQUE);
+				deplacement_choix(choix_x, choix_y);
+			}
+				
+			// Choix de la difficulté facile/difficile
+			else if (choix_x == 10 && choix_y == 121){ // MODE TERMINAL FACILE
+				mode = 11;
+				break;
+			}
+			else if (choix_x == 12 && choix_y == 121){ // MODE TERMINAL DIFFICILE
+				mode = 12;
+				break;
+			}
+			else if (choix_x == 15 && choix_y == 121){ // MODE GRAPHIQUE FACILE
+				mode = 21;
+				break;
+			}
+			else if (choix_x == 17 && choix_y == 121){ // MODE GRAPHIQUE DIFFICILE
+				mode = 22;
+				break;
+			}
+			else if (choix_x == 20) break; // MODE 'QUITTER'
 		}
-		else if (key == '\t'){ // Retour au menu précédent = TABULATION
+		else if (key == '\t' && choix_y == 121){ // Retour au menu principal = TABULATION
 			afficher_fichier(PATHMENU);
-			deplacement_choix(choix_x, choix_y);	
+			choix_y = choix_y - 18;
+			
+			if (choix_x == 17 || choix_x == 12) choix_x = choix_x - 2;
+			deplacement_choix(choix_x, choix_y);
 		}
 	}
 
-	if (CM_activated == 1){
+	if (mode == 11){
 
 		system("clear");
 		afficher_message(15, 55, "Lancement du jeu dans la console .\n");
