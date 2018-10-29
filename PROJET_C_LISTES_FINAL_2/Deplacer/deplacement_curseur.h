@@ -8,7 +8,3 @@ void deplacement_obus_terminal(OBUSP obus, char car);
 void deplacement_choix(int x, int y);
 void afficher_message(int x, int y, char* message);
 void effacer_choix(int x, int y);
-void init_terminal();
-void fin_win();
-void fin_game_over();
-void quit_terminal();

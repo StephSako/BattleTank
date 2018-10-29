@@ -35,12 +35,17 @@
 #define PETITASCII 15 // Pour les petits caractères ASCII OEM
 #define GRANDASCII 20 // Pour les grands caractères ASCII OEM
 
-#define NBOBUSALLOWED 50 // Nombre d'obus autorisé à apparaitre sur la map
+int NBOBUSALLOWED; // Nombre d'obus autorisé à apparaitre sur la map selon le mode choisi
 
-#define NBTANKTOTALFACILE 20 // Nombre total de tanks ennemis
-#define NBTANKWEAKFACILE 8 // Nombre total de tanks ennemis faibles
+#define NBTANKTOTALFACILE 20 // Nombre total de tanks ennemis pour le mode FACILE
+#define NBTANKWEAKFACILE 7 // Nombre total de tanks ennemis faibles
 #define NBTANKMEDIUMFACILE 7 // Nombre total de tanks ennemis moyens
-#define NBTANKSTRONGFACILE 5 // Nombre total de tanks ennemis forts
+#define NBTANKSTRONGFACILE 6 // Nombre total de tanks ennemis forts
+
+#define NBTANKTOTALDIFFICILE 30
+#define NBTANKWEAKDIFFICILE 10
+#define NBTANKMEDIUMDIFFICILE 10
+#define NBTANKSTRONGDIFFICILE 10
 
 #define NBCOUPSABIMENT 3 // Nombre de coups pour les blindages faibles se détruisent, et les blindages moyens et forts rétrogradent
 
@@ -56,6 +61,9 @@ char **carrosserieMTH; char **carrosserieMTG; char **carrosserieMTD; char **carr
 char **carrosserieSTH; char **carrosserieSTG; char **carrosserieSTD; char **carrosserieSTB;
 
 char *PATHMAP = "../Modèle/Fichiers_texte_map/map"; // Chemin de la map
+char *PATHMAPGRAPHIQUE = "../Modèle/Fichiers_texte_map/map_graphique"; // Chemin de la map
+char **true_map; // Tableau contenant la map soit terminal ou graphique à afficher
+
 char *PATHMENU = "../Modèle/Fichiers_texte_menu/main_menu"; // Chemin du menu principal
 char *PATHMENUTERMINAL = "../Modèle/Fichiers_texte_menu/main_menu_mode_terminal"; // Chemin du menu terminal
 char *PATHMENUGRAPHIQUE = "../Modèle/Fichiers_texte_menu/main_menu_mode_graphique"; // Chemin du menu graphique

@@ -146,6 +146,11 @@ void animation_bullet(char **mat, OBUSP obusP, char car){
 		fflush(stdout);										// On vide le buffer de sortie (on force l'affichage)
 		mat[obusP->pos_x][obusP->pos_y] = car;						// On ajoute l'obus dans la fake map
 	}
+	// Collision avec une brique non destructible
+	else if (mat[obusP->pos_x][obusP->pos_y] == 'X' || mat[obusP->pos_x][obusP->pos_y] == 'P' || mat[obusP->pos_x][obusP->pos_y] == 'E' ||
+			mat[obusP->pos_x][obusP->pos_y] == 'Y')
+		DeleteObusPTab(obusP); // On supprime l'obus du tableau de pointeurs
+		
 	else if (mat[obusP->pos_x][obusP->pos_y] == 'C'){
 		effacer_obus_terminal(obusP);								// On efface l'obus dans le terminal
 		mat[obusP->pos_x][obusP->pos_y] = ' ';						// On efface l'obus dans la fake map
@@ -166,16 +171,7 @@ void animation_bullet(char **mat, OBUSP obusP, char car){
 		mat[obusP->pos_x][obusP->pos_y] = ' ';
 		DeleteObusPTab(obusP);
 		system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
-	}
-	// Collision avec une brique non destructibles
-	else if (mat[obusP->pos_x][obusP->pos_y] == 'X' || mat[obusP->pos_x][obusP->pos_y] == 'P' || mat[obusP->pos_x][obusP->pos_y] == 'E' ||
-			mat[obusP->pos_x][obusP->pos_y] == 'Y')
-		DeleteObusPTab(obusP); // On supprime l'obus du tableau de pointeurs
-	// Collision avec un autre obus
-	/*else if (mat[obusP->pos_x][obusP->pos_y] == '<' || mat[obusP->pos_x][obusP->pos_y] == '>' || mat[obusP->pos_x][obusP->pos_y] == '^' ||
-			mat[obusP->pos_x][obusP->pos_y] == 'v'){
-		DeleteObusPTab(obusP); // On supprime l'obus qui a percuté un obstacle
-	}*/
+	}		
 	// Collision avec un tank ou un obus
 	else{
 		if (mat[obusP->pos_x][obusP->pos_y] == '*' || mat[obusP->pos_x][obusP->pos_y] == 'T')

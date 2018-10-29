@@ -1,4 +1,4 @@
-#include "../TankEnnemis/TankEnnemis.h"
+#include "../InitGame/InitGame.h"
 
 /* La fake_map est comme un calque permettant de gérer en background les collisions avec les tanks et les obus
 alors que la true map est juste la représentation graphique de la map en temps réèl dans le terminal */
@@ -75,20 +75,22 @@ int main(){
 		}
 	}
 
-	if (mode == 11){
+	if (mode != 0){ // Si le joueur a choisit un mode
+	
+		//initialiserLaPartieSelonLeMode(mode);												// ATTENTION
 
 		system("clear");
-		afficher_message(15, 55, "Lancement du jeu dans la console .\n");
+		afficher_message(15, 65, "Lancement du jeu .\n");
 		system("sleep 0.4");
-		afficher_message(15, 89, ".\n");
+		afficher_message(15, 83, ".\n");
 		system("sleep 0.4");
-		afficher_message(15, 90, ".\n");
+		afficher_message(15, 83, ".\n");
 		system("sleep 0.4");
-		afficher_message(20, 65, "C'est parti !\n");
+		afficher_message(20, 71, "C'est parti !\n");
 		system("sleep 0.5");
 		
 		// Chargement de la true_map
-		char **true_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAP);
+		true_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAP);								//*
 		affichage_mat(LONGUEURMAP, LARGEURMAP, true_map);
 
 		// Chargement de la fake_map
@@ -99,15 +101,15 @@ int main(){
 
 		// On initialise la répartition des différents types de tanks ennemis
 		repartitionTankEnnemis = allocation_dyn_tab_repar_tank_ennemis(); // 20 tanks au total, soit ...
-		repartitionTankEnnemis[0] = NBTANKWEAKFACILE; // ... 8 tanks faibles
-		repartitionTankEnnemis[1] = NBTANKMEDIUMFACILE; // ... 7 tanks moyens
-		repartitionTankEnnemis[2] = NBTANKSTRONGFACILE; // ... 5 tanks forts
+		repartitionTankEnnemis[0] = NBTANKWEAKFACILE; // ... 8 tanks faibles								//*
+		repartitionTankEnnemis[1] = NBTANKMEDIUMFACILE; // ... 7 tanks moyens								//*
+		repartitionTankEnnemis[2] = NBTANKSTRONGFACILE; // ... 5 tanks forts								//*
 
 		// On initialise une liste chaînée vide
 		head = NULL;
 		
 		// On créé le tank du joueur
-		struct TANK *joueur = creer_tank_joueur(fake_map, &head, 30, 30, 'A'); // On créé et initialise le TANKP du JOUEUR
+		struct TANK *joueur = creer_tank_joueur(fake_map, &head, 30, 30, 'B'); // On créé et initialise le TANKP du JOUEUR
 
 		// On créé deux premiers tanks ennemis
 		creer_tank_ennemis(fake_map, &head, 4, 2, 'B');

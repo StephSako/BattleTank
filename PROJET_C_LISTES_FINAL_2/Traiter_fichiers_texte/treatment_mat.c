@@ -67,11 +67,3 @@ void affichage_mat(int nbL, int nbC, char ** mat){
 		printf("\n");
 	}
 }
-
-OBUSP * allocation_dyn_tab(){
-	return malloc(NBOBUSALLOWED * sizeof(OBUSP));
-}
-
-int * allocation_dyn_tab_repar_tank_ennemis(){
-	return malloc(3 * sizeof(int));
-}
