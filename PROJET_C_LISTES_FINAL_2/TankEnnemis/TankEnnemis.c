@@ -89,7 +89,8 @@ void deplacer_tank_ennemis_terminal(char **fake_map, struct TANK *tankSelectionn
 						case(1): tankSelectionne->carrosserie = carrosserieMTH; break;
 						case(2): tankSelectionne->carrosserie = carrosserieSTH; break;
 						default: break;
-					} deplacement_tank_haut(fake_map, tankSelectionne); break; // On effectue le déplacement
+					} tankSelectionne->direction = 'A';
+					deplacement_tank_haut(fake_map, tankSelectionne); break; // On effectue le déplacement
 					
 				case(1): // Vers le bas
 					switch(tankSelectionne->blindage){
@@ -97,7 +98,8 @@ void deplacer_tank_ennemis_terminal(char **fake_map, struct TANK *tankSelectionn
 						case(1): tankSelectionne->carrosserie = carrosserieMTB; break;
 						case(2): tankSelectionne->carrosserie = carrosserieSTB; break;
 						default: break;
-					} deplacement_tank_bas(fake_map, tankSelectionne); break;
+					} tankSelectionne->direction = 'B';
+					deplacement_tank_bas(fake_map, tankSelectionne); break;
 					
 				case(2): // Vers la droite
 					switch(tankSelectionne->blindage){
@@ -105,7 +107,8 @@ void deplacer_tank_ennemis_terminal(char **fake_map, struct TANK *tankSelectionn
 						case(1): tankSelectionne->carrosserie = carrosserieMTD; break;
 						case(2): tankSelectionne->carrosserie = carrosserieSTD; break;
 						default: break;
-					} deplacement_tank_droite(fake_map, tankSelectionne); break;
+					} tankSelectionne->direction = 'C';
+					deplacement_tank_droite(fake_map, tankSelectionne); break;
 					
 				case(3): // Vers la gauche
 					switch(tankSelectionne->blindage){
@@ -113,10 +116,14 @@ void deplacer_tank_ennemis_terminal(char **fake_map, struct TANK *tankSelectionn
 						case(1): tankSelectionne->carrosserie = carrosserieMTG; break;
 						case(2): tankSelectionne->carrosserie = carrosserieSTG; break;
 						default: break;
-					} deplacement_tank_gauche(fake_map, tankSelectionne); break;
+					} tankSelectionne->direction = 'D';
+					deplacement_tank_gauche(fake_map, tankSelectionne); break;
 
 				default : break;
 			}
+			
+			int tirAleatoire = rand()%(2);
+			if (tirAleatoire == 0) shot_creator(tankSelectionne); // On fait tirer les tanks ennemis aléatoirement
 		}
 		tankSelectionne = tankSelectionne->suivant; // On passe au tank ennemi
 	}	

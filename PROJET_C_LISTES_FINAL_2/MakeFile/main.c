@@ -120,8 +120,10 @@ int main(){
 		int intervalleTirTankEnnemis = 0;
 		int nbRand;  // Nombre aléatoire qui se réinitialise pour que les tanks ennemis se déplacent chaque seconde
 
-		char entr;	
-		while ((entr = key_pressed()) != 'q' && NbEnnemisTanksToCreate() > 0 && pioupiouAlive == 1){
+		char entr;
+		
+		// Si le joueur ne quitte pas, qu'il reste des tanks à générer, que la bombe n'a pas explosé et que le joueur est encore vivant
+		while ((entr = key_pressed()) != 'q' && NbEnnemisTanksToCreate() > 0 && pioupiouAlive == 1 && joueurP->etat > 0){
 		
 			shot_cleaner(fake_map); // On efface tous les obus sur le terminal
 
