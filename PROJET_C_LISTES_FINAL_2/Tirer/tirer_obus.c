@@ -97,6 +97,7 @@ void AttaquerTank(char **mat, OBUSP obusP){
 							effacer_tank_terminal(temp); // On efface le tank dans le terminal
 							effacer_map_tank(mat, temp); // On efface le tank dans la fake_map
 							
+							nb_tank_wave--; // Un tank de moins dans la vague : il faut en créér un autre
 							temp->etat = 0;
 							SupprimerTank(&head, position);
 							system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
@@ -166,12 +167,20 @@ void animation_bullet(char **mat, OBUSP obusP, char car){
 		DeleteObusPTab(obusP);
 		system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
 	}
-	// Briques non destructibles
+	// Collision avec une brique non destructibles
 	else if (mat[obusP->pos_x][obusP->pos_y] == 'X' || mat[obusP->pos_x][obusP->pos_y] == 'P' || mat[obusP->pos_x][obusP->pos_y] == 'E' ||
-			mat[obusP->pos_x][obusP->pos_y] == 'Y') DeleteObusPTab(obusP); // On supprime l'obus du tableau de pointeurs
-	// Collision avec un tank	
+			mat[obusP->pos_x][obusP->pos_y] == 'Y')
+		DeleteObusPTab(obusP); // On supprime l'obus du tableau de pointeurs
+	// Collision avec un autre obus
+	/*else if (mat[obusP->pos_x][obusP->pos_y] == '<' || mat[obusP->pos_x][obusP->pos_y] == '>' || mat[obusP->pos_x][obusP->pos_y] == '^' ||
+			mat[obusP->pos_x][obusP->pos_y] == 'v'){
+		DeleteObusPTab(obusP); // On supprime l'obus qui a percuté un obstacle
+	}*/
+	// Collision avec un tank ou un obus
 	else{
-		AttaquerTank(mat, obusP); // On cherche le tank et on l'attaque s'il y en a eu un de touché
+		if (mat[obusP->pos_x][obusP->pos_y] == '*' || mat[obusP->pos_x][obusP->pos_y] == 'T')
+			AttaquerTank(mat, obusP); // On cherche le tank et on l'attaque s'il y en a eu un de touché
+			
 		DeleteObusPTab(obusP); // On supprime l'obus qui a percuté un obstacle
 	}
 }

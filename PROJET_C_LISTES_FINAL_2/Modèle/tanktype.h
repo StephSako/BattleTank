@@ -84,6 +84,9 @@ struct TANK *head; // Création de la liste
 // Tableau indiquant le nombre de tanks faibles, moyens et forts
 int *repartitionTankEnnemis;
 
+// Nombre de tank total en mode facile à générer au cours de la partie par vague de 2
+int nb_tank_wave = 0;
+
 /***********************************************************************************************************************************************/
 
 // Structure des obus

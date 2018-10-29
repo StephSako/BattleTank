@@ -74,6 +74,8 @@ void creer_tank_ennemis(char **fake_map, struct TANK **head, int pos_x, int pos_
 	newEnnemyTank->suivant = (*head);
     	(*head) = newEnnemyTank;
     	remplir_map_tank(fake_map, newEnnemyTank);
+    	
+    	nb_tank_wave++; // Un tank de plus dans la vague de tanks ennemis
 }
 
 void deplacer_tank_ennemis_terminal(char **fake_map, struct TANK *tankSelectionne){
@@ -166,12 +168,16 @@ void deplacer_tank_joueur_terminal(char **fake_map, struct TANK **joueurP){
 }
 
 int NbEnnemisTanksToCreate(){
-
 	int nbTankToCreate = 0;
-
-	for (int i = 0; i < 3; i++){
-		nbTankToCreate = nbTankToCreate + repartitionTankEnnemis[i];
-	}
-	
+	for (int i = 0; i < 3; i++) nbTankToCreate = nbTankToCreate + repartitionTankEnnemis[i];	
 	return nbTankToCreate;
+}
+
+int nbTankStillAlive(struct TANK *tank){
+	int nbTankStillAlive = 0;
+	while (tank != NULL){ 
+		nbTankStillAlive++;
+		tank = tank->suivant; 
+	}
+	return nbTankStillAlive;
 }
