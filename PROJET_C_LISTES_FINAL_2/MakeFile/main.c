@@ -117,7 +117,7 @@ int main(){
 		// On place le joueur sur le terminal et dans la fake map
 		affichage_tank_terminal(joueur);
 		
-		int intervalleTirTankEnnemis = 0;
+		int intervalleTankEnnemis = 0;
 		int nbRand;  // Nombre aléatoire qui se réinitialise pour que les tanks ennemis se déplacent chaque seconde
 
 		char entr;
@@ -140,9 +140,9 @@ int main(){
 			
 			srand(time(NULL));	
 			nbRand = rand()%(100);
-			if (intervalleTirTankEnnemis != nbRand){ // On bouge les tanks ennemis chaque seconde
+			if (intervalleTankEnnemis != nbRand){ // On bouge les tanks ennemis chaque seconde
 				deplacer_tank_ennemis_terminal(fake_map, head); // On bouge et affiche tous les tanks ennemis
-				intervalleTirTankEnnemis = nbRand;	
+				intervalleTankEnnemis = nbRand;	
 			}
 			
 			delay(87000); // Frequence d'affichage de toute la map (deplacement tank, tirs obus, ...)
@@ -151,6 +151,10 @@ int main(){
 	
 	/*if (NbEnnemisTanksToCreate() == 0) fin_win();
 	else if (pioupiouAlive == 1 || joueur->etat > 0) fin_game_over();*/
+	
+	/*system("clear");
+	printf("%d", NbEnnemisTanksToCreate());
+	system("sleep 10");*/
 	
 	quit_terminal(); // On nettoie le terminal et on remet ses bons paramètres
 	return 0;

@@ -71,7 +71,7 @@ void creer_tank_ennemis(char **fake_map, struct TANK **head, int pos_x, int pos_
 	}
 
 	// Insertion du nouveau tank ennemi au début de la liste chainées des tanks ennemis
-	newEnnemyTank->suivant = (*head); 
+	newEnnemyTank->suivant = (*head);
     	(*head) = newEnnemyTank;
     	remplir_map_tank(fake_map, newEnnemyTank);
 }

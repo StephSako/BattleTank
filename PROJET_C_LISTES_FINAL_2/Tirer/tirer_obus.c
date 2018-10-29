@@ -130,7 +130,6 @@ void AttaquerTank(char **mat, OBUSP obusP){
 					}
 									
 				default : break;
-				
 			}
 			break; // Nous avons impacté le bon tank en lui abîmant sa carrosserie et en le réaffichant
 		}
@@ -160,23 +159,18 @@ void animation_bullet(char **mat, OBUSP obusP, char car){
 		DeleteObusPTab(obusP);
 		system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosionFin.mp3");
 	}
-	// Briques non destructibles
-	else if 	(mat[obusP->pos_x][obusP->pos_y] == 'X' ||
-			mat[obusP->pos_x][obusP->pos_y] == 'P' ||
-			mat[obusP->pos_x][obusP->pos_y] == 'E' ||
-			mat[obusP->pos_x][obusP->pos_y] == 'Y'){
-			
-		// Un tank ENNEMI SUPERARME tire sur un bloc dur
-		if (mat[obusP->pos_x][obusP->pos_y] == 'P' && obusP->provenance == 2 && obusP->camp == 'E'){
-			effacer_obus_terminal(obusP);
-			mat[obusP->pos_x][obusP->pos_y] = ' ';
-			DeleteObusPTab(obusP);
-			system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
-		}
-		else DeleteObusPTab(obusP); // On supprime l'obus du tableau de pointeurs
+	// Un tank ENNEMI SUPERARME tire sur un bloc dur
+	else if (mat[obusP->pos_x][obusP->pos_y] == 'P' && obusP->provenance == 2 && obusP->camp == 'E'){
+		effacer_obus_terminal(obusP);
+		mat[obusP->pos_x][obusP->pos_y] = ' ';
+		DeleteObusPTab(obusP);
+		system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
 	}
-			
-	else{ // Gestion des collisions avec les tanks ennemis
+	// Briques non destructibles
+	else if (mat[obusP->pos_x][obusP->pos_y] == 'X' || mat[obusP->pos_x][obusP->pos_y] == 'P' || mat[obusP->pos_x][obusP->pos_y] == 'E' ||
+			mat[obusP->pos_x][obusP->pos_y] == 'Y') DeleteObusPTab(obusP); // On supprime l'obus du tableau de pointeurs
+	// Collision avec un tank	
+	else{
 		AttaquerTank(mat, obusP); // On cherche le tank et on l'attaque s'il y en a eu un de touché
 		DeleteObusPTab(obusP); // On supprime l'obus qui a percuté un obstacle
 	}
