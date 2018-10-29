@@ -110,9 +110,9 @@ int main(){
 		struct TANK *joueurP = creer_tank_joueur(fake_map, &head, 30, 30, 'A'); // On créé et initialise le TANKP du JOUEUR
 		
 		// On créer 3 tanks ennemis													// ATTENTION
-		creer_tank_ennemis(fake_map, &head, 4, 1, 'B');
-		creer_tank_ennemis(fake_map, &head, 30, 138, 'B');
-		creer_tank_ennemis(fake_map, &head, 11, 44, 'B');
+		creer_tank_ennemis(fake_map, &head, 4, 2, 'B');
+		creer_tank_ennemis(fake_map, &head, 30, 137, 'B');
+		creer_tank_ennemis(fake_map, &head, 18, 40, 'B');
 
 		// On place le joueur sur le terminal et dans la fake map
 		affichage_tank_terminal(joueurP);
