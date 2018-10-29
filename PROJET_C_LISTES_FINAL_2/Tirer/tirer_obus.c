@@ -97,6 +97,7 @@ void AttaquerTank(char **mat, OBUSP obusP){
 							effacer_tank_terminal(temp); // On efface le tank dans le terminal
 							effacer_map_tank(mat, temp); // On efface le tank dans la fake_map
 							
+							temp->etat = 0;
 							SupprimerTank(&head, position);
 							system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
 							

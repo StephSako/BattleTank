@@ -87,6 +87,13 @@ int main(){
 		afficher_message(20, 65, "C'est partit !\n");
 		system("sleep 0.5");
 		
+		// Chargement de la true_map
+		char **true_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAP);
+		affichage_mat(LONGUEURMAP, LARGEURMAP, true_map);
+
+		// Chargement de la fake_map
+		char **fake_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAP);
+		
 		// On initialise les carrosseries des tanks
 		init_carrosseries();
 
@@ -100,19 +107,12 @@ int main(){
 		head = NULL;
 
 		// On créé le tank du joueur
-		struct TANK *joueurP = creer_tank_joueur(&head, 30, 30, 'A', 2, 0, 'P', 1); // On créé et initialise le TANKP du JOUEUR
+		struct TANK *joueurP = creer_tank_joueur(fake_map, &head, 30, 30, 'A'); // On créé et initialise le TANKP du JOUEUR
 		
 		// On créer 3 tanks ennemis													// ATTENTION
-		creer_tank_ennemis(&head, 4, 1, 'B', 0, 1);
-		creer_tank_ennemis(&head, 30, 138, 'B', 0, 1);
-		creer_tank_ennemis(&head, 11, 44, 'B', 0, 1);
-
-		// Chargement de la true_map
-		char **true_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAP);
-		affichage_mat(LONGUEURMAP, LARGEURMAP, true_map);
-
-		// Chargement de la fake_map
-		char **fake_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAP);
+		creer_tank_ennemis(fake_map, &head, 4, 1, 'B');
+		creer_tank_ennemis(fake_map, &head, 30, 138, 'B');
+		creer_tank_ennemis(fake_map, &head, 11, 44, 'B');
 
 		// On place le joueur sur le terminal et dans la fake map
 		affichage_tank_terminal(joueurP);

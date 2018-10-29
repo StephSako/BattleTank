@@ -1,12 +1,12 @@
 #include "../Traiter_fichiers_texte/flux_fichier.h"
 
-struct TANK *creer_tank_joueur(struct TANK** head, int pos_x, int pos_y, char direction, int blindage_origine, int nb_impacts, char camp, int etat){
+struct TANK *creer_tank_joueur(char **fake_map, struct TANK** head, int pos_x, int pos_y, char direction){
 	// Créer et initialise le tank du joueur
 	struct TANK *tank = (struct TANK*) malloc(sizeof(struct TANK)); // On créé notre tank joueur
 	
 	// On initialise chaque attributs du tank joueur
-	tank->pos_x = pos_x; tank->pos_y = pos_y; tank->direction = direction; tank->blindage = blindage_origine; tank->etat = etat;
-	tank->blindage_origine = blindage_origine; tank->nb_impacts = nb_impacts; tank->camp = camp;
+	tank->pos_x = pos_x; tank->pos_y = pos_y; tank->direction = direction; tank->blindage_origine = 2; tank->etat = 2;
+	tank->blindage = tank->blindage_origine; tank->nb_impacts = 0; tank->camp = 'P';
 	
 	switch(direction){ // Selon la direction du tank joueur
 		case('A'): tank->carrosserie = carrosserieSTH; break;
@@ -16,11 +16,13 @@ struct TANK *creer_tank_joueur(struct TANK** head, int pos_x, int pos_y, char di
 	}
 	
 	tank->suivant = (*head); 
-    	(*head) = tank; 
+    	(*head) = tank;
+    	
+    	remplir_map_tank(fake_map, tank); // On remplit la fake map à la création pout être 'touchable'
 	return (*head);
 }
 
-void creer_tank_ennemis(struct TANK **head, int pos_x, int pos_y, char direction, int nb_impacts, int etat){
+void creer_tank_ennemis(char **fake_map, struct TANK **head, int pos_x, int pos_y, char direction){
 
 	// Création du nouvel élément
 	struct TANK *newEnnemyTank = (struct TANK*) malloc(sizeof(struct TANK)); // On créé notre tank ennemi
@@ -33,8 +35,8 @@ void creer_tank_ennemis(struct TANK **head, int pos_x, int pos_y, char direction
 
 	// On initialise chaque attributs du tank ennemi
 	newEnnemyTank->pos_x = pos_x; newEnnemyTank->pos_y = pos_y; newEnnemyTank->direction = direction;
-	newEnnemyTank->blindage = blindage_origine; newEnnemyTank->blindage_origine = blindage_origine; newEnnemyTank->nb_impacts = nb_impacts;
-	newEnnemyTank->camp = 'E'; newEnnemyTank->etat = etat;
+	newEnnemyTank->blindage = blindage_origine; newEnnemyTank->blindage_origine = blindage_origine; newEnnemyTank->nb_impacts = 0;
+	newEnnemyTank->camp = 'E'; newEnnemyTank->etat = 2;
 	
 	// On selectionne la bonne carrosserie selon le blindage d'origine
 	switch(blindage_origine){
@@ -71,6 +73,7 @@ void creer_tank_ennemis(struct TANK **head, int pos_x, int pos_y, char direction
 	// Insertion du nouveau tank ennemi au début de la liste chainées des tanks ennemis
 	newEnnemyTank->suivant = (*head); 
     	(*head) = newEnnemyTank;
+    	remplir_map_tank(fake_map, newEnnemyTank);
 }
 
 void deplacer_tank_ennemis_terminal(char **fake_map, struct TANK *tankSelectionne){
