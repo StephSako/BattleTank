@@ -84,7 +84,7 @@ int main(){
 		system("sleep 0.4");
 		afficher_message(15, 90, ".\n");
 		system("sleep 0.4");
-		afficher_message(20, 65, "C'est partit !\n");
+		afficher_message(20, 65, "C'est parti !\n");
 		system("sleep 0.5");
 		
 		// Chargement de la true_map
@@ -105,15 +105,14 @@ int main(){
 
 		// On initialise une liste chaînée vide
 		head = NULL;
-
+		
 		// On créé le tank du joueur
 		struct TANK *joueur = creer_tank_joueur(fake_map, &head, 30, 30, 'A'); // On créé et initialise le TANKP du JOUEUR
-		
-		// On créer 3 tanks ennemis													// ATTENTION
+
+		// On créé deux premiers tanks ennemis
 		creer_tank_ennemis(fake_map, &head, 4, 2, 'B');
 		creer_tank_ennemis(fake_map, &head, 30, 137, 'B');
-		creer_tank_ennemis(fake_map, &head, 18, 40, 'B');
-
+	
 		// On place le joueur sur le terminal et dans la fake map
 		affichage_tank_terminal(joueur);
 		
@@ -122,8 +121,14 @@ int main(){
 
 		char entr;
 		
-		// Si le joueur ne quitte pas, qu'il reste des tanks à générer, que la bombe n'a pas explosé et que le joueur est encore vivant
-		while ((entr = key_pressed()) != 'q' && NbEnnemisTanksToCreate() > 0 && pioupiouAlive == 1 && joueur->etat > 0){
+		// Si le joueur ne quitte pas, qu'il reste des tanks à générer, que la bombe n'a pas explosé et que le joueur est encore vivant et qu'il y a encore des tanks en vie sur la map
+		while ((entr = key_pressed()) != 'q' && pioupiouAlive == 1 && joueur->etat > 0 && nbTankStillAlive(head) > 1){
+		
+			if (nb_tank_wave < 2 && NbEnnemisTanksToCreate() > 0){ // On lance des vagues de tanks par deux tant qu'on peux en créer
+				// On définit l'emplacement du prochain tank à générer
+				if (nb_tank_wave%2 == 0) creer_tank_ennemis(fake_map, &head, 4, 2, 'B');
+				if (nb_tank_wave%2 != 0) creer_tank_ennemis(fake_map, &head, 30, 137, 'B');
+			}
 		
 			shot_cleaner(fake_map); // On efface tous les obus sur le terminal
 
@@ -149,13 +154,6 @@ int main(){
 		}
 	}
 	
-	/*if (NbEnnemisTanksToCreate() == 0) fin_win();
-	else if (pioupiouAlive == 1 || joueur->etat > 0) fin_game_over();*/
-	
-	/*system("clear");
-	printf("%d", NbEnnemisTanksToCreate());
-	system("sleep 10");*/
-	
-	quit_terminal(); // On nettoie le terminal et on remet ses bons paramètres
+	quit_terminal(); // On nettoie le terminal et on remet ses bons paramètres	
 	return 0;
 }
