@@ -140,8 +140,7 @@ void AttaquerTank(char **mat, OBUSP obusP){
 }
 
 void animation_bullet(char **mat, OBUSP obusP, char car){
-	if (obusP->pos_y <= LARGEURMAP && obusP->pos_y >= 0 && obusP->pos_x < LONGUEURMAP-1 && obusP->pos_x > 0 && 
-		mat[obusP->pos_x][obusP->pos_y] == ' '){						// Tant que l'obus ne percute pas d'obstacle
+	if (mat[obusP->pos_x][obusP->pos_y] == ' '){						// Tant que l'obus ne percute pas d'obstacle
 		
 		deplacement_obus_terminal(obusP, car);						// On affiche l'obus dans le terminal
 		fflush(stdout);										// On vide le buffer de sortie (on force l'affichage)
@@ -153,7 +152,8 @@ void animation_bullet(char **mat, OBUSP obusP, char car){
 		DeleteObusPTab(obusP);									// On supprime l'obus dans le tableau de pointeurs d'obus 															pour ne plus le traiter
 		system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3"); 	// On joue un bruitage à l'aide d'un script (execute en 															background)
 	}
-	else if (mat[obusP->pos_x][obusP->pos_y] == 'B' && obusP->camp == 'E'){		// Un tank ENNEMI a tiré sur la bombe à protéger
+	// Un tank ENNEMI a tiré sur la bombe à protéger
+	else if (mat[obusP->pos_x][obusP->pos_y] == 'B' && obusP->camp == 'E'){
 		pioupiouAlive = 0;
 		effacer_obus_terminal(obusP);
 		mat[obusP->pos_x][obusP->pos_y] = ' ';
@@ -164,16 +164,17 @@ void animation_bullet(char **mat, OBUSP obusP, char car){
 	else if 	(mat[obusP->pos_x][obusP->pos_y] == 'X' ||
 			mat[obusP->pos_x][obusP->pos_y] == 'P' ||
 			mat[obusP->pos_x][obusP->pos_y] == 'E' ||
-			mat[obusP->pos_x][obusP->pos_y] == 'Y')
+			mat[obusP->pos_x][obusP->pos_y] == 'Y'){
 			
-			// Un tank ENNEMI SUPERARME tire sur un bloc dur
-			if (mat[obusP->pos_x][obusP->pos_y] == 'P' && obusP->provenance == 2 && obusP->camp == 'E'){
-				effacer_obus_terminal(obusP);
-				mat[obusP->pos_x][obusP->pos_y] = ' ';
-				DeleteObusPTab(obusP);
-				system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
-			}
-			else DeleteObusPTab(obusP); // On supprime l'obus du tableau de pointeurs 
+		// Un tank ENNEMI SUPERARME tire sur un bloc dur
+		if (mat[obusP->pos_x][obusP->pos_y] == 'P' && obusP->provenance == 2 && obusP->camp == 'E'){
+			effacer_obus_terminal(obusP);
+			mat[obusP->pos_x][obusP->pos_y] = ' ';
+			DeleteObusPTab(obusP);
+			system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
+		}
+		else DeleteObusPTab(obusP); // On supprime l'obus du tableau de pointeurs
+	}
 			
 	else{ // Gestion des collisions avec les tanks ennemis
 		AttaquerTank(mat, obusP); // On cherche le tank et on l'attaque s'il y en a eu un de touché
