@@ -20,7 +20,7 @@ void init_terminal(){
 void quit_terminal(){
 	system("clear");
 	
-	if (pioupiouAlive == 1 && joueurMort == 0 && key != 'q') // Le joueur a gagné
+	if (pioupiouAlive == 1 && joueurMort == 0 && key != 'q' && mode != 3) // Le joueur a gagné
 		afficher_message(15, 60, "Vous avez gagné !!");
 	else if (pioupiouAlive == 0 || joueurMort == 1) // Le joueur a perdu
 		afficher_message(15, 60, "Vous avez perdu ...");
@@ -124,7 +124,10 @@ void MenuSelectionMode(){
 				mode = 22;
 				break;
 			}
-			else if (choix_x == 20) break; // MODE 'QUITTER'
+			else if (choix_x == 20){
+				mode = 3;
+				break; // MODE 'QUITTER'
+				}
 		}
 		else if (key == '\t' && choix_y == 120){ // Retour au menu principal = TABULATION
 			afficher_fichier(PATHMENU);

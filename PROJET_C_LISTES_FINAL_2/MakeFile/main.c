@@ -14,7 +14,7 @@ int main(){
 	
 	MenuSelectionMode(); // Le menu de selection du mode de jeu se lance
 
-	if (mode != 0){ // Si le joueur a choisit un mode
+	if (mode != 3 && key != 'q'){ // Si le joueur a choisit un mode
 
 		system("clear");
 		afficher_message(15, 60, "Lancement du jeu .\n");

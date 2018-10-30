@@ -57,7 +57,8 @@ int choix_y = 102;
 int mode = 0; 	/* MODE TERMINAL FACILE => 11
 			MODE TERMINAL DIFFICILE => 12
 			MODE TERMINAL FACILE => 21
-			MODE TERMINAL DIFFICILE => 22*/
+			MODE TERMINAL DIFFICILE => 22
+			MODE QUITTER => 3*/
 char key;
 
 /***********************************************************Variables globales des carrosseries*************************************************/
