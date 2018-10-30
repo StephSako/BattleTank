@@ -39,9 +39,9 @@ void initialiserLaPartieSelonLeMode(){
 	// On initialise la répartition des différents types de tanks ennemis
 	repartitionTankEnnemis = allocation_dyn_tab_repar_tank_ennemis();
 	
-	if (mode == 11){
-		// On initialise la map à afficher
-		true_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAPTERMINAL);
+	if (mode == 11){											// MODE TERMINAL FACILE
+		true_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAPTERMINAL); // On initialise la map à afficher
+		affichage_mat(LONGUEURMAP, LARGEURMAP, true_map); // On l'affiche
 		
 		NBTANKTOTAL = 20;
 		// On initialise la répartition des différents types de tanks ennemis
@@ -49,8 +49,9 @@ void initialiserLaPartieSelonLeMode(){
 		repartitionTankEnnemis[1] = NBTANKMEDIUMFACILE; // ... 7 tanks moyens
 		repartitionTankEnnemis[2] = NBTANKSTRONGFACILE; // ... 5 tanks forts
 	}
-	else if (mode == 12){
+	else if (mode == 12){										// MODE TERMINAL DIFFICILE
 		true_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAPTERMINAL);
+		affichage_mat(LONGUEURMAP, LARGEURMAP, true_map);
 		
 		NBTANKTOTAL = 30;
 		repartitionTankEnnemis[0] = NBTANKWEAKDIFFICILE; // ... 10 tanks faibles
@@ -58,16 +59,16 @@ void initialiserLaPartieSelonLeMode(){
 		repartitionTankEnnemis[2] = NBTANKSTRONGDIFFICILE; // ... 10 tanks forts
 		
 	}
-	else if (mode == 21){
-		true_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAPGRAPHIQUE);
+	else if (mode == 21){										// MODE GRAPHIQUE FACILE
+		afficher_fichier(PATHMAPGRAPHIQUE); // On affiche directement le fichier avec les caractères spéciaux
 		
 		NBTANKTOTAL = 20;
 		repartitionTankEnnemis[0] = NBTANKWEAKFACILE;
 		repartitionTankEnnemis[1] = NBTANKMEDIUMFACILE;
 		repartitionTankEnnemis[2] = NBTANKSTRONGFACILE;
 	}
-	else if (mode == 22){
-		true_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAPGRAPHIQUE);
+	else if (mode == 22){										// MODE GRAPHIQUE DIFFICILE
+		afficher_fichier(PATHMAPGRAPHIQUE);
 		
 		NBTANKTOTAL = 30;
 		repartitionTankEnnemis[0] = NBTANKWEAKDIFFICILE;
@@ -82,50 +83,50 @@ void MenuSelectionMode(){
 			effacer_choix(choix_x, choix_y);
 			
 			// Choix des modes terminal/graphique		
-			if (key == 'A' && choix_x != 10 && choix_y == 103) choix_x = choix_x - 5;
-			else if (key == 'B' && choix_x != 20 && choix_y == 103) choix_x = choix_x + 5;			
+			if (key == 'A' && choix_x != 10 && choix_y == 102) choix_x = choix_x - 5;
+			else if (key == 'B' && choix_x != 20 && choix_y == 102) choix_x = choix_x + 5;			
 			// Choix des modes facile/difficile
-			else if (key == 'A' && choix_x == 12 && choix_y == 121) choix_x = choix_x - 2;
-			else if (key == 'B' && choix_x == 10 && choix_y == 121) choix_x = choix_x + 2;
-			else if (key == 'A' && choix_x == 17 && choix_y == 121) choix_x = choix_x - 2;
-			else if (key == 'B' && choix_x == 15 && choix_y == 121) choix_x = choix_x + 2;
+			else if (key == 'A' && choix_x == 12 && choix_y == 120) choix_x = choix_x - 2;
+			else if (key == 'B' && choix_x == 10 && choix_y == 120) choix_x = choix_x + 2;
+			else if (key == 'A' && choix_x == 17 && choix_y == 120) choix_x = choix_x - 2;
+			else if (key == 'B' && choix_x == 15 && choix_y == 120) choix_x = choix_x + 2;
 			
 			deplacement_choix(choix_x, choix_y);
 		}
 		else if (key == '\n'){ // Valider un choix dans le menu = ENTREE
 			system("clear");
 			
-			if (choix_x == 10 && choix_y == 103){
+			if (choix_x == 10 && choix_y == 102){
 				choix_y = choix_y + 18;
 				afficher_fichier(PATHMENUTERMINAL);
 				deplacement_choix(choix_x, choix_y);
 			}			
-			else if (choix_x == 15 && choix_y == 103){
+			else if (choix_x == 15 && choix_y == 102){
 				choix_y = choix_y + 18;
 				afficher_fichier(PATHMENUGRAPHIQUE);
 				deplacement_choix(choix_x, choix_y);
 			}
 				
 			// Choix de la difficulté facile/difficile
-			else if (choix_x == 10 && choix_y == 121){ // MODE TERMINAL FACILE
+			else if (choix_x == 10 && choix_y == 120){ // MODE TERMINAL FACILE
 				mode = 11;
 				break;
 			}
-			else if (choix_x == 12 && choix_y == 121){ // MODE TERMINAL DIFFICILE
+			else if (choix_x == 12 && choix_y == 120){ // MODE TERMINAL DIFFICILE
 				mode = 12;
 				break;
 			}
-			else if (choix_x == 15 && choix_y == 121){ // MODE GRAPHIQUE FACILE
+			else if (choix_x == 15 && choix_y == 120){ // MODE GRAPHIQUE FACILE
 				mode = 21;
 				break;
 			}
-			else if (choix_x == 17 && choix_y == 121){ // MODE GRAPHIQUE DIFFICILE
+			else if (choix_x == 17 && choix_y == 120){ // MODE GRAPHIQUE DIFFICILE
 				mode = 22;
 				break;
 			}
 			else if (choix_x == 20) break; // MODE 'QUITTER'
 		}
-		else if (key == '\t' && choix_y == 121){ // Retour au menu principal = TABULATION
+		else if (key == '\t' && choix_y == 120){ // Retour au menu principal = TABULATION
 			afficher_fichier(PATHMENU);
 			choix_y = choix_y - 18;
 			

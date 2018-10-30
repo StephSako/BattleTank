@@ -30,7 +30,8 @@ int main(){
 		initialiserLaPartieSelonLeMode(mode);
 		
 		// Chargement de la true_map
-		affichage_mat(LONGUEURMAP, LARGEURMAP, true_map);
+		//affichage_mat(LONGUEURMAP, LARGEURMAP, true_map);											// ATTENTION
+		//afficher_fichier(PATHMAPTERMINAL);
 
 		// Chargement de la fake_map
 		char **fake_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAPTERMINAL);

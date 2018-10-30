@@ -37,17 +37,17 @@ void afficher_fichier(char *file_name){
 	fichier = fopen(file_name, "r");
 
 	if (fichier != NULL){
-		printf("\n");
+		//printf("\n");
         	do{
 			car = fgetc(fichier);
-			if ((char)car != '\n' && (char)car != EOF){			
-				j++;				
+			if ((char)car != '\n' && (char)car != EOF){						
 				if (j == (LARGEURMAP)){ // On revient à la ligne
 					j = 0;
 					i++;
 				}
 				gotoxy(i, j);
 				printf("%c", (char)car);
+				j++;
 			}
 			
         	}while (car != EOF);

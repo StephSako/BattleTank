@@ -51,7 +51,7 @@ int NBTANKTOTAL;
 
 // Position du selecteur de choix dans le menu
 int choix_x = 10;
-int choix_y = 103;
+int choix_y = 102;
 
 // Mode de jeu
 int mode = 0; 	/* MODE TERMINAL FACILE => 11

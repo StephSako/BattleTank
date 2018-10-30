@@ -21,7 +21,10 @@ flux_fichier.o : ../Traiter_fichiers_texte/flux_fichier.h tirer_obus.o
 TankEnnemis.o : ../TankEnnemis/TankEnnemis.h flux_fichier.o
 	gcc -c -Werror -Wall ../TankEnnemis/TankEnnemis.c
 
-main.o : main.c TankEnnemis.o
+InitGame.o : ../InitGame/InitGame.h TankEnnemis.o
+	gcc -c -Werror -Wall ../InitGame/InitGame.c
+
+main.o : main.c InitGame.o
 	gcc -c -Werror -Wall main.c
 	
 AlesieaBattle : main.o

@@ -12,4 +12,4 @@ ligneStrictNonVide=$(($lignesTotal-$ligneStrictVide))
 caractStrictNonVide=$(($caractTotal-$caractStrictVide))
 
 echo $lignesTotal lignes au total et $ligneStrictNonVide lignes non-vides.;
-echo $caractTotal lettres au total et $caractStrictNonVide lettres non-vides \(ni tab ni espace\).;
+echo $caractTotal lettres au total et $caractStrictNonVide lettres de lignes non-vides;
