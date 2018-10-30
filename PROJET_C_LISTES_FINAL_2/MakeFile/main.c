@@ -68,7 +68,7 @@ int main(){
 				if (nb_tank_wave%2 == 0) creer_tank_ennemis(fake_map, &head, 4, 2, 'B');
 				if (nb_tank_wave%2 != 0) creer_tank_ennemis(fake_map, &head, 30, 137, 'B');
 			}
-		
+
 			shot_cleaner(fake_map); // On efface tous les obus sur le terminal
 
 			// Gestion des déplacements du joueur
