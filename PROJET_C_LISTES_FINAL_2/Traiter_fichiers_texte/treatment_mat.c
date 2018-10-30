@@ -27,41 +27,34 @@ void lib_mat(int nbL, char ** mat){
 void affichage_mat(int nbL, int nbC, char ** mat){
 	for (int i = 0; i < nbL; i++){
 		for (int j = 0; j < nbC; j++){
-			//printf("%c", mat[i][j]);
-			
 			if (mat[i][j] == 'X'){
-				printf("%s%c", WHITE, mat[i][j]);
+				printf("%s▯", WHITE);
 				printf("%s", NORMAL);
 			}
 			else if (mat[i][j] == 'P'){
-				printf("%s%c", YELLOW, mat[i][j]);
+				printf("%s▯", YELLOW);
+				printf("%s", NORMAL);
+			}
+			else if (mat[i][j] == 'M'){
+				printf("%s☲", BLACK);
 				printf("%s", NORMAL);
 			}
 			else if (mat[i][j] == 'C'){
-				printf("%s%c", WHITE, mat[i][j]);
+				printf("%s▯", WHITE);
 				printf("%s", NORMAL);
 			}
 			else if (mat[i][j] == 'W'){
-				printf("%s%c", CYAN, mat[i][j]);
+				printf("%s▇", CYAN);
 				printf("%s", NORMAL);
 			}
 			else if (mat[i][j] == 'Y'){
-				printf("%s%c", GREEN, mat[i][j]);
+				printf("%s☿", GREEN);
 				printf("%s", NORMAL);
 			}
 			else if (mat[i][j] == 'B'){
-				printf("%s%c", REDCLIGNOTANT, mat[i][j]);
+				printf("%s☢", REDCLIGNOTANT);
 				printf("%s", NORMAL);
 			}
-			/*else if (mat[i][j] == 'B'){
-				//printf("💣");
-				//printf("\033[%d;%dH", (i), (j));
-				//system("printf 💣");
-				//system("printf '\033[5;20HQ'");
-				//printf("\033[%d;%dH", (i+1), (j+1));
-				//printf("\uHHHH💣");
-				printf("\u8223");
-			}*/
 			else printf("%c", mat[i][j]);
 		}
 		printf("\n");

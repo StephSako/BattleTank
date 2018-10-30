@@ -56,6 +56,24 @@ void afficher_fichier(char *file_name){
     	}else printf("\nLe fichier n'existe pas : %s.\n", file_name);
 }
 
+void afficher_fichier_ASCII(char *file_name){
+
+	FILE* fichier = NULL;
+    int caractereActuel = 0;
+ 
+    fichier = fopen(file_name, "r");
+ 
+    if (fichier != NULL){
+        do{
+            caractereActuel = fgetc(fichier);
+            printf("%c", caractereActuel);
+            
+        } while (caractereActuel != EOF);
+ 
+        fclose(fichier);
+    }
+}
+
 void init_carrosseries(){
 	// On initialise les carrosseries des tanks
 	carrosserieWTH = creer_charger_map(LONGUEURTANK, PETITASCII, "../Modèle/Fichiers_texte_tank/weak_tank/weak_tank_haut");

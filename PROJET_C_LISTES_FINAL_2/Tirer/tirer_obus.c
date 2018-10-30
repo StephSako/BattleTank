@@ -143,12 +143,12 @@ void AttaquerTank(char **mat, OBUSP obusP){
 	}
 }
 
-void animation_bullet(char **mat, OBUSP obusP, char car){
+void animation_bullet(char **mat, OBUSP obusP){
 	if (mat[obusP->pos_x][obusP->pos_y] == ' '){						// Tant que l'obus ne percute pas d'obstacle
 		
-		deplacement_obus_terminal(obusP, car);						// On affiche l'obus dans le terminal
+		deplacement_obus_terminal(obusP);						// On affiche l'obus dans le terminal
 		fflush(stdout);										// On vide le buffer de sortie (on force l'affichage)
-		mat[obusP->pos_x][obusP->pos_y] = car;						// On ajoute l'obus dans la fake map
+		mat[obusP->pos_x][obusP->pos_y] = '+';						// On ajoute l'obus dans la fake map
 	}
 	// Collision avec une brique non destructible
 	else if (mat[obusP->pos_x][obusP->pos_y] == 'X' || mat[obusP->pos_x][obusP->pos_y] == 'P' || mat[obusP->pos_x][obusP->pos_y] == 'E' ||
@@ -210,15 +210,7 @@ void shot_creator(struct TANK *joueurP){
 void shot_manager(char **fake_map){
 	// On parcourt le tableau des obus pour tous les faire deplacer d'un accoup en même temps : c'est naturel
 	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
-		if (TabPointeursObus[i] != NULL){
-			switch(TabPointeursObus[i]->direction){
-				case 'A': animation_bullet(fake_map, TabPointeursObus[i], '^'); break; // Animation par accoup de l'obus
-				case 'D': animation_bullet(fake_map, TabPointeursObus[i], '<'); break;	
-				case 'B': animation_bullet(fake_map, TabPointeursObus[i], 'v'); break;	
-				case 'C': animation_bullet(fake_map, TabPointeursObus[i], '>'); break;
-				default : break;
-			}
-		}
+		if (TabPointeursObus[i] != NULL) animation_bullet(fake_map, TabPointeursObus[i]); // Animation par accoup de l'obus
 	}
 }
 

@@ -60,7 +60,7 @@ void initialiserLaPartieSelonLeMode(){
 		
 	}
 	else if (mode == 21){										// MODE GRAPHIQUE FACILE
-		afficher_fichier(PATHMAPGRAPHIQUE); // On affiche directement le fichier avec les caractères spéciaux
+		afficher_fichier_ASCII(PATHMAPGRAPHIQUE); // On affiche directement le fichier avec les caractères spéciaux
 		
 		NBTANKTOTAL = 20;
 		repartitionTankEnnemis[0] = NBTANKWEAKFACILE;
@@ -68,7 +68,7 @@ void initialiserLaPartieSelonLeMode(){
 		repartitionTankEnnemis[2] = NBTANKSTRONGFACILE;
 	}
 	else if (mode == 22){										// MODE GRAPHIQUE DIFFICILE
-		afficher_fichier(PATHMAPGRAPHIQUE);
+		afficher_fichier_ASCII(PATHMAPGRAPHIQUE);
 		
 		NBTANKTOTAL = 30;
 		repartitionTankEnnemis[0] = NBTANKWEAKDIFFICILE;

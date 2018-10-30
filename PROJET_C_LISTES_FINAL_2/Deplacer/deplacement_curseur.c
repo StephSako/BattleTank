@@ -31,9 +31,9 @@ void effacer_obus_terminal(OBUSP obus){
 	printf(" ");
 }
 
-void deplacement_obus_terminal(OBUSP obus, char direction){
+void deplacement_obus_terminal(OBUSP obus){
 	gotoxy(obus->pos_x, obus->pos_y);
-	printf("%c", direction);
+	printf("•");
 }
 
 void deplacement_choix(int x, int y){
