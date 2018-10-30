@@ -102,6 +102,7 @@ void AttaquerTank(char **mat, OBUSP obusP){
 							
 							nb_tank_wave--; // Un tank de moins dans la vague : il faut en créér un autre
 							temp->etat = 0;
+							if (temp->camp == 'P') joueurMort = 1; // Détermine si le tank du joueur est détruitz
 							SupprimerTank(&head, position);
 							system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
 							

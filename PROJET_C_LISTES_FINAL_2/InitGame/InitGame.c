@@ -17,29 +17,16 @@ void init_terminal(){
 	TabPointeursObus = allocation_dyn_tab_obus(); // Allocation dynamique du tableau de pointeurs d'obus
 }
 
-void fin_win(){
-	system("clear");
-	afficher_message(15, 60, "Vous avez perdu ...");
-	fflush(stdout);
-	system("sleep 1");
-	system("setterm -cursor on");
-	system("stty echo");
-	system("clear");
-}
-
-void fin_game_over(){
-	system("clear");
-	afficher_message(15, 60, "Vous avez gagné !!");
-	fflush(stdout);
-	system("sleep 1");
-	system("setterm -cursor on");
-	system("stty echo");
-	system("clear");
-}
-
 void quit_terminal(){
 	system("clear");
-	afficher_message(15, 60, "Vous quittez le jeu ...");
+	
+	if (pioupiouAlive == 1 && joueurMort == 0 && key != 'q') // Le joueur a gagné
+		afficher_message(15, 60, "Vous avez gagné !!");
+	else if (pioupiouAlive == 0 || joueurMort == 1) // Le joueur a perdu
+		afficher_message(15, 60, "Vous avez perdu ...");
+	else { // Sinon le joueur a quitté
+		afficher_message(15, 60, "Vous quittez le jeu ...");
+	}
 	fflush(stdout);
 	system("sleep 0.8");
 	system("setterm -cursor on");
@@ -56,6 +43,7 @@ void initialiserLaPartieSelonLeMode(){
 		// On initialise la map à afficher
 		true_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAPTERMINAL);
 		
+		NBTANKTOTAL = 20;
 		// On initialise la répartition des différents types de tanks ennemis
 		repartitionTankEnnemis[0] = NBTANKWEAKFACILE; // ... 8 tanks faibles
 		repartitionTankEnnemis[1] = NBTANKMEDIUMFACILE; // ... 7 tanks moyens
@@ -64,6 +52,7 @@ void initialiserLaPartieSelonLeMode(){
 	else if (mode == 12){
 		true_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAPTERMINAL);
 		
+		NBTANKTOTAL = 30;
 		repartitionTankEnnemis[0] = NBTANKWEAKDIFFICILE; // ... 10 tanks faibles
 		repartitionTankEnnemis[1] = NBTANKMEDIUMDIFFICILE; // ... 10 tanks moyens
 		repartitionTankEnnemis[2] = NBTANKSTRONGDIFFICILE; // ... 10 tanks forts
@@ -72,6 +61,7 @@ void initialiserLaPartieSelonLeMode(){
 	else if (mode == 21){
 		true_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAPGRAPHIQUE);
 		
+		NBTANKTOTAL = 20;
 		repartitionTankEnnemis[0] = NBTANKWEAKFACILE;
 		repartitionTankEnnemis[1] = NBTANKMEDIUMFACILE;
 		repartitionTankEnnemis[2] = NBTANKSTRONGFACILE;
@@ -79,13 +69,14 @@ void initialiserLaPartieSelonLeMode(){
 	else if (mode == 22){
 		true_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAPGRAPHIQUE);
 		
+		NBTANKTOTAL = 30;
 		repartitionTankEnnemis[0] = NBTANKWEAKDIFFICILE;
 		repartitionTankEnnemis[1] = NBTANKMEDIUMDIFFICILE;
 		repartitionTankEnnemis[2] = NBTANKSTRONGDIFFICILE;
 	}
 }
 
-void MenuSelectionMode(char key){
+void MenuSelectionMode(){
 	while((key = key_pressed()) != 'q'){
 		if (key == 'A' || key == 'B'){ // Naviguer dans le menu = HAUT / BAS
 			effacer_choix(choix_x, choix_y);

@@ -37,12 +37,12 @@
 
 int NBOBUSALLOWED; // Nombre d'obus autorisé à apparaitre sur la map selon le mode choisi
 
-#define NBTANKTOTALFACILE 20 // Nombre total de tanks ennemis pour le mode FACILE
+// 20 tanks ennemis en mode facile ou 30 tanks ennemis en mode difficile
+int NBTANKTOTAL;
 #define NBTANKWEAKFACILE 7 // Nombre total de tanks ennemis faibles
 #define NBTANKMEDIUMFACILE 7 // Nombre total de tanks ennemis moyens
 #define NBTANKSTRONGFACILE 6 // Nombre total de tanks ennemis forts
 
-#define NBTANKTOTALDIFFICILE 30
 #define NBTANKWEAKDIFFICILE 10
 #define NBTANKMEDIUMDIFFICILE 10
 #define NBTANKSTRONGDIFFICILE 10
@@ -58,6 +58,7 @@ int mode = 0; 	/* MODE TERMINAL FACILE => 11
 			MODE TERMINAL DIFFICILE => 12
 			MODE TERMINAL FACILE => 21
 			MODE TERMINAL DIFFICILE => 22*/
+char key;
 
 /***********************************************************Variables globales des carrosseries*************************************************/
 
@@ -94,6 +95,8 @@ struct TANK{
 };
 
 struct TANK *head; // Création de la liste
+
+int joueurMort = 0;
 
 int vieJoueur = 9;
 

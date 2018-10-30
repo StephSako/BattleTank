@@ -12,8 +12,7 @@ int main(){
 	// On initialise la selection dans le menu
 	deplacement_choix(choix_x, choix_y);
 	
-	char key = ' ';
-	MenuSelectionMode(key); // Le menu de selection du mode de jeu se lance
+	MenuSelectionMode(); // Le menu de selection du mode de jeu se lance
 
 	if (mode != 0){ // Si le joueur a choisit un mode
 
@@ -55,15 +54,15 @@ int main(){
 		int intervalleTankEnnemis = 0;
 		int nbRand;  // Nombre aléatoire qui se réinitialise pour que les tanks ennemis se déplacent chaque seconde
 
-		char entr;
-		
 		// Si le joueur ne quitte pas, qu'il reste des tanks à générer, que la bombe n'a pas explosé et que le joueur est encore vivant et qu'il y a encore des tanks en vie sur la map
-		while ((entr = key_pressed()) != 'q' && pioupiouAlive == 1 && joueur->etat > 0 && nbTankStillAlive(head) > 1){
+		while ((key = key_pressed()) != 'q' && pioupiouAlive == 1 && joueurMort == 0 &&  nbTankStillAlive(head) > 0){
 		
 			afficher_message_int(1, 140, NbEnnemisTanksToCreate()); // On affiche le nombre de tanks restant
 			afficher_message_int(2, 140, vieJoueur); // On affiche la vie du joueur
-		
-			if (nb_tank_wave < 2 && NbEnnemisTanksToCreate() > 0){ // On lance des vagues de tanks par deux tant qu'on peux en créer
+			if (NbEnnemisTanksToCreate() < 10) afficher_message(1, 141, " "); // Règler un bug d'affichage
+			
+			// On lance des vagues de tanks par deux tant qu'on peux en créer
+			if (nb_tank_wave < 2 && NBTANKTOTAL >= 2){
 				// On définit l'emplacement du prochain tank à générer
 				if (nb_tank_wave%2 == 0) creer_tank_ennemis(fake_map, &head, 4, 2, 'B');
 				if (nb_tank_wave%2 != 0) creer_tank_ennemis(fake_map, &head, 30, 137, 'B');
@@ -72,13 +71,13 @@ int main(){
 			shot_cleaner(fake_map); // On efface tous les obus sur le terminal
 
 			// Gestion des déplacements du joueur
-			if (entr == 'A' || entr == 'B' || entr == 'C' || entr =='D'){
-				joueur->direction = entr; // Mise à jour de la position du joueur
+			if (key == 'A' || key == 'B' || key == 'C' || key =='D'){
+				joueur->direction = key; // Mise à jour de la position du joueur
 				deplacer_tank_joueur_terminal(fake_map, &joueur); // On déplace le tank du joueur dans le terminal/fake map
 			}
 
 			// Gestion des tirs du joueur
-			else if (entr == 'x') shot_creator(joueur); // On créé un obus et on l'ajoute dans le tableau de pointeurs d'obus
+			else if (key == 'x') shot_creator(joueur); // On créé un obus et on l'ajoute dans le tableau de pointeurs d'obus
 
 			shot_manager(fake_map); // On réalise le déplacement de tous les obus par accoups
 			
@@ -93,6 +92,6 @@ int main(){
 		}
 	}
 	
-	quit_terminal(); // On nettoie le terminal et on remet ses bons paramètres	
+	quit_terminal(); // On nettoie le terminal et on remet ses bons paramètres
 	return 0;
 }

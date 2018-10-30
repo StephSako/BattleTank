@@ -75,6 +75,7 @@ void creer_tank_ennemis(char **fake_map, struct TANK **head, int pos_x, int pos_
     	(*head) = newEnnemyTank;
     	remplir_map_tank(fake_map, newEnnemyTank);
     	
+    	NBTANKTOTAL--; // Un tank de moins à créé
     	nb_tank_wave++; // Un tank de plus dans la vague de tanks ennemis
 }
 
@@ -176,7 +177,7 @@ int NbEnnemisTanksToCreate(){
 int nbTankStillAlive(struct TANK *tank){
 	int nbTankStillAlive = 0;
 	while (tank != NULL){ 
-		nbTankStillAlive++;
+		if (tank->camp == 'E') nbTankStillAlive++;
 		tank = tank->suivant; 
 	}
 	return nbTankStillAlive;
