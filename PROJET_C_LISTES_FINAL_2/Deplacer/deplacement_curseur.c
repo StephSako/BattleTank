@@ -47,6 +47,11 @@ void afficher_message(int x, int y, char* message){
 	printf("%s", message);
 }
 
+void afficher_message_int(int x, int y, int nb){
+	gotoxy(x, y);
+	printf("%d", nb);
+}
+
 void effacer_choix(int x, int y){
 	gotoxy(x, y);
 	printf(" ");

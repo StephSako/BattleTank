@@ -95,6 +95,8 @@ struct TANK{
 
 struct TANK *head; // Création de la liste
 
+int vieJoueur = 9;
+
 // Tableau indiquant le nombre de tanks faibles, moyens et forts
 int *repartitionTankEnnemis;
 

@@ -41,7 +41,7 @@ void affichage_mat(int nbL, int nbC, char ** mat){
 				printf("%s%c", WHITE, mat[i][j]);
 				printf("%s", NORMAL);
 			}
-			else if (mat[i][j] == 'E'){
+			else if (mat[i][j] == 'W'){
 				printf("%s%c", CYAN, mat[i][j]);
 				printf("%s", NORMAL);
 			}

@@ -84,3 +84,62 @@ void initialiserLaPartieSelonLeMode(){
 		repartitionTankEnnemis[2] = NBTANKSTRONGDIFFICILE;
 	}
 }
+
+void MenuSelectionMode(char key){
+	while((key = key_pressed()) != 'q'){
+		if (key == 'A' || key == 'B'){ // Naviguer dans le menu = HAUT / BAS
+			effacer_choix(choix_x, choix_y);
+			
+			// Choix des modes terminal/graphique		
+			if (key == 'A' && choix_x != 10 && choix_y == 103) choix_x = choix_x - 5;
+			else if (key == 'B' && choix_x != 20 && choix_y == 103) choix_x = choix_x + 5;			
+			// Choix des modes facile/difficile
+			else if (key == 'A' && choix_x == 12 && choix_y == 121) choix_x = choix_x - 2;
+			else if (key == 'B' && choix_x == 10 && choix_y == 121) choix_x = choix_x + 2;
+			else if (key == 'A' && choix_x == 17 && choix_y == 121) choix_x = choix_x - 2;
+			else if (key == 'B' && choix_x == 15 && choix_y == 121) choix_x = choix_x + 2;
+			
+			deplacement_choix(choix_x, choix_y);
+		}
+		else if (key == '\n'){ // Valider un choix dans le menu = ENTREE
+			system("clear");
+			
+			if (choix_x == 10 && choix_y == 103){
+				choix_y = choix_y + 18;
+				afficher_fichier(PATHMENUTERMINAL);
+				deplacement_choix(choix_x, choix_y);
+			}			
+			else if (choix_x == 15 && choix_y == 103){
+				choix_y = choix_y + 18;
+				afficher_fichier(PATHMENUGRAPHIQUE);
+				deplacement_choix(choix_x, choix_y);
+			}
+				
+			// Choix de la difficulté facile/difficile
+			else if (choix_x == 10 && choix_y == 121){ // MODE TERMINAL FACILE
+				mode = 11;
+				break;
+			}
+			else if (choix_x == 12 && choix_y == 121){ // MODE TERMINAL DIFFICILE
+				mode = 12;
+				break;
+			}
+			else if (choix_x == 15 && choix_y == 121){ // MODE GRAPHIQUE FACILE
+				mode = 21;
+				break;
+			}
+			else if (choix_x == 17 && choix_y == 121){ // MODE GRAPHIQUE DIFFICILE
+				mode = 22;
+				break;
+			}
+			else if (choix_x == 20) break; // MODE 'QUITTER'
+		}
+		else if (key == '\t' && choix_y == 121){ // Retour au menu principal = TABULATION
+			afficher_fichier(PATHMENU);
+			choix_y = choix_y - 18;
+			
+			if (choix_x == 17 || choix_x == 12) choix_x = choix_x - 2;
+			deplacement_choix(choix_x, choix_y);
+		}
+	}
+}

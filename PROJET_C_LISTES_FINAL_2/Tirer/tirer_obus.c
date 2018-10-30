@@ -86,9 +86,12 @@ void AttaquerTank(char **mat, OBUSP obusP){
 	
 	int position = 0; // Rang auquel se trouve un tank qui devra être détruit et supprimé de la liste chaînée des tanks
 	struct TANK *temp = head;
+	
 	while (temp != NULL){ // On boucle sur tous les tanks de la liste chaînée
 		if (temp->pos_x == pos_xTankAttaque && temp->pos_y == pos_yTankAttaque){
 			temp->nb_impacts++;
+			
+			if (temp->camp == 'P') vieJoueur--; // On enlève de la vie au joueur
 
 			switch(temp->nb_impacts){
 				case NBCOUPSABIMENT : // A partir de NBCOUPSABIMENT pour chaque blindage, la carrosserie s'abîme

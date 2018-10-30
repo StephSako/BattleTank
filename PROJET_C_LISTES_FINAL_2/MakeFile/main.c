@@ -12,74 +12,19 @@ int main(){
 	// On initialise la selection dans le menu
 	deplacement_choix(choix_x, choix_y);
 	
-	char key;
-	while((key = key_pressed()) != 'q'){
-		if (key == 'A' || key == 'B'){ // Naviguer dans le menu = HAUT / BAS
-			effacer_choix(choix_x, choix_y);
-			
-			// Choix des modes terminal/graphique		
-			if (key == 'A' && choix_x != 10 && choix_y == 103) choix_x = choix_x - 5;
-			else if (key == 'B' && choix_x != 20 && choix_y == 103) choix_x = choix_x + 5;			
-			// Choix des modes facile/difficile
-			else if (key == 'A' && choix_x == 12 && choix_y == 121) choix_x = choix_x - 2;
-			else if (key == 'B' && choix_x == 10 && choix_y == 121) choix_x = choix_x + 2;
-			else if (key == 'A' && choix_x == 17 && choix_y == 121) choix_x = choix_x - 2;
-			else if (key == 'B' && choix_x == 15 && choix_y == 121) choix_x = choix_x + 2;
-			
-			deplacement_choix(choix_x, choix_y);
-		}
-		else if (key == '\n'){ // Valider un choix dans le menu = ENTREE
-			system("clear");
-			
-			if (choix_x == 10 && choix_y == 103){
-				choix_y = choix_y + 18;
-				afficher_fichier(PATHMENUTERMINAL);
-				deplacement_choix(choix_x, choix_y);
-			}			
-			else if (choix_x == 15 && choix_y == 103){
-				choix_y = choix_y + 18;
-				afficher_fichier(PATHMENUGRAPHIQUE);
-				deplacement_choix(choix_x, choix_y);
-			}
-				
-			// Choix de la difficulté facile/difficile
-			else if (choix_x == 10 && choix_y == 121){ // MODE TERMINAL FACILE
-				mode = 11;
-				break;
-			}
-			else if (choix_x == 12 && choix_y == 121){ // MODE TERMINAL DIFFICILE
-				mode = 12;
-				break;
-			}
-			else if (choix_x == 15 && choix_y == 121){ // MODE GRAPHIQUE FACILE
-				mode = 21;
-				break;
-			}
-			else if (choix_x == 17 && choix_y == 121){ // MODE GRAPHIQUE DIFFICILE
-				mode = 22;
-				break;
-			}
-			else if (choix_x == 20) break; // MODE 'QUITTER'
-		}
-		else if (key == '\t' && choix_y == 121){ // Retour au menu principal = TABULATION
-			afficher_fichier(PATHMENU);
-			choix_y = choix_y - 18;
-			
-			if (choix_x == 17 || choix_x == 12) choix_x = choix_x - 2;
-			deplacement_choix(choix_x, choix_y);
-		}
-	}
+	char key = ' ';
+	MenuSelectionMode(key); // Le menu de selection du mode de jeu se lance
 
 	if (mode != 0){ // Si le joueur a choisit un mode
 
 		system("clear");
-		afficher_message(15, 65, "Lancement du jeu .\n");
+		afficher_message(15, 60, "Lancement du jeu .\n");
 		system("sleep 0.4");
-		afficher_message(15, 83, ".\n");
+		afficher_message(15, 78, ".\n");
 		system("sleep 0.4");
-		afficher_message(15, 84, ".\n");
+		afficher_message(15, 79, ".\n");
 		system("sleep 0.4");
-		afficher_message(20, 71, "C'est parti !\n");
+		afficher_message(20, 63, "C'est parti !\n");
 		system("sleep 0.5");
 		
 		// On initialise les règles de la partie selon le mode choisie par le joueur
@@ -114,6 +59,9 @@ int main(){
 		
 		// Si le joueur ne quitte pas, qu'il reste des tanks à générer, que la bombe n'a pas explosé et que le joueur est encore vivant et qu'il y a encore des tanks en vie sur la map
 		while ((entr = key_pressed()) != 'q' && pioupiouAlive == 1 && joueur->etat > 0 && nbTankStillAlive(head) > 1){
+		
+			afficher_message_int(1, 140, NbEnnemisTanksToCreate()); // On affiche le nombre de tanks restant
+			afficher_message_int(2, 140, vieJoueur); // On affiche la vie du joueur
 		
 			if (nb_tank_wave < 2 && NbEnnemisTanksToCreate() > 0){ // On lance des vagues de tanks par deux tant qu'on peux en créer
 				// On définit l'emplacement du prochain tank à générer

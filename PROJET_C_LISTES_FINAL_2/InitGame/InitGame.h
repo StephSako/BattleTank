@@ -7,3 +7,4 @@ void fin_win();
 void fin_game_over();
 void quit_terminal();
 void initialiserLaPartieSelonLeMode();
+void MenuSelectionMode(char key);
