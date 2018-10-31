@@ -39,13 +39,12 @@ int main(){
 		
 		// On créé le tank du joueur
 		struct TANK *joueur = creer_tank_joueur(fake_map, &head, 30, 30, 'A'); // On créé et initialise le TANKP du JOUEUR
+		// On place le joueur sur le terminal et dans la fake map
+		affichage_tank_terminal(joueur);
 
 		// On créé deux premiers tanks ennemis
 		creer_tank_ennemis(fake_map, &head, 4, 2, 'C');
 		creer_tank_ennemis(fake_map, &head, 30, 137, 'D');
-	
-		// On place le joueur sur le terminal et dans la fake map
-		affichage_tank_terminal(joueur);
 		
 		int intervalleTankEnnemis = 0;
 		int nbRand;  // Nombre aléatoire qui se réinitialise pour que les tanks ennemis se déplacent chaque seconde
@@ -69,7 +68,7 @@ int main(){
 			// Gestion des déplacements du joueur
 			if (key == 'A' || key == 'B' || key == 'C' || key =='D'){
 				joueur->direction = key; // Mise à jour de la position du joueur
-				deplacer_tank_joueur_terminal(fake_map, &joueur); // On déplace le tank du joueur dans le terminal/fake map
+				deplacer_tank_joueur_terminal(fake_map, joueur); // On déplace le tank du joueur dans le terminal/fake map
 			}
 
 			// Gestion des tirs du joueur
@@ -80,7 +79,7 @@ int main(){
 			srand(time(NULL));	
 			nbRand = rand()%(4);
 			if (intervalleTankEnnemis != nbRand){ // On bouge les tanks ennemis chaque seconde
-				deplacer_tank_ennemis_terminal(fake_map, head, intervalleTankEnnemis); // On bouge et affiche tous les tanks ennemis
+				deplacer_tank_ennemis_terminal(fake_map, intervalleTankEnnemis); // On bouge et affiche tous les tanks ennemis
 				intervalleTankEnnemis = nbRand;	
 			}
 			

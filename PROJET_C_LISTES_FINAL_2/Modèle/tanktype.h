@@ -70,7 +70,7 @@ char *PATHMAPTERMINAL = "../Modèle/Fichiers_texte_map/map"; // Chemin de la map
 char **true_map; // Tableau contenant la map à afficher
 
 char *PATHMENU = "../Modèle/Fichiers_texte_menu/main_menu"; // Chemin du menu principal
-char *PATHMENUTERMINAL = "../Modèle/Fichiers_texte_menu/main_menu_mode_terminal"; // Chemin du menu terminal
+char *PATHMENUTERMINAL = "../Modèle/Fichiers_texte_menu/main_menu_difficulte"; // Chemin du menu terminal
 
 /**********************************************************Structure du tank du joueur**********************************************************/
 

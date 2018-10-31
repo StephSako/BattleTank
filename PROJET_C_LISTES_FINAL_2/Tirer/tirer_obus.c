@@ -51,7 +51,7 @@ void SupprimerTank(struct TANK **head, int position){
 
 	free(temp->suivant); // On libère la mémoire
 	temp->suivant = suivant; // Deliement du tank supprimé
-} 
+}
 
 void AttaquerTank(char **mat, OBUSP obusP){
 	
@@ -184,7 +184,7 @@ void animation_bullet(char **mat, OBUSP obusP){
 void shot_creator(struct TANK *tank){
 	if (firstEmptyIndexObusTab() < NBOBUSALLOWED){ // Si on n'atteint pas le nombre d'obus tires maximum à l'ecran
 					
-		OBUSP obus = malloc(sizeof(OBUS)); // On declare un NOUVEAU pointeur de l'obus cree	
+		OBUSP obus = malloc(sizeof(OBUS)); // On créé un nouveau pointeur de l'obus cree	
 		obus->provenance = tank->blindage;
 		obus->camp = tank->camp;	
 		// On deplace l'obus dans le terminal / la fake map
