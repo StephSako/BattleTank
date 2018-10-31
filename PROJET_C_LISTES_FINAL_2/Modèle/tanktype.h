@@ -54,10 +54,8 @@ int choix_x = 10;
 int choix_y = 102;
 
 // Mode de jeu
-int mode = 0; 	/* MODE TERMINAL FACILE => 11
-			MODE TERMINAL DIFFICILE => 12
-			MODE TERMINAL FACILE => 21
-			MODE TERMINAL DIFFICILE => 22
+int mode = 0; 	/* MODE TERMINAL FACILE => 1
+			MODE TERMINAL DIFFICILE => 2
 			MODE QUITTER => 3*/
 char key;
 
@@ -69,12 +67,10 @@ char **carrosserieMTH; char **carrosserieMTG; char **carrosserieMTD; char **carr
 char **carrosserieSTH; char **carrosserieSTG; char **carrosserieSTD; char **carrosserieSTB;
 
 char *PATHMAPTERMINAL = "../Modèle/Fichiers_texte_map/map"; // Chemin de la map
-char *PATHMAPGRAPHIQUE = "../Modèle/Fichiers_texte_map/map_graphique"; // Chemin de la map
-char **true_map; // Tableau contenant la map soit terminal ou graphique à afficher
+char **true_map; // Tableau contenant la map à afficher
 
 char *PATHMENU = "../Modèle/Fichiers_texte_menu/main_menu"; // Chemin du menu principal
 char *PATHMENUTERMINAL = "../Modèle/Fichiers_texte_menu/main_menu_mode_terminal"; // Chemin du menu terminal
-char *PATHMENUGRAPHIQUE = "../Modèle/Fichiers_texte_menu/main_menu_mode_graphique"; // Chemin du menu graphique
 
 /**********************************************************Structure du tank du joueur**********************************************************/
 

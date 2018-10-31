@@ -24,16 +24,6 @@ int main(){
 	MenuSelectionMode(); // Le menu de selection du mode de jeu se lance
 
 	if (mode != 3 && key != 'q'){ // Si le joueur a choisit un mode
-
-		system("clear");
-		afficher_message(15, 60, "Lancement du jeu .\n");
-		system("sleep 0.4");
-		afficher_message(15, 78, ".\n");
-		system("sleep 0.4");
-		afficher_message(15, 79, ".\n");
-		system("sleep 0.4");
-		afficher_message(20, 63, "C'est parti !\n");
-		system("sleep 0.5");
 		
 		// On initialise les règles de la partie selon le mode choisie par le joueur
 		initialiserLaPartieSelonLeMode(mode);
