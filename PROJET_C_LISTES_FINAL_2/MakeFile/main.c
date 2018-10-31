@@ -74,21 +74,18 @@ int main(){
 			// Gestion des tirs du joueur
 			else if (key == 'x') shot_creator(joueur); // On créé un obus et on l'ajoute dans le tableau de pointeurs d'obus
 
-			shot_manager(fake_map); // On réalise le déplacement de tous les obus par accoups
-			
+			// Le mouvement des tanks est aléatoire chaque seconde
 			srand(time(NULL));	
 			nbRand = rand()%(4);
-			if (intervalleTankEnnemis != nbRand){ // On bouge les tanks ennemis chaque seconde
+			if (intervalleTankEnnemis != nbRand){
 				deplacer_tank_ennemis_terminal(fake_map, intervalleTankEnnemis); // On bouge et affiche tous les tanks ennemis
 				intervalleTankEnnemis = nbRand;	
 			}
 			
+			shot_manager(fake_map); // On réalise le déplacement de tous les obus par accoups
+			
 			delay(26000); // Frequence d'affichage de toute la map (deplacement tank, tirs obus, ...)
 		}
-		
-		/*system("clear");
-		affichage_mat_fake(LONGUEURMAP, LARGEURMAP, fake_map);
-		system("sleep 100");*/
 	}
 	
 	quit_terminal(); // On nettoie le terminal et on remet ses bons paramètres
