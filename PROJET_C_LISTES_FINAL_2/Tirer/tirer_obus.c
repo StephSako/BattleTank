@@ -144,22 +144,18 @@ void AttaquerTank(char **mat, OBUSP obusP){
 }
 
 void animation_bullet(char **mat, OBUSP obusP){
-	if (mat[obusP->pos_x][obusP->pos_y] == ' '){						// Tant que l'obus ne percute pas d'obstacle
-		
-		deplacement_obus_terminal(obusP);						// On affiche l'obus dans le terminal
+	// L'obus avance dans le vide
+	if (mat[obusP->pos_x][obusP->pos_y] == ' '){
+		deplacement_obus_terminal(obusP);							// On affiche l'obus dans le terminal
 		fflush(stdout);										// On vide le buffer de sortie (on force l'affichage)
 		mat[obusP->pos_x][obusP->pos_y] = '+';						// On ajoute l'obus dans la fake map
 	}
-	// Collision avec une brique non destructible
-	else if (mat[obusP->pos_x][obusP->pos_y] == 'X' || mat[obusP->pos_x][obusP->pos_y] == 'P' || mat[obusP->pos_x][obusP->pos_y] == 'E' ||
-			mat[obusP->pos_x][obusP->pos_y] == 'Y')
-		DeleteObusPTab(obusP); // On supprime l'obus du tableau de pointeurs
-		
+	// Collision avec une brique destructible
 	else if (mat[obusP->pos_x][obusP->pos_y] == 'C'){
 		effacer_obus_terminal(obusP);								// On efface l'obus dans le terminal
 		mat[obusP->pos_x][obusP->pos_y] = ' ';						// On efface l'obus dans la fake map
 		DeleteObusPTab(obusP);									// On supprime l'obus dans le tableau de pointeurs d'obus 															pour ne plus le traiter
-		system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3"); 	// On joue un bruitage à l'aide d'un script (execute en 															background)
+		system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3"); 	// On joue un bruitage avec d'un script (executé en fond)
 	}
 	// Un tank ENNEMI a tiré sur la bombe à protéger
 	else if (mat[obusP->pos_x][obusP->pos_y] == 'B' && obusP->camp == 'E'){
@@ -175,8 +171,8 @@ void animation_bullet(char **mat, OBUSP obusP){
 		mat[obusP->pos_x][obusP->pos_y] = ' ';
 		DeleteObusPTab(obusP);
 		system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
-	}		
-	// Collision avec un tank ou un obus
+	}
+	// Collision avec un tank ou une brique non destructible
 	else{
 		if (mat[obusP->pos_x][obusP->pos_y] == '*' || mat[obusP->pos_x][obusP->pos_y] == 'T')
 			AttaquerTank(mat, obusP); // On cherche le tank et on l'attaque s'il y en a eu un de touché
@@ -185,22 +181,22 @@ void animation_bullet(char **mat, OBUSP obusP){
 	}
 }
 
-void shot_creator(struct TANK *joueurP){
+void shot_creator(struct TANK *tank){
 	if (firstEmptyIndexObusTab() < NBOBUSALLOWED){ // Si on n'atteint pas le nombre d'obus tires maximum à l'ecran
 					
 		OBUSP obus = malloc(sizeof(OBUS)); // On declare un NOUVEAU pointeur de l'obus cree	
-		obus->provenance = joueurP->blindage;
-		obus->camp = joueurP->camp;	
+		obus->provenance = tank->blindage;
+		obus->camp = tank->camp;	
 		// On deplace l'obus dans le terminal / la fake map
-		switch(joueurP->direction){ // On initialise les attributs de l'obus tire en fonction des attributs du tank
+		switch(tank->direction){ // On initialise les attributs de l'obus tire en fonction des attributs du tank
 			case 'A':
-				obus->pos_x = joueurP->pos_x-1; obus->pos_y = joueurP->pos_y+2; obus->direction = joueurP->direction; break;
+				obus->pos_x = tank->pos_x-1; obus->pos_y = tank->pos_y+2; obus->direction = tank->direction; break;
 			case 'D':
-				obus->pos_x = joueurP->pos_x+1; obus->pos_y = joueurP->pos_y-1; obus->direction = joueurP->direction; break;
+				obus->pos_x = tank->pos_x+1; obus->pos_y = tank->pos_y-1; obus->direction = tank->direction; break;
 			case 'B':
-				obus->pos_x = joueurP->pos_x+3; obus->pos_y = joueurP->pos_y+2; obus->direction = joueurP->direction; break;
+				obus->pos_x = tank->pos_x+3; obus->pos_y = tank->pos_y+2; obus->direction = tank->direction; break;
 			case 'C':
-				obus->pos_x = joueurP->pos_x+1; obus->pos_y = joueurP->pos_y+5; obus->direction = joueurP->direction; break;
+				obus->pos_x = tank->pos_x+1; obus->pos_y = tank->pos_y+5; obus->direction = tank->direction; break;
 			default : break;
 		}
 		TabPointeursObus[firstEmptyIndexObusTab()] = obus; // On ajoute le pointeur d'obus dans le tableau

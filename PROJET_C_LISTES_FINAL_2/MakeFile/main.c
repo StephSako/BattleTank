@@ -1,5 +1,14 @@
 #include "../InitGame/InitGame.h"
 
+void affichage_mat_fake(int nbL, int nbC, char ** mat){
+	for (int i = 0; i < nbL; i++){
+		for (int j = 0; j < nbC; j++){
+			printf("%c", mat[i][j]);
+		}
+		printf("\n");
+	}
+}
+
 /* La fake_map est comme un calque permettant de gérer en background les collisions avec les tanks et les obus
 alors que la true map est juste la représentation graphique de la map en temps réèl dans le terminal */
 
@@ -28,10 +37,6 @@ int main(){
 		
 		// On initialise les règles de la partie selon le mode choisie par le joueur
 		initialiserLaPartieSelonLeMode(mode);
-		
-		// Chargement de la true_map
-		//affichage_mat(LONGUEURMAP, LARGEURMAP, true_map);											// ATTENTION
-		//afficher_fichier(PATHMAPTERMINAL);
 
 		// Chargement de la fake_map
 		char **fake_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAPTERMINAL);
@@ -46,8 +51,8 @@ int main(){
 		struct TANK *joueur = creer_tank_joueur(fake_map, &head, 30, 30, 'A'); // On créé et initialise le TANKP du JOUEUR
 
 		// On créé deux premiers tanks ennemis
-		creer_tank_ennemis(fake_map, &head, 4, 2, 'B');
-		creer_tank_ennemis(fake_map, &head, 30, 137, 'B');
+		creer_tank_ennemis(fake_map, &head, 4, 2, 'C');
+		creer_tank_ennemis(fake_map, &head, 30, 137, 'D');
 	
 		// On place le joueur sur le terminal et dans la fake map
 		affichage_tank_terminal(joueur);
@@ -65,8 +70,8 @@ int main(){
 			// On lance des vagues de tanks par deux tant qu'on peux en créer
 			if (nb_tank_wave < 2 && NBTANKTOTAL >= 2){
 				// On définit l'emplacement du prochain tank à générer
-				if (nb_tank_wave%2 == 0) creer_tank_ennemis(fake_map, &head, 4, 2, 'B');
-				if (nb_tank_wave%2 != 0) creer_tank_ennemis(fake_map, &head, 30, 137, 'B');
+				if (nb_tank_wave%2 == 0) creer_tank_ennemis(fake_map, &head, 4, 2, 'C');
+				if (nb_tank_wave%2 != 0) creer_tank_ennemis(fake_map, &head, 30, 137, 'D');
 			}
 
 			shot_cleaner(fake_map); // On efface tous les obus sur le terminal
@@ -91,6 +96,10 @@ int main(){
 			
 			delay(87000); // Frequence d'affichage de toute la map (deplacement tank, tirs obus, ...)
 		}
+		
+		system("clear");
+		affichage_mat_fake(LONGUEURMAP, LARGEURMAP, fake_map);
+		system("sleep 100");
 	}
 	
 	quit_terminal(); // On nettoie le terminal et on remet ses bons paramètres

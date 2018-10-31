@@ -28,7 +28,7 @@ void affichage_mat(int nbL, int nbC, char ** mat){
 	for (int i = 0; i < nbL; i++){
 		for (int j = 0; j < nbC; j++){
 			if (mat[i][j] == 'X'){
-				printf("%s▯", WHITE);
+				printf("%s▯", NORMAL);
 				printf("%s", NORMAL);
 			}
 			else if (mat[i][j] == 'P'){
