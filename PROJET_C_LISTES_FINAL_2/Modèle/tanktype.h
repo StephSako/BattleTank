@@ -91,9 +91,9 @@ struct TANK{
 	struct TANK *suivant;
 };
 
-struct TANK *head; // Création de la liste
+struct TANK *joueur; // Tank du joueur
 
-int joueurMort = 0;
+struct TANK *head; // Création de la liste
 
 int vieJoueur = 9;
 
@@ -111,7 +111,7 @@ typedef struct{
 	int pos_y;
 	char direction;
 	int provenance; // 0 : tank ennemi faible, 1 : tank ennemi moyen, 2 : tank ennemi fort
-	char camp;
+	char camp; // 'E' = ennemi, 'P' = joueur
 } OBUS;
 
 // Pointeur sur l'objet OBUS

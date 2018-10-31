@@ -88,7 +88,7 @@ void AttaquerTank(char **mat, OBUSP obusP){
 	struct TANK *temp = head;
 	
 	while (temp != NULL){ // On boucle sur tous les tanks de la liste chaînée
-		if (temp->pos_x == pos_xTankAttaque && temp->pos_y == pos_yTankAttaque){
+		if (temp->pos_x == pos_xTankAttaque && temp->pos_y == pos_yTankAttaque && temp->camp != obusP->camp){ // On désactive le tir allier
 			temp->nb_impacts++;
 			
 			if (temp->camp == 'P') vieJoueur--; // On enlève de la vie au joueur
@@ -101,8 +101,7 @@ void AttaquerTank(char **mat, OBUSP obusP){
 							effacer_map_tank(mat, temp); // On efface le tank dans la fake_map
 							
 							nb_tank_wave--; // Un tank de moins dans la vague : il faut en créér un autre
-							temp->etat = 0;
-							if (temp->camp == 'P') joueurMort = 1; // Détermine si le tank du joueur est détruitz
+							temp->etat = 0; // Le tank est mort
 							SupprimerTank(&head, position);
 							system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
 							

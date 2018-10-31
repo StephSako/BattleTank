@@ -37,8 +37,8 @@ int main(){
 		// On initialise une liste chaînée vide
 		head = NULL;
 		
-		// On créé le tank du joueur
-		struct TANK *joueur = creer_tank_joueur(fake_map, &head, 30, 30, 'A'); // On créé et initialise le TANKP du JOUEUR
+		// On initialise le tank du joueur
+		joueur = creer_tank_joueur(fake_map, &head, 30, 30, 'A'); // On créé et initialise le TANKP du JOUEUR
 		// On place le joueur sur le terminal et dans la fake map
 		affichage_tank_terminal(joueur);
 
@@ -47,14 +47,14 @@ int main(){
 		creer_tank_ennemis(fake_map, &head, 30, 137, 'D');
 		
 		int intervalleTankEnnemis = 0;
-		int nbRand;  // Nombre aléatoire qui se réinitialise pour que les tanks ennemis se déplacent chaque seconde
+		int nbRand;
 
-		// Si le joueur ne quitte pas, qu'il reste des tanks à générer, que la bombe n'a pas explosé et que le joueur est encore vivant et qu'il y a encore des tanks en vie sur la map
-		while ((key = key_pressed()) != 'q' && pioupiouAlive == 1 && joueurMort == 0 &&  nbTankStillAlive(head) > 0){
+		// Si le joueur ne quitte pas, que la bombe n'a pas explosé et que le joueur est encore vivant et qu'il y a encore des tanks en vie
+		while ((key = key_pressed()) != 'q' && pioupiouAlive == 1 && joueur->etat > 0 &&  nbTankStillAlive(head) > 0){
 		
 			afficher_message_int(1, 140, NbEnnemisTanksToCreate()); // On affiche le nombre de tanks restant
 			afficher_message_int(2, 140, vieJoueur); // On affiche la vie du joueur
-			if (NbEnnemisTanksToCreate() < 10) afficher_message(1, 141, " "); // Règler un bug d'affichage
+			if (NbEnnemisTanksToCreate() < 10) afficher_message(1, 141, " "); // Régler un bug d'affichage
 			
 			// On lance des vagues de tanks par deux tant qu'on peux en créer
 			if (nb_tank_wave < 2 && NBTANKTOTAL >= 2){
