@@ -79,11 +79,10 @@ void creer_tank_ennemis(char **fake_map, struct TANK **head, int pos_x, int pos_
     	nb_tank_wave++; // Un tank de plus dans la vague de tanks ennemis
 }
 
-void deplacer_tank_ennemis_terminal(char **fake_map, struct TANK *tankSelectionne){
+void deplacer_tank_ennemis_terminal(char **fake_map, struct TANK *tankSelectionne, int directionAleatoire){
 
 	while (tankSelectionne != NULL){ // On boucle sur tous les tanks de la liste chaînée
 		if (tankSelectionne->camp == 'E'){ // On ne boucle que sur les tanks ennemis
-			int directionAleatoire = rand()%(4);
 			
 			switch(directionAleatoire){ // Selon la direction du tank ennemis
 				case(0): // Vers le haut
@@ -124,9 +123,7 @@ void deplacer_tank_ennemis_terminal(char **fake_map, struct TANK *tankSelectionn
 
 				default : break;
 			}
-			
-			int tirAleatoire = rand()%(2);
-			if (tirAleatoire == 0) shot_creator(tankSelectionne); // On fait tirer les tanks ennemis aléatoirement
+			shot_creator(tankSelectionne); // On fait tirer les tanks ennemis aléatoirement
 		}
 		tankSelectionne = tankSelectionne->suivant; // On passe au tank ennemi
 	}	

@@ -88,18 +88,18 @@ int main(){
 			shot_manager(fake_map); // On réalise le déplacement de tous les obus par accoups
 			
 			srand(time(NULL));	
-			nbRand = rand()%(100);
+			nbRand = rand()%(4);
 			if (intervalleTankEnnemis != nbRand){ // On bouge les tanks ennemis chaque seconde
-				deplacer_tank_ennemis_terminal(fake_map, head); // On bouge et affiche tous les tanks ennemis
+				deplacer_tank_ennemis_terminal(fake_map, head, intervalleTankEnnemis); // On bouge et affiche tous les tanks ennemis
 				intervalleTankEnnemis = nbRand;	
 			}
 			
-			delay(87000); // Frequence d'affichage de toute la map (deplacement tank, tirs obus, ...)
+			delay(26000); // Frequence d'affichage de toute la map (deplacement tank, tirs obus, ...)
 		}
 		
-		system("clear");
+		/*system("clear");
 		affichage_mat_fake(LONGUEURMAP, LARGEURMAP, fake_map);
-		system("sleep 100");
+		system("sleep 100");*/
 	}
 	
 	quit_terminal(); // On nettoie le terminal et on remet ses bons paramètres
