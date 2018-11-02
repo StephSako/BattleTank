@@ -57,6 +57,7 @@ void creer_charger_map_new_version(char *file_name){
 
 	FILE* fichier = NULL;
     int caractereActuel = 0;
+    int nb = 0;
  
     fichier = fopen(file_name, "r");
  
@@ -66,13 +67,12 @@ void creer_charger_map_new_version(char *file_name){
         do
         {
             caractereActuel = fgetc(fichier);
-            /*if (caractereActuel == ' '){
-            	printf(" "); printf(" "); printf(" ");
-            }
-            else */printf("%c", caractereActuel);
+            printf("%c", caractereActuel);
+            nb++;
             
         } while (caractereActuel != EOF); // On continue tant que fgetc n'a pas retourné EOF (fin de fichier)
  
+ 	printf("\n%d\n", nb);
         fclose(fichier);
     }
 }
@@ -95,6 +95,16 @@ int main(){
 	
 	printf("\n");*/
 	
-	creer_charger_map_new_version("test4");
+	creer_charger_map_new_version("TankDetruit");
+	
+	printf("\n");
+	
+	for (int i = 0; i < 30; i++){
+		printf("\n%d\n", i);
+		char **mat3 = creer_charger_map(3, i, "TankDetruit");
+		printf("\n");
+		affichage_mat(3, i, mat3);
+	}
+		
 	return 0;
 }

@@ -20,11 +20,11 @@ void init_terminal(){
 void quit_terminal(){
 	system("clear");
 	
-	if (pioupiouAlive == 1 && joueur->etat > 0 && key != 'q' && mode != 3) // Le joueur a gagné
+	if (pioupiouAlive == 1 && joueurMort == 0 && key != 'q' && mode != 3) // Le joueur a gagné
 		afficher_message(15, 60, "Vous avez gagné !!");
 	else if (pioupiouAlive == 0)
 		afficher_message(15, 48, "Vous avez perdu ... la bombe a explosé");
-	else if (joueur->etat == 0)
+	else if (joueurMort == 1)
 		afficher_message(15, 48, "Vous avez perdu ... vous êtes mort");
 	else { // Sinon le joueur a quitté
 		afficher_message(15, 60, "Vous quittez le jeu ...");

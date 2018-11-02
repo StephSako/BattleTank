@@ -47,7 +47,7 @@ int NBTANKTOTAL;
 #define NBTANKMEDIUMDIFFICILE 10
 #define NBTANKSTRONGDIFFICILE 10
 
-#define NBCOUPSABIMENT 3 // Nombre de coups pour les blindages faibles se détruisent, et les blindages moyens et forts rétrogradent
+#define NBCOUPSABIMENT 2 // Nombre de coups pour les blindages faibles se détruisent, et les blindages moyens et forts rétrogradent
 
 // Position du selecteur de choix dans le menu
 int choix_x = 10;
@@ -65,6 +65,7 @@ char key;
 char **carrosserieWTH; char **carrosserieWTG; char **carrosserieWTD; char **carrosserieWTB;
 char **carrosserieMTH; char **carrosserieMTG; char **carrosserieMTD; char **carrosserieMTB;
 char **carrosserieSTH; char **carrosserieSTG; char **carrosserieSTD; char **carrosserieSTB;
+char **carrosserieTankDetruit;
 
 char *PATHMAPTERMINAL = "../Modèle/Fichiers_texte_map/map"; // Chemin de la map
 char **true_map; // Tableau contenant la map à afficher
@@ -96,6 +97,7 @@ struct TANK *joueur; // Tank du joueur
 struct TANK *head; // Création de la liste
 
 int vieJoueur = 9;
+int joueurMort = 0;
 
 // Tableau indiquant le nombre de tanks faibles, moyens et forts
 int *repartitionTankEnnemis;

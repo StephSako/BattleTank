@@ -90,4 +90,6 @@ void init_carrosseries(){
 	carrosserieSTG = creer_charger_map(LONGUEURTANK, PETITASCII, "../Modèle/Fichiers_texte_tank/strong_tank/strong_tank_gauche");
 	carrosserieSTD = creer_charger_map(LONGUEURTANK, PETITASCII, "../Modèle/Fichiers_texte_tank/strong_tank/strong_tank_droite");
 	carrosserieSTB = creer_charger_map(LONGUEURTANK, PETITASCII, "../Modèle/Fichiers_texte_tank/strong_tank/strong_tank_bas");
+	
+	carrosserieTankDetruit = creer_charger_map(LONGUEURTANK, 15, "../Modèle/Fichiers_texte_tank/TankDetruit");
 }

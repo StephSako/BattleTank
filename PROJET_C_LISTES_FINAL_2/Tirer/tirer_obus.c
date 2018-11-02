@@ -97,11 +97,16 @@ void AttaquerTank(char **mat, OBUSP obusP){
 				case NBCOUPSABIMENT : // A partir de NBCOUPSABIMENT pour chaque blindage, la carrosserie s'abîme
 					switch(temp->blindage){
 						case 0 :
+							temp->carrosserie = carrosserieTankDetruit; // On change la carrosserie du tank
+							affichage_tank_terminal(temp);
+							
 							effacer_tank_terminal(temp); // On efface le tank dans le terminal
 							effacer_map_tank(mat, temp); // On efface le tank dans la fake_map
 							
+							NBTANKTOTAL--; // Un tank de moins à créé
 							nb_tank_wave--; // Un tank de moins dans la vague : il faut en créér un autre
 							temp->etat = 0; // Le tank est mort
+							if (temp->camp == 'P') joueurMort = 1;
 							SupprimerTank(&head, position);
 							system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
 							
