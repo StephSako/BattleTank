@@ -47,7 +47,7 @@ int NBTANKTOTAL;
 #define NBTANKMEDIUMDIFFICILE 10
 #define NBTANKSTRONGDIFFICILE 10
 
-#define NBCOUPSABIMENT 2 // Nombre de coups pour les blindages faibles se détruisent, et les blindages moyens et forts rétrogradent
+#define NBCOUPSABIMENT 3 // Nombre de coups pour les blindages faibles se détruisent, et les blindages moyens et forts rétrogradent
 
 // Position du selecteur de choix dans le menu
 int choix_x = 10;
@@ -135,3 +135,5 @@ void delay(int NbSecondes){
 /***********************************************************Variable du pioupiou****************************************************************/
 
 int pioupiouAlive = 1;
+int intervalleTankEnnemis = 0;
+int directionAleatoire = 0;

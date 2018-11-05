@@ -154,29 +154,53 @@ void animation_bullet(char **mat, OBUSP obusP){
 		fflush(stdout);										// On vide le buffer de sortie (on force l'affichage)
 		mat[obusP->pos_x][obusP->pos_y] = '+';						// On ajoute l'obus dans la fake map
 	}
-	// Collision avec une brique destructible
-	else if (mat[obusP->pos_x][obusP->pos_y] == 'C'){
-		effacer_obus_terminal(obusP);								// On efface l'obus dans le terminal
-		mat[obusP->pos_x][obusP->pos_y] = ' ';						// On efface l'obus dans la fake map
-		DeleteObusPTab(obusP);									// On supprime l'obus dans le tableau de pointeurs d'obus 															pour ne plus le traiter
-		system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3"); 	// On joue un bruitage avec d'un script (executé en fond)
+	// Collision avec une brique
+	else if (mat[obusP->pos_x][obusP->pos_y] == 'C' || mat[obusP->pos_x][obusP->pos_y] == 'P'){
+		//effacer_obus_terminal(obusP);			// On efface l'obus dans le terminal
+		
+		if (obusP->direction == 'A' || obusP->direction == 'B'){
+			for (int i = obusP->pos_y-1; i <= obusP->pos_y+1; i++){
+				if (mat[obusP->pos_x][i] == 'P' && obusP->provenance == 2){		// Brique dur
+					mat[obusP->pos_x][i] = ' ';
+					effacer_obus_terminal(obusP->pos_x, i);
+				}
+				else if (mat[obusP->pos_x][i] == 'C'){					// Brique normale
+					mat[obusP->pos_x][i] = ' ';
+					effacer_obus_terminal(obusP->pos_x, i);
+				}
+			}
+		} else if (obusP->direction == 'C' || obusP->direction == 'D'){
+					
+			for (int i = obusP->pos_x-1; i <= obusP->pos_x+1; i++){
+				if (mat[i][obusP->pos_y] == 'P' && obusP->provenance == 2){
+					mat[i][obusP->pos_y] = ' ';
+					effacer_obus_terminal(i, obusP->pos_y);
+				}
+				else if (mat[i][obusP->pos_y] == 'C'){
+					mat[i][obusP->pos_y] = ' ';
+					effacer_obus_terminal(i, obusP->pos_y);
+				}
+			}
+		}	
+		DeleteObusPTab(obusP);				// On supprime l'obus dans le tableau de pointeurs d'obus pour ne plus le traiter
+		//system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3"); 	// On joue un bruitage avec d'un script (executé en fond)
 	}
 	// Un tank ENNEMI a tiré sur la bombe à protéger
 	else if (mat[obusP->pos_x][obusP->pos_y] == 'B' && obusP->camp == 'E'){
 		pioupiouAlive = 0;
-		effacer_obus_terminal(obusP);
+		effacer_obus_terminal(obusP->pos_x, obusP->pos_y);
 		mat[obusP->pos_x][obusP->pos_y] = ' ';
 		DeleteObusPTab(obusP);
 		system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosionFin.mp3");
 	}
-	// Un tank ENNEMI SUPERARME tire sur un bloc dur
-	else if (mat[obusP->pos_x][obusP->pos_y] == 'P' && obusP->provenance == 2 && obusP->camp == 'E'){
-		effacer_obus_terminal(obusP);
+	/*// Un tank ENNEMI SUPERARME tire sur un bloc dur
+	else if (mat[obusP->pos_x][obusP->pos_y] == 'P' && obusP->provenance == 2){
+		effacer_obus_terminal(obusP->pos_x, obusP->pos_y);
 		mat[obusP->pos_x][obusP->pos_y] = ' ';
 		DeleteObusPTab(obusP);
 		system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
-	}
-	// Collision avec un tank ou une brique non destructible
+	}*/
+	// Collision avec un tank ou une brique non destructible (eau, roseau, limite de la map)
 	else{
 		if (mat[obusP->pos_x][obusP->pos_y] == '*' || mat[obusP->pos_x][obusP->pos_y] == 'T')
 			AttaquerTank(mat, obusP); // On cherche le tank et on l'attaque s'il y en a eu un de touché
@@ -219,7 +243,7 @@ void shot_cleaner(char **fake_map){
 	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
 		if (TabPointeursObus[i] != NULL){
 		
-			effacer_obus_terminal(TabPointeursObus[i]); // On efface tous les obus encore en "vie"
+			effacer_obus_terminal(TabPointeursObus[i]->pos_x, TabPointeursObus[i]->pos_y); // On efface tous les obus encore en "vie"
 			fake_map[TabPointeursObus[i]->pos_x][TabPointeursObus[i]->pos_y] = ' ';
 			
 			switch(TabPointeursObus[i]->direction){

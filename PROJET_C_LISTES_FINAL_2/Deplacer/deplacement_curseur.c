@@ -26,8 +26,8 @@ void effacer_tank_terminal(struct TANK *tank){
 	}
 }
 
-void effacer_obus_terminal(OBUSP obus){	
-	gotoxy(obus->pos_x, obus->pos_y);
+void effacer_obus_terminal(int x, int y){	
+	gotoxy(x, y);
 	printf(" ");
 }
 

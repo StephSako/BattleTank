@@ -47,9 +47,6 @@ int main(){
 		creer_tank_ennemis(fake_map, &head, 30, 137, 'D');
 		creer_tank_ennemis(fake_map, &head, 8, 130, 'D');
 		creer_tank_ennemis(fake_map, &head, 33, 29, 'D');
-		
-		int intervalleTankEnnemis = 0;
-		int nbRand;
 
 		// Si le joueur ne quitte pas, que la bombe n'a pas explosé et que le joueur est encore vivant et qu'il y a encore des tanks en vie
 		while ((key = key_pressed()) != 'q' && pioupiouAlive == 1 && joueur->etat > 0 &&  NBTANKTOTAL > 0){
@@ -76,18 +73,14 @@ int main(){
 			// Gestion des tirs du joueur
 			else if (key == 'x') shot_creator(joueur); // On créé un obus et on l'ajoute dans le tableau de pointeurs d'obus
 
-			// Le mouvement des tanks est aléatoire chaque seconde
-			srand(time(NULL));	
-			nbRand = rand()%(4);
-			if (intervalleTankEnnemis != nbRand){
-				deplacer_tank_ennemis_terminal(fake_map, intervalleTankEnnemis); // On bouge et affiche tous les tanks ennemis
-				intervalleTankEnnemis = nbRand;	
-			}
+			deplacer_tank_ennemis_terminal(fake_map); // On bouge et affiche tous les tanks ennemis
 			
 			shot_manager(fake_map); // On réalise le déplacement de tous les obus par accoups
 			
 			delay(26000); // Frequence d'affichage de toute la map (deplacement tank, tirs obus, ...)
 		}
+		/*system("clear");
+		affichage_mat_simple(LONGUEURMAP, LARGEURMAP, fake_map);*/
 	}
 	
 	quit_terminal(); // On nettoie le terminal et on remet ses bons paramètres

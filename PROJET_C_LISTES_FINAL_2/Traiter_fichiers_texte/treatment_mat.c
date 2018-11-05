@@ -60,3 +60,12 @@ void affichage_mat(int nbL, int nbC, char ** mat){
 		printf("\n");
 	}
 }
+
+void affichage_mat_simple(int nbL, int nbC, char ** mat){
+	for (int i = 0; i < nbL; i++){
+		for (int j = 0; j < nbC; j++){
+			printf("%c", mat[i][j]);
+		}
+		printf("\n");
+	}
+}
