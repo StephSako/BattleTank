@@ -8,6 +8,12 @@ struct TANK *creer_tank_joueur(char **fake_map, struct TANK** head, int pos_x, i
 	tank->pos_x = pos_x; tank->pos_y = pos_y; tank->direction = direction; tank->blindage_origine = 1; tank->etat = 2;
 	tank->blindage =  tank->blindage_origine; tank->nb_impacts = 0; tank->camp = 'P';
 	
+	switch(tank->blindage_origine){
+		case(0): vieJoueur = 3; break;
+		case(1): vieJoueur = 6; break;
+		case(2): vieJoueur = 9; break;
+	}
+	
 	switch(direction){ // Selon la direction du tank joueur
 		case('A'): tank->carrosserie = carrosserieSTH; break;
 		case('B'): tank->carrosserie = carrosserieSTB; break;
@@ -81,15 +87,16 @@ void creer_tank_ennemis(char **fake_map, struct TANK **head, int pos_x, int pos_
 
 void deplacer_tank_ennemis_terminal(char **fake_map){
 
+	srand(time(NULL));
 	struct TANK *temp = head;
+	
 	while (temp != NULL){ // On boucle sur tous les tanks de la liste chaînée
 		// Le mouvement des tanks est aléatoire chaque seconde
-		srand(time(NULL));
 		directionAleatoire = rand()%(4);
+		tirAleatoire = rand()%(2);
 	
 		if (temp->camp == 'E'){ // On ne boucle que sur les tanks ennemis
-			
-			if (intervalleTankEnnemis != directionAleatoire){
+			//if (intervalleDeplacementTankEnnemis != directionAleatoire){
 			
 				switch(directionAleatoire){ // Selon la direction du tank ennemis
 					case(0): // Vers le haut
@@ -129,10 +136,13 @@ void deplacer_tank_ennemis_terminal(char **fake_map){
 						deplacement_tank_gauche(fake_map, temp); break;
 
 					default : break;
-				}
-				intervalleTankEnnemis = directionAleatoire;
+				/*}
+				intervalleDeplacementTankEnnemis = directionAleatoire;*/
 			}
-			shot_creator(temp); // On fait tirer les tanks ennemis aléatoirement
+			if (intervalleTirTankEnnemis != tirAleatoire){
+				shot_creator(temp); // On fait tirer les tanks ennemis aléatoirement
+				intervalleTirTankEnnemis = tirAleatoire;
+			}
 		}
 		temp = temp->suivant; // On passe au tank ennemi
 	}	

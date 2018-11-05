@@ -160,15 +160,16 @@ void animation_bullet(char **mat, OBUSP obusP){
 		
 		if (obusP->direction == 'A' || obusP->direction == 'B'){
 			for (int i = obusP->pos_y-1; i <= obusP->pos_y+1; i++){
-				if (mat[obusP->pos_x][i] == 'P' && obusP->provenance == 2){		// Brique dur
+				if (mat[obusP->pos_x][i] == 'P' && obusP->provenance == 2){		// Tir tank superarmé sur une brique dur
 					mat[obusP->pos_x][i] = ' ';
 					effacer_obus_terminal(obusP->pos_x, i);
 				}
-				else if (mat[obusP->pos_x][i] == 'C'){					// Brique normale
+				else if (mat[obusP->pos_x][i] == 'C'){					// Tir sur une brique normale
 					mat[obusP->pos_x][i] = ' ';
 					effacer_obus_terminal(obusP->pos_x, i);
 				}
 			}
+			system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3"); // On joue un bruitage avec d'un script (executé en fond)
 		} else if (obusP->direction == 'C' || obusP->direction == 'D'){
 					
 			for (int i = obusP->pos_x-1; i <= obusP->pos_x+1; i++){
@@ -181,9 +182,9 @@ void animation_bullet(char **mat, OBUSP obusP){
 					effacer_obus_terminal(i, obusP->pos_y);
 				}
 			}
+			system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3"); // On joue un bruitage avec d'un script (executé en fond)
 		}	
 		DeleteObusPTab(obusP);				// On supprime l'obus dans le tableau de pointeurs d'obus pour ne plus le traiter
-		//system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3"); 	// On joue un bruitage avec d'un script (executé en fond)
 	}
 	// Un tank ENNEMI a tiré sur la bombe à protéger
 	else if (mat[obusP->pos_x][obusP->pos_y] == 'B' && obusP->camp == 'E'){
@@ -193,18 +194,10 @@ void animation_bullet(char **mat, OBUSP obusP){
 		DeleteObusPTab(obusP);
 		system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosionFin.mp3");
 	}
-	/*// Un tank ENNEMI SUPERARME tire sur un bloc dur
-	else if (mat[obusP->pos_x][obusP->pos_y] == 'P' && obusP->provenance == 2){
-		effacer_obus_terminal(obusP->pos_x, obusP->pos_y);
-		mat[obusP->pos_x][obusP->pos_y] = ' ';
-		DeleteObusPTab(obusP);
-		system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
-	}*/
 	// Collision avec un tank ou une brique non destructible (eau, roseau, limite de la map)
 	else{
 		if (mat[obusP->pos_x][obusP->pos_y] == '*' || mat[obusP->pos_x][obusP->pos_y] == 'T')
-			AttaquerTank(mat, obusP); // On cherche le tank et on l'attaque s'il y en a eu un de touché
-			
+			AttaquerTank(mat, obusP); // On cherche le tank et on l'attaque s'il y en a eu un de touché	
 		DeleteObusPTab(obusP); // On supprime l'obus qui a percuté un obstacle
 	}
 }

@@ -39,6 +39,7 @@ int main(){
 		
 		// On initialise le tank du joueur
 		joueur = creer_tank_joueur(fake_map, &head, 9, 73, 'A'); // On créé et initialise le TANKP du JOUEUR
+		
 		// On place le joueur sur le terminal et dans la fake map
 		affichage_tank_terminal(joueur);
 
@@ -79,8 +80,6 @@ int main(){
 			
 			delay(26000); // Frequence d'affichage de toute la map (deplacement tank, tirs obus, ...)
 		}
-		/*system("clear");
-		affichage_mat_simple(LONGUEURMAP, LARGEURMAP, fake_map);*/
 	}
 	
 	quit_terminal(); // On nettoie le terminal et on remet ses bons paramètres

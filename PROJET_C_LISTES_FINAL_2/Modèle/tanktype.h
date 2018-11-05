@@ -96,7 +96,7 @@ struct TANK *joueur; // Tank du joueur
 
 struct TANK *head; // Création de la liste
 
-int vieJoueur = 9;
+int vieJoueur;
 int joueurMort = 0;
 
 // Tableau indiquant le nombre de tanks faibles, moyens et forts
@@ -135,5 +135,7 @@ void delay(int NbSecondes){
 /***********************************************************Variable du pioupiou****************************************************************/
 
 int pioupiouAlive = 1;
-int intervalleTankEnnemis = 0;
+int intervalleDeplacementTankEnnemis = 0;
+int intervalleTirTankEnnemis = 0;
 int directionAleatoire = 0;
+int tirAleatoire = 0;
