@@ -98,20 +98,24 @@ void AttaquerTank(char **mat, OBUSP obusP){
 					switch(temp->blindage){
 						case 0 :
 							temp->carrosserie = carrosserieTankDetruit; // On change la carrosserie du tank
-							affichage_tank_terminal(temp);
-							
-							effacer_tank_terminal(temp); // On efface le tank dans le terminal
-							effacer_map_tank(mat, temp); // On efface le tank dans la fake_map
-							
 							NBTANKTOTAL--; // Un tank de moins à créé
 							nb_tank_wave--; // Un tank de moins dans la vague : il faut en créér un autre
 							temp->etat = 0; // Le tank est mort
 							if (temp->camp == 'P') joueurMort = 1;
+							
+							int randSuppr = rand()%(11000);
+							while (randSuppr != 50){
+								affichage_tank_terminal(temp);
+								randSuppr = rand()%(11000); // Gagner du temps pour afficher les poussières (~ delay())
+							}
+							
+							effacer_tank_terminal(temp); // On efface le tank dans le terminal
+							effacer_map_tank(mat, temp); // On efface le tank dans la fake_map
 							SupprimerTank(&head, position);
 							system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
-							
 							break;
-						case 1 : 
+							
+						default : // Le tank n'est pas encore mort
 							switch(temp->direction){
 								case 'A': temp->carrosserie = carrosserieWTH; break;
 								case 'B': temp->carrosserie = carrosserieWTB; break;
@@ -122,20 +126,6 @@ void AttaquerTank(char **mat, OBUSP obusP){
 							} temp->blindage--; temp->nb_impacts = 0;
 							effacer_tank_terminal(temp);
 							affichage_tank_terminal(temp); break;
-							
-						case 2 :
-							switch(head->direction){ // A partir de 3 coups, la carrosserie s'abîme
-								case 'A': temp->carrosserie = carrosserieMTH; break;
-								case 'B': temp->carrosserie = carrosserieMTB; break;
-								case 'C': temp->carrosserie = carrosserieMTD; break;
-								case 'D': temp->carrosserie = carrosserieMTG; break;
-								default : break;
-								
-							} temp->blindage--; temp->nb_impacts = 0;
-							effacer_tank_terminal(temp);
-							affichage_tank_terminal(temp); break;
-							
-						default : break;
 					}
 									
 				default : break;
@@ -158,6 +148,7 @@ void animation_bullet(char **mat, OBUSP obusP){
 	else if (mat[obusP->pos_x][obusP->pos_y] == 'C' || mat[obusP->pos_x][obusP->pos_y] == 'P'){
 		//effacer_obus_terminal(obusP);			// On efface l'obus dans le terminal
 		
+		int son = 0; // Variable qui définit si on joue le bruitage ou pas (1 bruitage pour 3 briques pour ne pas déranger le joueur avec trop de bruitages)
 		if (obusP->direction == 'A' || obusP->direction == 'B'){
 			for (int i = obusP->pos_y-1; i <= obusP->pos_y+1; i++){
 				if (mat[obusP->pos_x][i] == 'P' && obusP->provenance == 2){		// Tir tank superarmé sur une brique dur
@@ -168,10 +159,13 @@ void animation_bullet(char **mat, OBUSP obusP){
 					mat[obusP->pos_x][i] = ' ';
 					effacer_obus_terminal(obusP->pos_x, i);
 				}
+				if (son == 0){
+					system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3"); // On joue un bruitage avec d'un script (executé en fond)
+					son = 1;
+				}
 			}
-			system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3"); // On joue un bruitage avec d'un script (executé en fond)
 		} else if (obusP->direction == 'C' || obusP->direction == 'D'){
-					
+			
 			for (int i = obusP->pos_x-1; i <= obusP->pos_x+1; i++){
 				if (mat[i][obusP->pos_y] == 'P' && obusP->provenance == 2){
 					mat[i][obusP->pos_y] = ' ';
@@ -181,8 +175,11 @@ void animation_bullet(char **mat, OBUSP obusP){
 					mat[i][obusP->pos_y] = ' ';
 					effacer_obus_terminal(i, obusP->pos_y);
 				}
+				if (son == 0){
+					system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
+					son = 1;
+				}
 			}
-			system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3"); // On joue un bruitage avec d'un script (executé en fond)
 		}	
 		DeleteObusPTab(obusP);				// On supprime l'obus dans le tableau de pointeurs d'obus pour ne plus le traiter
 	}

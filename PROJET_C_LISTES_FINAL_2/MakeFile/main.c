@@ -38,7 +38,7 @@ int main(){
 		head = NULL;
 		
 		// On initialise le tank du joueur
-		joueur = creer_tank_joueur(fake_map, &head, 9, 73, 'A'); // On créé et initialise le TANKP du JOUEUR
+		joueur = creer_tank_joueur(fake_map, &head, 8, 74, 'A'); // On créé et initialise le TANKP du JOUEUR
 		
 		// On place le joueur sur le terminal et dans la fake map
 		affichage_tank_terminal(joueur);
@@ -72,13 +72,22 @@ int main(){
 			}
 
 			// Gestion des tirs du joueur
-			else if (key == 'x') shot_creator(joueur); // On créé un obus et on l'ajoute dans le tableau de pointeurs d'obus
+			else if (key == ' ') shot_creator(joueur); // On créé un obus et on l'ajoute dans le tableau de pointeurs d'obus
 
 			deplacer_tank_ennemis_terminal(fake_map); // On bouge et affiche tous les tanks ennemis
-			
 			shot_manager(fake_map); // On réalise le déplacement de tous les obus par accoups
 			
 			delay(26000); // Frequence d'affichage de toute la map (deplacement tank, tirs obus, ...)
+			
+			/*struct TANK *temp = head;	
+			// On supprime tous les tanks morts pour leur laisser le temps de s'afficher avec des poussières
+			while (temp != NULL){
+				if (temp->blindage == 0){
+					effacer_tank_terminal(temp); // On efface le tank dans le terminal
+					effacer_map_tank(fake_map, temp); // On efface le tank dans la fake_map
+				}
+				temp = temp->suivant;
+			}*/
 		}
 	}
 	
