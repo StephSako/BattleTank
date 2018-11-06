@@ -6,21 +6,35 @@ struct TANK *creer_tank_joueur(char **fake_map, struct TANK** head, int pos_x, i
 	
 	// On initialise chaque attributs du tank joueur
 	tank->pos_x = pos_x; tank->pos_y = pos_y; tank->direction = direction; tank->blindage_origine = 1; tank->etat = 2;
-	tank->blindage =  tank->blindage_origine; tank->nb_impacts = 0; tank->camp = 'P';
+	tank->blindage =  tank->blindage_origine; tank->nb_impacts = 0; tank->camp = 'P'; tank->timingDeplacement = 0; tank->timingTir = 0;
 	
 	switch(tank->blindage_origine){
-		case(0): vieJoueur = 3; break;
-		case(1): vieJoueur = 6; break;
-		case(2): vieJoueur = 9; break;
+		case(0): vieJoueur = 3;
+			switch(direction){ // Selon la direction du tank joueur
+				case('A'): tank->carrosserie = carrosserieWTH; break;
+				case('B'): tank->carrosserie = carrosserieWTB; break;
+				case('C'): tank->carrosserie = carrosserieWTD; break;
+				case('D'): tank->carrosserie = carrosserieWTG; break;
+				default: break;
+			} break;
+		case(1): vieJoueur = 6;
+			switch(direction){ // Selon la direction du tank joueur
+				case('A'): tank->carrosserie = carrosserieMTH; break;
+				case('B'): tank->carrosserie = carrosserieMTB; break;
+				case('C'): tank->carrosserie = carrosserieMTD; break;
+				case('D'): tank->carrosserie = carrosserieMTG; break;
+				default: break;
+			} break;
+		case(2): vieJoueur = 9;
+			switch(direction){ // Selon la direction du tank joueur
+				case('A'): tank->carrosserie = carrosserieSTH; break;
+				case('B'): tank->carrosserie = carrosserieSTB; break;
+				case('C'): tank->carrosserie = carrosserieSTD; break;
+				case('D'): tank->carrosserie = carrosserieSTG; break;
+				default: break;
+			} break;
 	}
-	
-	switch(direction){ // Selon la direction du tank joueur
-		case('A'): tank->carrosserie = carrosserieMTH; break;
-		case('B'): tank->carrosserie = carrosserieMTB; break;
-		case('C'): tank->carrosserie = carrosserieMTD; break;
-		case('D'): tank->carrosserie = carrosserieMTG; break;
-	}
-	
+
 	tank->suivant = (*head); 
     	(*head) = tank;
     	
@@ -42,7 +56,7 @@ void creer_tank_ennemis(char **fake_map, struct TANK **head, int pos_x, int pos_
 	// On initialise chaque attributs du tank ennemi
 	newEnnemyTank->pos_x = pos_x; newEnnemyTank->pos_y = pos_y; newEnnemyTank->direction = direction;
 	newEnnemyTank->blindage = blindage_origine; newEnnemyTank->blindage_origine = blindage_origine; newEnnemyTank->nb_impacts = 0;
-	newEnnemyTank->camp = 'E'; newEnnemyTank->etat = 2;
+	newEnnemyTank->camp = 'E'; newEnnemyTank->etat = 2; newEnnemyTank->timingDeplacement = 1; newEnnemyTank->timingTir = 1;
 	
 	// On selectionne la bonne carrosserie selon le blindage d'origine
 	switch(blindage_origine){
@@ -87,59 +101,60 @@ void creer_tank_ennemis(char **fake_map, struct TANK **head, int pos_x, int pos_
 
 void deplacer_tank_ennemis_terminal(char **fake_map){
 
-	srand(time(NULL));
 	struct TANK *temp = head;
-	
-	while (temp != NULL){ // On boucle sur tous les tanks de la liste chaînée
-		// Le mouvement des tanks est aléatoire chaque seconde
-		directionAleatoire = rand()%(4);
-		tirAleatoire = rand()%(2);
-	
-		if (temp->camp == 'E'){ // On ne boucle que sur les tanks ennemis			
-			switch(directionAleatoire){ // Selon la direction du tank ennemis
-				case(0): // Vers le haut
-					switch(temp->blindage){ // Selon la direction du tank ennemi
-						case(0): temp->carrosserie = carrosserieWTH; break;
-						case(1): temp->carrosserie = carrosserieMTH; break;
-						case(2): temp->carrosserie = carrosserieSTH; break;
-						default: break;
-					} temp->direction = 'A';
-					deplacement_tank_haut(fake_map, temp); break; // On effectue le déplacement
-					
-				case(1): // Vers le bas
-					switch(temp->blindage){
-						case(0): temp->carrosserie = carrosserieWTB; break;
-						case(1): temp->carrosserie = carrosserieMTB; break;
-						case(2): temp->carrosserie = carrosserieSTB; break;
-						default: break;
-					} temp->direction = 'B';
-					deplacement_tank_bas(fake_map, temp); break;
-					
-				case(2): // Vers la droite
-					switch(temp->blindage){
-						case(0): temp->carrosserie = carrosserieWTD; break;
-						case(1): temp->carrosserie = carrosserieMTD; break;
-						case(2): temp->carrosserie = carrosserieSTD; break;
-						default: break;
-					} temp->direction = 'C';
-					deplacement_tank_droite(fake_map, temp); break;
-					
-				case(3): // Vers la gauche
-					switch(temp->blindage){
-						case(0): temp->carrosserie = carrosserieWTG; break;
-						case(1): temp->carrosserie = carrosserieMTG; break;
-						case(2): temp->carrosserie = carrosserieSTG; break;
-						default: break;
-					} temp->direction = 'D';
-					deplacement_tank_gauche(fake_map, temp); break;
+	while (temp != NULL){ // On boucle sur tous les tanks de la liste chaînée	
+		if (temp->camp == 'E'){ // On ne boucle que sur les tanks ennemis
+			if (temp->timingDeplacement%15000 == 0){
+				int directionAleatoire = rand()%(4); // Le mouvement des tanks est aléatoire	
+				switch(directionAleatoire){ // Selon la direction du tank ennemis
+					case(0): // Vers le haut
+						switch(temp->blindage){ // Selon la direction du tank ennemi
+							case(0): temp->carrosserie = carrosserieWTH; break;
+							case(1): temp->carrosserie = carrosserieMTH; break;
+							case(2): temp->carrosserie = carrosserieSTH; break;
+							default: break;
+						} temp->direction = 'A';
+						deplacement_tank_haut(fake_map, temp); break; // On effectue le déplacement
+						
+					case(1): // Vers le bas
+						switch(temp->blindage){
+							case(0): temp->carrosserie = carrosserieWTB; break;
+							case(1): temp->carrosserie = carrosserieMTB; break;
+							case(2): temp->carrosserie = carrosserieSTB; break;
+							default: break;
+						} temp->direction = 'B';
+						deplacement_tank_bas(fake_map, temp); break;
+						
+					case(2): // Vers la droite
+						switch(temp->blindage){
+							case(0): temp->carrosserie = carrosserieWTD; break;
+							case(1): temp->carrosserie = carrosserieMTD; break;
+							case(2): temp->carrosserie = carrosserieSTD; break;
+							default: break;
+						} temp->direction = 'C';
+						deplacement_tank_droite(fake_map, temp); break;
+						
+					case(3): // Vers la gauche
+						switch(temp->blindage){
+							case(0): temp->carrosserie = carrosserieWTG; break;
+							case(1): temp->carrosserie = carrosserieMTG; break;
+							case(2): temp->carrosserie = carrosserieSTG; break;
+							default: break;
+						} temp->direction = 'D';
+						deplacement_tank_gauche(fake_map, temp); break;
 
-				default : break;
+					default : break;
+				}
+				temp->timingDeplacement = 0;
 			}
 			
-			if (intervalleTirTankEnnemis != tirAleatoire){
+			if (temp->timingTir%40000 == 0){
 				//shot_creator(temp); // On fait tirer les tanks ennemis aléatoirement
-				intervalleTirTankEnnemis = tirAleatoire;
+				temp->timingTir = 0;
 			}
+			
+			temp->timingTir++;
+			temp->timingDeplacement++;
 		}
 		temp = temp->suivant; // On passe au tank ennemi
 	}	

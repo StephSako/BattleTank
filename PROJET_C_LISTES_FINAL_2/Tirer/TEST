@@ -206,9 +206,8 @@ void shot_creator(struct TANK *tank){
 		obus->provenance = tank->blindage;
 		obus->camp = tank->camp;
 		obus->direction = tank->direction;
-		obus->timingDeplacementObus = 1;
-		
-		// On deplace l'obus dans le terminal + fake map
+		obus->timingDeplacement = 0;
+		// On deplace l'obus dans le terminal / la fake map
 		switch(tank->direction){ // On initialise les attributs de l'obus tire en fonction des attributs du tank
 			case 'A':
 				obus->pos_x = tank->pos_x-1; obus->pos_y = tank->pos_y+2; break;
@@ -224,28 +223,33 @@ void shot_creator(struct TANK *tank){
 	}
 }
 
-void shot_printer(char **fake_map){
+void shot_manager(char **fake_map){
+	// On parcourt le tableau des obus pour tous les faire deplacer d'un accoup en même temps : c'est naturel
+	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
+		if (TabPointeursObus[i] != NULL){
+			if (TabPointeursObus[i]->timingDeplacement%8 == 0){
+				animation_bullet(fake_map, TabPointeursObus[i]); // Animation par accoup de l'obus
+			}
+			TabPointeursObus[i]->timingDeplacement++;
+		}
+	}
+}
+
+void shot_cleaner(char **fake_map){
 	// On parcourt le tableau des obus pour tous les effacer du terminal et de la fake map
 	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
 		if (TabPointeursObus[i] != NULL){
-			if (TabPointeursObus[i]->timingDeplacementObus%8000 == 0){
-				
-				animation_bullet(fake_map, TabPointeursObus[i]); // Animation par accoup de l'obus
-				
-				//effacer_obus_terminal(TabPointeursObus[i]->pos_x, TabPointeursObus[i]->pos_y); // On efface tous les obus
-				//fake_map[TabPointeursObus[i]->pos_x][TabPointeursObus[i]->pos_y] = ' ';
-				
-				// On met à jour la position
-				switch(TabPointeursObus[i]->direction){
-					case 'A': TabPointeursObus[i]->pos_x--; break; // On incremente les positions des obus = le fameux 'accoup'
-					case 'D': TabPointeursObus[i]->pos_y--; break;	
-					case 'B': TabPointeursObus[i]->pos_x++; break;	
-					case 'C': TabPointeursObus[i]->pos_y++; break;
-					default : break;
-				}			
-				TabPointeursObus[i]->timingDeplacementObus = 0;
+		
+			effacer_obus_terminal(TabPointeursObus[i]->pos_x, TabPointeursObus[i]->pos_y); // On efface tous les obus encore en "vie"
+			fake_map[TabPointeursObus[i]->pos_x][TabPointeursObus[i]->pos_y] = ' ';
+			
+			switch(TabPointeursObus[i]->direction){
+				case 'A': TabPointeursObus[i]->pos_x--; break; // On incremente les positions des obus = le fameux 'accoup'
+				case 'D': TabPointeursObus[i]->pos_y--; break;	
+				case 'B': TabPointeursObus[i]->pos_x++; break;	
+				case 'C': TabPointeursObus[i]->pos_y++; break;
+				default : break;
 			}
-			TabPointeursObus[i]->timingDeplacementObus++;
 		}
 	}
 }

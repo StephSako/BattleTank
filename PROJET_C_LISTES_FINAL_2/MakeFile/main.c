@@ -38,7 +38,7 @@ int main(){
 		head = NULL;
 		
 		// On initialise le tank du joueur
-		joueur = creer_tank_joueur(fake_map, &head, 8, 74, 'A'); // On créé et initialise le TANKP du JOUEUR
+		joueur = creer_tank_joueur(fake_map, &head, 8, 80, 'B'); // On créé et initialise le TANKP du JOUEUR
 		
 		// On place le joueur sur le terminal et dans la fake map
 		affichage_tank_terminal(joueur);
@@ -62,32 +62,20 @@ int main(){
 				if (nb_tank_wave%2 == 0) creer_tank_ennemis(fake_map, &head, 4, 2, 'C');
 				if (nb_tank_wave%2 != 0) creer_tank_ennemis(fake_map, &head, 30, 137, 'D');
 			}
-
-			shot_cleaner(fake_map); // On efface tous les obus sur le terminal
-
+			
+			shot_printer(fake_map); // On réalise le déplacement de tous les obus par accoups
+			
 			// Gestion des déplacements du joueur
 			if (key == 'A' || key == 'B' || key == 'C' || key =='D'){
 				joueur->direction = key; // Mise à jour de la position du joueur
 				deplacer_tank_joueur_terminal(fake_map, joueur); // On déplace le tank du joueur dans le terminal/fake map
 			}
-
 			// Gestion des tirs du joueur
 			else if (key == ' ') shot_creator(joueur); // On créé un obus et on l'ajoute dans le tableau de pointeurs d'obus
-
+			
+			//shot_printer(fake_map); // On réalise le déplacement de tous les obus par accoups
 			deplacer_tank_ennemis_terminal(fake_map); // On bouge et affiche tous les tanks ennemis
-			shot_manager(fake_map); // On réalise le déplacement de tous les obus par accoups
-			
-			delay(26000); // Frequence d'affichage de toute la map (deplacement tank, tirs obus, ...)
-			
-			/*struct TANK *temp = head;	
-			// On supprime tous les tanks morts pour leur laisser le temps de s'afficher avec des poussières
-			while (temp != NULL){
-				if (temp->blindage == 0){
-					effacer_tank_terminal(temp); // On efface le tank dans le terminal
-					effacer_map_tank(fake_map, temp); // On efface le tank dans la fake_map
-				}
-				temp = temp->suivant;
-			}*/
+			//shot_printer(fake_map); // On réalise le déplacement de tous les obus par accoups
 		}
 	}
 	

@@ -88,6 +88,9 @@ struct TANK{
 	
 	char camp;
 	int etat;
+	
+	int timingDeplacement;
+	int timingTir;
 
 	struct TANK *suivant;
 };
@@ -114,6 +117,8 @@ typedef struct{
 	char direction;
 	int provenance; // 0 : tank ennemi faible, 1 : tank ennemi moyen, 2 : tank ennemi fort
 	char camp; // 'E' = ennemi, 'P' = joueur
+	
+	int timingDeplacementObus;
 } OBUS;
 
 // Pointeur sur l'objet OBUS
@@ -122,20 +127,6 @@ typedef OBUS * OBUSP;
 // Tableau de pointeurs d'obus permettant de les fair déplacer tous en même temps par accoups
 OBUSP *TabPointeursObus;
 
-/***********************************************************************************************************************************************/
-// Fonction qui permet de mettre un délai sans bloquer le programme
-void delay(int NbSecondes){
-	int seuil = 0;
-	while(seuil <= NbSecondes){
-		int n = rand()%(10);		
-		if (n == 5) seuil++;
-	}
-}
-
 /***********************************************************Variable du pioupiou****************************************************************/
 
 int pioupiouAlive = 1;
-int intervalleDeplacementTankEnnemis = 0;
-int intervalleTirTankEnnemis = 0;
-int directionAleatoire = 0;
-int tirAleatoire = 0;
