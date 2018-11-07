@@ -63,7 +63,7 @@ int main(){
 				if (nb_tank_wave%2 != 0) creer_tank_ennemis(fake_map, &head, 30, 137, 'D');
 			}
 			
-			shot_printer(fake_map); // On réalise le déplacement de tous les obus par accoups
+			shot_cleaner(fake_map); // On réalise le déplacement de tous les obus par accoups
 			
 			// Gestion des déplacements du joueur
 			if (key == 'A' || key == 'B' || key == 'C' || key =='D'){
@@ -73,9 +73,8 @@ int main(){
 			// Gestion des tirs du joueur
 			else if (key == ' ') shot_creator(joueur); // On créé un obus et on l'ajoute dans le tableau de pointeurs d'obus
 			
-			//shot_printer(fake_map); // On réalise le déplacement de tous les obus par accoups
 			deplacer_tank_ennemis_terminal(fake_map); // On bouge et affiche tous les tanks ennemis
-			//shot_printer(fake_map); // On réalise le déplacement de tous les obus par accoups
+			shot_manager(fake_map); // On gère les impacts des obus
 		}
 	}
 	
