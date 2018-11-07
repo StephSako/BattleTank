@@ -206,7 +206,7 @@ void shot_creator(struct TANK *tank){
 		obus->provenance = tank->blindage;
 		obus->camp = tank->camp;
 		obus->direction = tank->direction;
-		obus->timingDeplacementObus = 1;
+		obus->timingDeplacementObus = 0;
 		
 		// On deplace l'obus dans le terminal + fake map
 		switch(tank->direction){ // On initialise les attributs de l'obus tire en fonction des attributs du tank
@@ -227,19 +227,18 @@ void shot_creator(struct TANK *tank){
 void shot_manager(char **fake_map){
 	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
 		if (TabPointeursObus[i] != NULL){
-			//if (TabPointeursObus[i]->timingDeplacementObus == 800){
-				//deplacement_obus_terminal(TabPointeursObus[i]);
+			if (TabPointeursObus[i]->timingDeplacementObus%2000 == 0){
+				/*fflush(stdout);
+				deplacement_obus_terminal(TabPointeursObus[i]);*/
 				animation_bullet(fake_map, TabPointeursObus[i]); // Animation par accoup de l'obus
-				/*TabPointeursObus[i]->timingDeplacementObus = 1;
 			}
-			(TabPointeursObus[i]->timingDeplacementObus)++;*/
-		}		
+		}
 	}
 	
 	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
 		if (TabPointeursObus[i] != NULL){
 		
-			//if (TabPointeursObus[i]->timingDeplacementObus%800 == 0){
+			if (TabPointeursObus[i]->timingDeplacementObus%2000 == 0){
 			
 				// On efface et vide tous les obus de leurs anciennes positions
 				effacer_obus_terminal(TabPointeursObus[i]->pos_x, TabPointeursObus[i]->pos_y);
@@ -253,9 +252,9 @@ void shot_manager(char **fake_map){
 					case 'C': TabPointeursObus[i]->pos_y++; break;
 					default : break;
 				}
-				/*TabPointeursObus[i]->timingDeplacementObus = 1;
+				TabPointeursObus[i]->timingDeplacementObus = 0;
 			}
-			(TabPointeursObus[i]->timingDeplacementObus)++;*/
+			(TabPointeursObus[i]->timingDeplacementObus)++;
 		}
 	}
 }
