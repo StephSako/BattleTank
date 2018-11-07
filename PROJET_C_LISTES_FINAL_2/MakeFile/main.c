@@ -57,13 +57,11 @@ int main(){
 			if (NBTANKTOTAL < 10) afficher_message(1, 141, " "); // Régler un bug d'affichage
 			
 			// On lance des vagues de tanks par deux tant qu'on peux en créer									// ATTENTION
-			if (nb_tank_wave < 2 && NBTANKTOTAL >= 2){
+			if (nb_tank_wave < 3 && NBTANKTOTAL >= 2){
 				// On définit l'emplacement du prochain tank à générer
 				if (nb_tank_wave%2 == 0) creer_tank_ennemis(fake_map, &head, 4, 2, 'C');
 				if (nb_tank_wave%2 != 0) creer_tank_ennemis(fake_map, &head, 30, 137, 'D');
 			}
-			
-			shot_cleaner(fake_map); // On réalise le déplacement de tous les obus par accoups
 			
 			// Gestion des déplacements du joueur
 			if (key == 'A' || key == 'B' || key == 'C' || key =='D'){
@@ -74,7 +72,7 @@ int main(){
 			else if (key == ' ') shot_creator(joueur); // On créé un obus et on l'ajoute dans le tableau de pointeurs d'obus
 			
 			deplacer_tank_ennemis_terminal(fake_map); // On bouge et affiche tous les tanks ennemis
-			shot_manager(fake_map); // On gère les impacts des obus
+			shot_manager(fake_map); // On réalise le déplacement de tous les obus par accoups
 		}
 	}
 	

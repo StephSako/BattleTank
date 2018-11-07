@@ -224,10 +224,21 @@ void shot_creator(struct TANK *tank){
 	}
 }
 
-void shot_cleaner(char **fake_map){
-	// On parcourt le tableau des obus pour tous les effacer du terminal et de la fake map
+void shot_manager(char **fake_map){
 	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
 		if (TabPointeursObus[i] != NULL){
+			//if (TabPointeursObus[i]->timingDeplacementObus == 800){
+				//deplacement_obus_terminal(TabPointeursObus[i]);
+				animation_bullet(fake_map, TabPointeursObus[i]); // Animation par accoup de l'obus
+				/*TabPointeursObus[i]->timingDeplacementObus = 1;
+			}
+			(TabPointeursObus[i]->timingDeplacementObus)++;*/
+		}		
+	}
+	
+	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
+		if (TabPointeursObus[i] != NULL){
+		
 			//if (TabPointeursObus[i]->timingDeplacementObus%800 == 0){
 			
 				// On efface et vide tous les obus de leurs anciennes positions
@@ -246,19 +257,5 @@ void shot_cleaner(char **fake_map){
 			}
 			(TabPointeursObus[i]->timingDeplacementObus)++;*/
 		}
-	}
-}
-
-void shot_manager(char **fake_map){
-	// On parcourt le tableau des obus pour tous les faire deplacer d'un accoup en même temps : c'est naturel
-	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
-		if (TabPointeursObus[i] != NULL){
-			//if (TabPointeursObus[i]->timingDeplacementObus%800 == 0){
-				//deplacement_obus_terminal(TabPointeursObus[i]);
-				animation_bullet(fake_map, TabPointeursObus[i]); // Animation par accoup de l'obus
-				/*TabPointeursObus[i]->timingDeplacementObus = 1;
-			}
-			(TabPointeursObus[i]->timingDeplacementObus)++;*/
-		}		
 	}
 }

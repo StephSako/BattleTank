@@ -105,7 +105,7 @@ void deplacer_tank_ennemis_terminal(char **fake_map){
 	while (temp != NULL){ // On boucle sur tous les tanks de la liste chaînée	
 		if (temp->camp == 'E'){ // On ne boucle que sur les tanks ennemis
 			if (temp->timingDeplacement%15000 == 0){
-				int directionAleatoire = rand()%(4); // Le mouvement des tanks est aléatoire	
+				int directionAleatoire = rand()%(4); // Le mouvement des tanks est aléatoire
 				switch(directionAleatoire){ // Selon la direction du tank ennemis
 					case(0): // Vers le haut
 						switch(temp->blindage){ // Selon la direction du tank ennemi
