@@ -5,7 +5,7 @@ struct TANK *creer_tank_joueur(char **fake_map, struct TANK** head, int pos_x, i
 	struct TANK *tank = (struct TANK*) malloc(sizeof(struct TANK)); // On créé notre tank joueur
 	
 	// On initialise chaque attributs du tank joueur
-	tank->pos_x = pos_x; tank->pos_y = pos_y; tank->direction = direction; tank->blindage_origine = 1; tank->etat = 2;
+	tank->pos_x = pos_x; tank->pos_y = pos_y; tank->direction = direction; tank->blindage_origine = 1; tank->etat = 2; tank->linearite = 0;
 	tank->blindage =  tank->blindage_origine; tank->nb_impacts = 0; tank->camp = 'P'; tank->timingDeplacement = 0; tank->timingTir = 0;
 	
 	switch(tank->blindage_origine){
@@ -54,7 +54,7 @@ void creer_tank_ennemis(char **fake_map, struct TANK **head, int pos_x, int pos_
 	repartitionTankEnnemis[blindage_origine]--; // On décrémente puisqu'un tank va être créé de ce blindage
 
 	// On initialise chaque attributs du tank ennemi
-	newEnnemyTank->pos_x = pos_x; newEnnemyTank->pos_y = pos_y; newEnnemyTank->direction = direction;
+	newEnnemyTank->pos_x = pos_x; newEnnemyTank->pos_y = pos_y; newEnnemyTank->direction = direction; newEnnemyTank->linearite = 0;
 	newEnnemyTank->blindage = blindage_origine; newEnnemyTank->blindage_origine = blindage_origine; newEnnemyTank->nb_impacts = 0;
 	newEnnemyTank->camp = 'E'; newEnnemyTank->etat = 2; newEnnemyTank->timingDeplacement = 1; newEnnemyTank->timingTir = 1;
 	
@@ -104,9 +104,28 @@ void deplacer_tank_ennemis_terminal(char **fake_map){
 	struct TANK *temp = head;
 	while (temp != NULL){ // On boucle sur tous les tanks de la liste chaînée	
 		if (temp->camp == 'E'){ // On ne boucle que sur les tanks ennemis
-			if (temp->timingDeplacement%15000 == 0){
-				int directionAleatoire = rand()%(4); // Le mouvement des tanks est aléatoire
-				switch(directionAleatoire){ // Selon la direction du tank ennemis
+
+			// On met un delai de changer de direction des tanks
+			if (temp->timingDeplacement%5000 == 0){
+				int direction = -1;
+				
+				// On fais bouger le tank sur 5 cases de suite pour créer une mouvement plus naturel et éviter le sur-place
+				if (temp->linearite < 5){
+					switch(temp->direction){ // Selon la direction du tank ennemi
+						case('A'): direction = 0; break;
+						case('B'): direction = 1; break;
+						case('C'): direction = 2; break;
+						case('D'): direction = 3; break;
+						default: break;
+					}
+					temp->linearite++;
+				} else{
+					temp->linearite = 0;
+					int directionAleatoire = rand()%(4); // Le mouvement des tanks est aléatoire au bout de 5 mouvements consécutifs
+					direction = directionAleatoire;
+				}
+				
+				switch(direction){
 					case(0): // Vers le haut
 						switch(temp->blindage){ // Selon la direction du tank ennemi
 							case(0): temp->carrosserie = carrosserieWTH; break;
@@ -148,8 +167,8 @@ void deplacer_tank_ennemis_terminal(char **fake_map){
 				temp->timingDeplacement = 0;
 			}
 			
-			if (temp->timingTir%40000 == 0){
-				//shot_creator(temp); // On fait tirer les tanks ennemis aléatoirement
+			if (temp->timingTir%30000 == 0){
+				shot_creator(temp); // On fait tirer les tanks ennemis aléatoirement
 				temp->timingTir = 0;
 			}
 			

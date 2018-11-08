@@ -91,6 +91,8 @@ struct TANK{
 	
 	int timingDeplacement;
 	int timingTir;
+	
+	int linearite;
 
 	struct TANK *suivant;
 };
