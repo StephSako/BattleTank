@@ -38,7 +38,7 @@ int main(){
 		head = NULL;
 		
 		// On initialise le tank du joueur
-		joueur = creer_tank_joueur(fake_map, &head, 8, 80, 'B'); // On créé et initialise le TANKP du JOUEUR
+		joueur = creer_tank_joueur(fake_map, &head, 8, 80, 'D'); // On créé et initialise le TANKP du JOUEUR
 		
 		// On place le joueur sur le terminal et dans la fake map
 		affichage_tank_terminal(joueur);
