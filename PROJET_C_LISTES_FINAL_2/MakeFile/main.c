@@ -1,14 +1,5 @@
 #include "../InitGame/InitGame.h"
 
-void affichage_mat_fake(int nbL, int nbC, char ** mat){
-	for (int i = 0; i < nbL; i++){
-		for (int j = 0; j < nbC; j++){
-			printf("%c", mat[i][j]);
-		}
-		printf("\n");
-	}
-}
-
 /* La fake_map est comme un calque permettant de gérer en background les collisions avec les tanks et les obus
 alors que la true map est juste la représentation graphique de la map en temps réèl dans le terminal */
 
@@ -56,7 +47,7 @@ int main(){
 			afficher_message_int(2, 140, vieJoueur); // On affiche la vie du joueur
 			if (NBTANKTOTAL < 10) afficher_message(1, 141, " "); // Régler un bug d'affichage
 			
-			// On lance des vagues de tanks par deux tant qu'on peux en créer									// ATTENTION
+			// On lance des vagues de tanks par 4 tant qu'on peux en créer									// ATTENTION
 			if (nb_tank_wave < 3 && NBTANKTOTAL >= 2){
 				// On définit l'emplacement du prochain tank à générer
 				if (nb_tank_wave%2 == 0) creer_tank_ennemis(fake_map, &head, 4, 2, 'C');

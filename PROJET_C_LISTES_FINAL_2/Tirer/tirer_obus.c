@@ -139,19 +139,9 @@ void AttaquerTank(char **mat, OBUSP obusP){
 }
 
 void animation_bullet(char **mat, OBUSP obusP){ // Avec la nouvelle position
+
 	// L'obus avance dans le vide
 	if (mat[obusP->pos_x][obusP->pos_y] == ' '){
-	
-		//effacer_obus_terminal(obusP->pos_x, obusP->pos_y);
-	
-		/*switch(obusP->direction){
-			case 'A': effacer_obus_terminal(obusP->pos_x--, obusP->pos_y); break;
-			case 'D': effacer_obus_terminal(obusP->pos_x, obusP->pos_y); break;	
-			case 'B': effacer_obus_terminal(obusP->pos_x++, obusP->pos_y); break;	
-			case 'C': effacer_obus_terminal(obusP->pos_x, obusP->pos_y++); break;
-			default : break;
-		}*/
-	
 		deplacement_obus_terminal(obusP);							// On affiche l'obus dans le terminal
 		mat[obusP->pos_x][obusP->pos_y] = '+';						// On ajoute l'obus dans la fake map
 	}
@@ -238,7 +228,7 @@ void shot_manager(char **fake_map){
 	
 	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
 		if (TabPointeursObus[i] != NULL){
-			if (TabPointeursObus[i]->timingDeplacementObus%351 == 0){
+			if (TabPointeursObus[i]->timingDeplacementObus%251 == 0){
 				animation_bullet(fake_map, TabPointeursObus[i]); // Animation par accoup de l'obus
 			}
 		}
@@ -246,7 +236,7 @@ void shot_manager(char **fake_map){
 	
 	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
 		if (TabPointeursObus[i] != NULL){
-			if (TabPointeursObus[i]->timingDeplacementObus%700 == 0){
+			if (TabPointeursObus[i]->timingDeplacementObus%500 == 0){
 			
 				// On efface et vide tous les obus de leurs anciennes positions
 				effacer_obus_terminal(TabPointeursObus[i]->pos_x, TabPointeursObus[i]->pos_y);
