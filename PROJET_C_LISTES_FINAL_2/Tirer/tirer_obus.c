@@ -23,12 +23,9 @@ void DeleteObusPTab(OBUSP obusPDeleted){
 // Supprime le tank détruit de la liste chaînée
 void SupprimerTank(struct TANK **head, int position){
 	// La liste est vide
-	if (*head == NULL){
-		return;
-	}
-
+	if (*head == NULL) return;
+	
 	struct TANK* temp = *head; 
-
 	// Si on veut supprimer le 1er tank de la liste
 	if (position == 0){
 		*head = temp->suivant;
@@ -37,48 +34,31 @@ void SupprimerTank(struct TANK **head, int position){
 	}
 	
 	// On cherche le tank précédant du tank à supprimer
-	for (int i = 0; temp != NULL && i < position-1; i++)
-		temp = temp->suivant; 
+	for (int i = 0; temp != NULL && i < position-1; i++) temp = temp->suivant; 
 
 	// Si position est supèrieure au nombre de tanks dans la liste
-	if (temp == NULL || temp->suivant == NULL){
-		return;
-	}
+	if (temp == NULL || temp->suivant == NULL) return;
 	
-	// Le tank temp->suivant est le tank à supprimer 
-    	// On stocke le pointeur du tank suivant au tank à supprimer 
+	// Le tank temp->suivant est le tank à supprimer et on stocke le pointeur du tank suivant au tank à supprimer 
 	struct TANK *suivant = temp->suivant->suivant; 
 
 	free(temp->suivant); // On libère la mémoire
 	temp->suivant = suivant; // Deliement du tank supprimé
 }
 
-void AttaquerTank(char **mat, OBUSP obusP){
-	
+void AttaquerTank(char **mat, OBUSP obusP){	
 	int pos_xTankAttaque = 0, pos_yTankAttaque = 0; // Position du tank attaqué et à rechercher dans le tableau d'obus
 	switch(obusP->direction){
-		case('D') : if (mat[obusP->pos_x][obusP->pos_y-4] == '*') pos_xTankAttaque = obusP->pos_x;
-				else if (mat[obusP->pos_x-1][obusP->pos_y-4] == '*') pos_xTankAttaque = obusP->pos_x-1;
-				else if (mat[obusP->pos_x-2][obusP->pos_y-4] == '*') pos_xTankAttaque = obusP->pos_x-2;
+		case('D') : for (int i = 0; i < 3; i++) if (mat[obusP->pos_x-i][obusP->pos_y-4] == '*') pos_xTankAttaque = obusP->pos_x-i;
 				pos_yTankAttaque = obusP->pos_y-4; break;
 				
-		case('B') : if (mat[obusP->pos_x][obusP->pos_y] == '*') pos_yTankAttaque = obusP->pos_y;
-				else if (mat[obusP->pos_x][obusP->pos_y-1] == '*') pos_yTankAttaque = obusP->pos_y-1;
-				else if (mat[obusP->pos_x][obusP->pos_y-2] == '*') pos_yTankAttaque = obusP->pos_y-2;
-				else if (mat[obusP->pos_x][obusP->pos_y-3] == '*') pos_yTankAttaque = obusP->pos_y-3;
-				else if (mat[obusP->pos_x][obusP->pos_y-4] == '*') pos_yTankAttaque = obusP->pos_y-4;
+		case('B') : for (int i = 0; i < 5; i++) if (mat[obusP->pos_x][obusP->pos_y-i] == '*') pos_yTankAttaque = obusP->pos_y-i;
 				pos_xTankAttaque = obusP->pos_x; break;
 		
-		case('C') : if (mat[obusP->pos_x][obusP->pos_y] == '*') pos_xTankAttaque = obusP->pos_x;
-				else if (mat[obusP->pos_x-1][obusP->pos_y] == '*') pos_xTankAttaque = obusP->pos_x-1;
-				else if (mat[obusP->pos_x-2][obusP->pos_y] == '*') pos_xTankAttaque = obusP->pos_x-2;
+		case('C') : for (int i = 0; i < 3; i++) if (mat[obusP->pos_x-i][obusP->pos_y] == '*') pos_xTankAttaque = obusP->pos_x-i;
 				pos_yTankAttaque = obusP->pos_y; break;
 		
-		case('A') : if (mat[obusP->pos_x-2][obusP->pos_y] == '*') pos_yTankAttaque = obusP->pos_y;
-				else if (mat[obusP->pos_x-2][obusP->pos_y-1] == '*') pos_yTankAttaque = obusP->pos_y-1;
-				else if (mat[obusP->pos_x-2][obusP->pos_y-2] == '*') pos_yTankAttaque = obusP->pos_y-2;
-				else if (mat[obusP->pos_x-2][obusP->pos_y-3] == '*') pos_yTankAttaque = obusP->pos_y-3;
-				else if (mat[obusP->pos_x-2][obusP->pos_y-4] == '*') pos_yTankAttaque = obusP->pos_y-4;
+		case('A') : for(int i = 0; i < 5; i++) if (mat[obusP->pos_x-2][obusP->pos_y-i] == '*') pos_yTankAttaque = obusP->pos_y-i;
 				pos_xTankAttaque = obusP->pos_x-2; break;
 		
 		default : break;
@@ -89,8 +69,7 @@ void AttaquerTank(char **mat, OBUSP obusP){
 	
 	while (temp != NULL){ // On boucle sur tous les tanks de la liste chaînée
 		if (temp->pos_x == pos_xTankAttaque && temp->pos_y == pos_yTankAttaque && temp->camp != obusP->camp){ // On désactive le tir allier
-			temp->nb_impacts++;
-			
+			temp->nb_impacts++;			
 			if (temp->camp == 'P') vieJoueur--; // On enlève de la vie au joueur
 
 			switch(temp->nb_impacts){
@@ -127,8 +106,7 @@ void AttaquerTank(char **mat, OBUSP obusP){
 							} temp->blindage--; temp->nb_impacts = 0;
 							effacer_tank_terminal(temp);
 							affichage_tank_terminal(temp); break;
-					}
-									
+					}				
 				default : break;
 			}
 			break; // Nous avons impacté le bon tank en lui abîmant sa carrosserie et en le réaffichant
@@ -160,7 +138,8 @@ void animation_bullet(char **mat, OBUSP obusP){ // Avec la nouvelle position
 					effacer_obus_terminal(obusP->pos_x, i);
 				}
 				if (son == 0){
-					system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3"); // On joue un bruitage avec d'un script (executé en fond)
+					// On joue un bruitage avec d'un script (executé en fond)
+					system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
 					son = 1;
 				}
 			}
@@ -210,14 +189,10 @@ void shot_creator(struct TANK *tank){
 		
 		// On deplace l'obus dans le terminal + fake map
 		switch(tank->direction){ // On initialise les attributs de l'obus tire en fonction des attributs du tank
-			case 'A':
-				obus->pos_x = tank->pos_x-1; obus->pos_y = tank->pos_y+2; break;
-			case 'D':
-				obus->pos_x = tank->pos_x+1; obus->pos_y = tank->pos_y-1; break;
-			case 'B':
-				obus->pos_x = tank->pos_x+3; obus->pos_y = tank->pos_y+2; break;
-			case 'C':
-				obus->pos_x = tank->pos_x+1; obus->pos_y = tank->pos_y+5; break;
+			case 'A': obus->pos_x = tank->pos_x-1; obus->pos_y = tank->pos_y+2; break;
+			case 'D': obus->pos_x = tank->pos_x+1; obus->pos_y = tank->pos_y-1; break;
+			case 'B': obus->pos_x = tank->pos_x+3; obus->pos_y = tank->pos_y+2; break;
+			case 'C': obus->pos_x = tank->pos_x+1; obus->pos_y = tank->pos_y+5; break;
 			default : break;
 		}
 		TabPointeursObus[firstEmptyIndexObusTab()] = obus; // On ajoute le pointeur d'obus dans le tableau
@@ -236,8 +211,7 @@ void shot_manager(char **fake_map){
 	
 	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
 		if (TabPointeursObus[i] != NULL){
-			if (TabPointeursObus[i]->timingDeplacementObus%500 == 0){
-			
+			if (TabPointeursObus[i]->timingDeplacementObus%500 == 0){			
 				// On efface et vide tous les obus de leurs anciennes positions
 				effacer_obus_terminal(TabPointeursObus[i]->pos_x, TabPointeursObus[i]->pos_y);
 				fake_map[TabPointeursObus[i]->pos_x][TabPointeursObus[i]->pos_y] = ' ';
@@ -254,11 +228,8 @@ void shot_manager(char **fake_map){
 				// Permet d'éviter des clignotements de l'obus (car il y a un delai pour l'affichage comme pour l'effacement)
 				if (fake_map[TabPointeursObus[i]->pos_x][TabPointeursObus[i]->pos_y] == ' '){
 					deplacement_obus_terminal(TabPointeursObus[i]); // Réaffiche l'obus en attendant son traitement
-				}
-				
-				TabPointeursObus[i]->timingDeplacementObus = 1;
-			}
-			TabPointeursObus[i]->timingDeplacementObus++;
+				} TabPointeursObus[i]->timingDeplacementObus = 1;
+			} TabPointeursObus[i]->timingDeplacementObus++;
 		}
 	}
 }

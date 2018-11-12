@@ -167,7 +167,7 @@ void deplacer_tank_ennemis_terminal(char **fake_map){
 				temp->timingDeplacement = 0;
 			}
 			
-			if (temp->timingTir%30000 == 0){
+			if (temp->timingTir%25000 == 0){
 				shot_creator(temp); // On fait tirer les tanks ennemis aléatoirement
 				temp->timingTir = 0;
 			}

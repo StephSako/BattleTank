@@ -39,7 +39,7 @@ int main(){
 		creer_tank_ennemis(fake_map, &head, 30, 137, 'D');
 		creer_tank_ennemis(fake_map, &head, 8, 130, 'D');
 		creer_tank_ennemis(fake_map, &head, 33, 29, 'D');
-
+		
 		// Si le joueur ne quitte pas, que la bombe n'a pas explosé et que le joueur est encore vivant et qu'il y a encore des tanks en vie
 		while ((key = key_pressed()) != 'q' && pioupiouAlive == 1 && joueur->etat > 0 &&  NBTANKTOTAL > 0){
 		
