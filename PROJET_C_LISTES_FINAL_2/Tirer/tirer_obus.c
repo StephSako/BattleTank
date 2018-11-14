@@ -203,14 +203,6 @@ void shot_manager(char **fake_map){
 	
 	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
 		if (TabPointeursObus[i] != NULL){
-			if (TabPointeursObus[i]->timingDeplacementObus%251 == 0){
-				animation_bullet(fake_map, TabPointeursObus[i]); // Animation par accoup de l'obus
-			}
-		}
-	}
-	
-	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
-		if (TabPointeursObus[i] != NULL){
 			if (TabPointeursObus[i]->timingDeplacementObus%500 == 0){		
 				// On efface et vide tous les obus de leurs anciennes positions
 				effacer_obus_terminal(TabPointeursObus[i]->pos_x, TabPointeursObus[i]->pos_y);
@@ -230,6 +222,14 @@ void shot_manager(char **fake_map){
 					deplacement_obus_terminal(TabPointeursObus[i]); // Réaffiche l'obus en attendant son traitement
 				} TabPointeursObus[i]->timingDeplacementObus = 1;
 			} TabPointeursObus[i]->timingDeplacementObus++;
+		}
+	}
+	
+	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
+		if (TabPointeursObus[i] != NULL){
+			if (TabPointeursObus[i]->timingDeplacementObus%251 == 0){
+				animation_bullet(fake_map, TabPointeursObus[i]); // Animation par accoup de l'obus
+			}
 		}
 	}
 }
