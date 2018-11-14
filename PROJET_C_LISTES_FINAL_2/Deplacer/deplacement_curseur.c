@@ -58,8 +58,8 @@ void afficher_message_nb_tank(int x, int y, int nb){
 
 void afficher_message_vie(int x, int y, int vie){
 	gotoxy(x, y);
-	if(vie > 3) printf("%s%d", MAGENTA, vie);
-	else printf("%s%d", YELLOW, vie);
+	if(vie > 3) printf("%s%d", YELLOW, vie);
+	else printf("%s%d", MAGENTA, vie);
 	printf("%s", NORMAL);
 }
 

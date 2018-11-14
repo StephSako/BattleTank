@@ -69,45 +69,37 @@ void AttaquerTank(char **mat, OBUSP obusP){
 	
 	while (temp != NULL){ // On boucle sur tous les tanks de la liste chaînée
 		if (temp->pos_x == pos_xTankAttaque && temp->pos_y == pos_yTankAttaque && temp->camp != obusP->camp){ // On désactive le tir allier
+			
 			temp->nb_impacts++;			
 			if (temp->camp == 'P') vieJoueur--; // On enlève de la vie au joueur
 
-			switch(temp->nb_impacts){
-				case NBCOUPSABIMENT : // A partir de NBCOUPSABIMENT pour chaque blindage, la carrosserie s'abîme
-					switch(temp->blindage){
-						case 0 :
-							system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
-							temp->carrosserie = carrosserieTankDetruit; // On change la carrosserie du tank
-							NBTANKTOTAL--; // Un tank de moins à créé
-							nb_tank_wave--; // Un tank de moins dans la vague : il faut en créér un autre
-							temp->etat = 0; // Le tank est mort
-							if (temp->camp == 'P') joueurMort = 1;
-							
-							// On affiche les poussières des tanks en train de mourrir
-							int randSuppr = 0;
-							while (randSuppr <= 12000){
-								affichage_tank_terminal(temp);
-								randSuppr++; // Gagner du temps pour afficher les poussières (~ delay())
-							}
-							
-							effacer_tank_terminal(temp); // On efface le tank dans le terminal
-							effacer_map_tank(mat, temp); // On efface le tank dans la fake_map
-							SupprimerTank(&head, position);
-							break;
-							
-						default : // Le tank n'est pas encore mort
-							switch(temp->direction){
-								case 'A': temp->carrosserie = carrosserieWTH; break;
-								case 'B': temp->carrosserie = carrosserieWTB; break;
-								case 'C': temp->carrosserie = carrosserieWTD; break;
-								case 'D': temp->carrosserie = carrosserieWTG; break;
-								default : break;
-								
-							} temp->blindage--; temp->nb_impacts = 0;
-							effacer_tank_terminal(temp);
-							affichage_tank_terminal(temp); break;
-					}				
-				default : break;
+			if(temp->nb_impacts == NBCOUPSABIMENT){ // A partir de NBCOUPSABIMENT pour chaque blindage, la carrosserie s'abîme
+				switch(temp->blindage){
+					case 0 :
+						system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
+						temp->carrosserie = carrosserieTankDetruit; // On change la carrosserie du tank
+						NBTANKTOTAL--; // Un tank de moins à créé
+						nb_tank_wave--; // Un tank de moins dans la vague : il faut en créér un autre
+						temp->etat = 0; // Le tank est mort
+						if (temp->camp == 'P') joueurMort = 1;
+						
+						// On affiche les poussières des tanks en train de mourrir
+						int randSuppr = 0;
+						while (randSuppr <= 12000){
+							affichage_tank_terminal(temp);
+							randSuppr++; // Gagner du temps pour afficher les poussières (~ delay())
+						}
+						
+						effacer_tank_terminal(temp); // On efface le tank dans le terminal
+						effacer_map_tank(mat, temp); // On efface le tank dans la fake_map
+						SupprimerTank(&head, position);
+						break;
+						
+					default : // Le tank n'est pas encore mort
+						temp->blindage--; temp->nb_impacts = 0;
+						effacer_tank_terminal(temp);
+						affichage_tank_terminal(temp); break;
+					}
 			}
 			break; // Nous avons impacté le bon tank en lui abîmant sa carrosserie et en le réaffichant
 		}

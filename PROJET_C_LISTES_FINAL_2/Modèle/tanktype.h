@@ -47,7 +47,7 @@ int NBTANKTOTAL;
 #define NBTANKMEDIUMDIFFICILE 10
 #define NBTANKSTRONGDIFFICILE 10
 
-#define NBCOUPSABIMENT 3 // Nombre de coups pour les blindages faibles se détruisent, et les blindages moyens et forts rétrogradent
+int NBCOUPSABIMENT; // Nombre de coups pour les blindages faibles se détruisent, et les blindages moyens et forts rétrogradent
 
 // Position du selecteur de choix dans le menu
 int choix_x = 10;
