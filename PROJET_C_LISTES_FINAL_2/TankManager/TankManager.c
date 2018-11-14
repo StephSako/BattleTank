@@ -1,6 +1,6 @@
 #include "../Traiter_fichiers_texte/flux_fichier.h"
 
-struct TANK *creer_tank_joueur(struct TANK** head, int pos_x, int pos_y, char direction){
+struct TANK *creer_tank_joueur(int pos_x, int pos_y, char direction){
 	// Créer et initialise le tank du joueur
 	struct TANK *tank = (struct TANK*) malloc(sizeof(struct TANK)); // On créé notre tank joueur
 	
@@ -35,14 +35,14 @@ struct TANK *creer_tank_joueur(struct TANK** head, int pos_x, int pos_y, char di
 			} break;
 	}
 
-	tank->suivant = (*head); 
-    	(*head) = tank;
+	tank->suivant = head; 
+    	head = tank;
     	
     	remplir_map_tank(tank); // On remplit la fake map à la création pout être 'touchable'
-	return (*head);
+	return head;
 }
 
-void creer_tank_ennemis(struct TANK **head, int pos_x, int pos_y, char direction){
+void creer_tank_ennemis(int pos_x, int pos_y, char direction){
 
 	// Création du nouvel élément
 	struct TANK *newEnnemyTank = (struct TANK*) malloc(sizeof(struct TANK)); // On créé notre tank ennemi
@@ -91,8 +91,8 @@ void creer_tank_ennemis(struct TANK **head, int pos_x, int pos_y, char direction
 	}
 
 	// Insertion du nouveau tank ennemi au début de la liste chainées
-	newEnnemyTank->suivant = (*head);
-    	(*head) = newEnnemyTank;
+	newEnnemyTank->suivant = head;
+    	head = newEnnemyTank;
     	remplir_map_tank(newEnnemyTank); // On remplit la fake map avec le tank
     	affichage_tank_terminal(newEnnemyTank); // On affiche le nouveau tank ennemis sur le terminal
     	
@@ -173,7 +173,7 @@ void deplacer_tank_ennemis_terminal(){
 				temp->timingDeplacement = 0;
 			}
 			
-			if (temp->timingTir%25000 == 0){
+			if (temp->timingTir%30000 == 0){
 				shot_creator(temp); // On fait tirer les tanks ennemis aléatoirement
 				temp->timingTir = 0;
 			}

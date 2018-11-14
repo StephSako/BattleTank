@@ -77,16 +77,16 @@ void initialiserLaPartieSelonLeMode(){
 	head = NULL;
 	
 	// On initialise le tank du joueur
-	joueur = creer_tank_joueur(&head, 9, 74, 'B'); // On créé et initialise le TANKP du JOUEUR
+	joueur = creer_tank_joueur(9, 74, 'B'); // On créé et initialise le TANKP du JOUEUR
 	
 	// On place le joueur sur le terminal et dans la fake map
 	affichage_tank_terminal(joueur);
 
 	// On créé quatre premiers tanks ennemis
-	creer_tank_ennemis(&head, 4, 1, 'C');
-	creer_tank_ennemis(&head, 30, 138, 'D');
-	creer_tank_ennemis(&head, 8, 130, 'D');
-	creer_tank_ennemis(&head, 33, 29, 'D');
+	creer_tank_ennemis(4, 1, 'C');
+	creer_tank_ennemis(30, 138, 'D');
+	creer_tank_ennemis(8, 130, 'D');
+	creer_tank_ennemis(33, 29, 'D');
 }
 
 void MenuSelectionMode(){
