@@ -5,7 +5,11 @@ void gotoxy(int x, int y){
 }
 
 void affichage_tank_terminal(struct TANK *tank){
-	if (tank->camp == 'E') printf("%s", RED);
+	if (tank->camp == 'E'){
+		if (tank->blindage == 0) printf("%s", YELLOW);
+		else if (tank->blindage == 1) printf("%s", MAGENTA);
+		else if (tank->blindage == 2) printf("%s", RED);
+	}
 	else if (tank->camp == 'P') printf("%s", GREEN);
 	
 	for (int i = 0; i < LONGUEURTANK; i++){
@@ -47,9 +51,16 @@ void afficher_message(int x, int y, char* message){
 	printf("%s", message);
 }
 
-void afficher_message_int(int x, int y, int nb){
+void afficher_message_nb_tank(int x, int y, int nb){
 	gotoxy(x, y);
 	printf("%d", nb);
+}
+
+void afficher_message_vie(int x, int y, int vie){
+	gotoxy(x, y);
+	if(vie > 3) printf("%s%d", MAGENTA, vie);
+	else printf("%s%d", YELLOW, vie);
+	printf("%s", NORMAL);
 }
 
 void effacer_choix(int x, int y){

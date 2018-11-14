@@ -9,7 +9,7 @@ struct TANK *creer_tank_joueur(char **fake_map, struct TANK** head, int pos_x, i
 	tank->blindage =  tank->blindage_origine; tank->nb_impacts = 0; tank->camp = 'P'; tank->timingDeplacement = 0; tank->timingTir = 0;
 	
 	switch(tank->blindage_origine){
-		case(0): vieJoueur = 3;
+		case(0):
 			switch(direction){ // Selon la direction du tank joueur
 				case('A'): tank->carrosserie = carrosserieWTH; break;
 				case('B'): tank->carrosserie = carrosserieWTB; break;
@@ -17,7 +17,7 @@ struct TANK *creer_tank_joueur(char **fake_map, struct TANK** head, int pos_x, i
 				case('D'): tank->carrosserie = carrosserieWTG; break;
 				default: break;
 			} break;
-		case(1): vieJoueur = 6;
+		case(1): 
 			switch(direction){ // Selon la direction du tank joueur
 				case('A'): tank->carrosserie = carrosserieMTH; break;
 				case('B'): tank->carrosserie = carrosserieMTB; break;
@@ -25,7 +25,7 @@ struct TANK *creer_tank_joueur(char **fake_map, struct TANK** head, int pos_x, i
 				case('D'): tank->carrosserie = carrosserieMTG; break;
 				default: break;
 			} break;
-		case(2): vieJoueur = 9;
+		case(2):
 			switch(direction){ // Selon la direction du tank joueur
 				case('A'): tank->carrosserie = carrosserieSTH; break;
 				case('B'): tank->carrosserie = carrosserieSTB; break;
