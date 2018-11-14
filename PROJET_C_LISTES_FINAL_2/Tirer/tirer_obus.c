@@ -46,19 +46,19 @@ void SupprimerTank(struct TANK **head, int position){
 	temp->suivant = suivant; // Deliement du tank supprimé
 }
 
-void AttaquerTank(char **mat, OBUSP obusP){	
+void AttaquerTank(OBUSP obusP){	
 	int pos_xTankAttaque = 0, pos_yTankAttaque = 0; // Position du tank attaqué et à rechercher dans le tableau d'obus
 	switch(obusP->direction){
-		case('D') : for (int i = 0; i < 3; i++) if (mat[obusP->pos_x-i][obusP->pos_y-4] == '*') pos_xTankAttaque = obusP->pos_x-i;
+		case('D') : for (int i = 0; i < 3; i++) if (fake_map[obusP->pos_x-i][obusP->pos_y-4] == '*') pos_xTankAttaque = obusP->pos_x-i;
 				pos_yTankAttaque = obusP->pos_y-4; break;
 				
-		case('B') : for (int i = 0; i < 5; i++) if (mat[obusP->pos_x][obusP->pos_y-i] == '*') pos_yTankAttaque = obusP->pos_y-i;
+		case('B') : for (int i = 0; i < 5; i++) if (fake_map[obusP->pos_x][obusP->pos_y-i] == '*') pos_yTankAttaque = obusP->pos_y-i;
 				pos_xTankAttaque = obusP->pos_x; break;
 		
-		case('C') : for (int i = 0; i < 3; i++) if (mat[obusP->pos_x-i][obusP->pos_y] == '*') pos_xTankAttaque = obusP->pos_x-i;
+		case('C') : for (int i = 0; i < 3; i++) if (fake_map[obusP->pos_x-i][obusP->pos_y] == '*') pos_xTankAttaque = obusP->pos_x-i;
 				pos_yTankAttaque = obusP->pos_y; break;
 		
-		case('A') : for(int i = 0; i < 5; i++) if (mat[obusP->pos_x-2][obusP->pos_y-i] == '*') pos_yTankAttaque = obusP->pos_y-i;
+		case('A') : for(int i = 0; i < 5; i++) if (fake_map[obusP->pos_x-2][obusP->pos_y-i] == '*') pos_yTankAttaque = obusP->pos_y-i;
 				pos_xTankAttaque = obusP->pos_x-2; break;
 		
 		default : break;
@@ -91,7 +91,7 @@ void AttaquerTank(char **mat, OBUSP obusP){
 						}
 						
 						effacer_tank_terminal(temp); // On efface le tank dans le terminal
-						effacer_map_tank(mat, temp); // On efface le tank dans la fake_map
+						effacer_map_tank(temp); // On efface le tank dans la fake_map
 						SupprimerTank(&head, position);
 						break;
 						
@@ -108,25 +108,25 @@ void AttaquerTank(char **mat, OBUSP obusP){
 	}
 }
 
-void animation_bullet(char **mat, OBUSP obusP){ // Avec la nouvelle position
+void animation_bullet(OBUSP obusP){ // Avec la nouvelle position
 
 	// L'obus avance dans le vide
-	if (mat[obusP->pos_x][obusP->pos_y] == ' '){
+	if (fake_map[obusP->pos_x][obusP->pos_y] == ' '){
 		deplacement_obus_terminal(obusP);							// On affiche l'obus dans le terminal
-		mat[obusP->pos_x][obusP->pos_y] = '+';						// On ajoute l'obus dans la fake map
+		fake_map[obusP->pos_x][obusP->pos_y] = '+';						// On ajoute l'obus dans la fake map
 	}
 	// Collision avec une brique
-	else if (mat[obusP->pos_x][obusP->pos_y] == 'C' || mat[obusP->pos_x][obusP->pos_y] == 'P'){
+	else if (fake_map[obusP->pos_x][obusP->pos_y] == 'C' || fake_map[obusP->pos_x][obusP->pos_y] == 'P'){
 		
 		int son = 0; // On joue le bruitage ou pas ? (1 bruitage pour 3 briques pour ne pas déranger le joueur avec trop de bruitages)
 		if (obusP->direction == 'A' || obusP->direction == 'B'){
 			for (int i = obusP->pos_y-1; i <= obusP->pos_y+1; i++){
-				if (mat[obusP->pos_x][i] == 'P' && obusP->provenance == 2){		// Tir tank superarmé sur une brique dur
-					mat[obusP->pos_x][i] = ' ';
+				if (fake_map[obusP->pos_x][i] == 'P' && obusP->provenance == 2){		// Tir tank superarmé sur une brique dur
+					fake_map[obusP->pos_x][i] = ' ';
 					effacer_obus_terminal(obusP->pos_x, i);
 				}
-				else if (mat[obusP->pos_x][i] == 'C'){					// Tir sur une brique normale
-					mat[obusP->pos_x][i] = ' ';
+				else if (fake_map[obusP->pos_x][i] == 'C'){					// Tir sur une brique normale
+					fake_map[obusP->pos_x][i] = ' ';
 					effacer_obus_terminal(obusP->pos_x, i);
 				}
 				if (son == 0){
@@ -138,12 +138,12 @@ void animation_bullet(char **mat, OBUSP obusP){ // Avec la nouvelle position
 		} else if (obusP->direction == 'C' || obusP->direction == 'D'){
 			
 			for (int i = obusP->pos_x-1; i <= obusP->pos_x+1; i++){
-				if (mat[i][obusP->pos_y] == 'P' && obusP->provenance == 2){
-					mat[i][obusP->pos_y] = ' ';
+				if (fake_map[i][obusP->pos_y] == 'P' && obusP->provenance == 2){
+					fake_map[i][obusP->pos_y] = ' ';
 					effacer_obus_terminal(i, obusP->pos_y);
 				}
-				else if (mat[i][obusP->pos_y] == 'C'){
-					mat[i][obusP->pos_y] = ' ';
+				else if (fake_map[i][obusP->pos_y] == 'C'){
+					fake_map[i][obusP->pos_y] = ' ';
 					effacer_obus_terminal(i, obusP->pos_y);
 				}
 				if (son == 0){
@@ -155,17 +155,17 @@ void animation_bullet(char **mat, OBUSP obusP){ // Avec la nouvelle position
 		DeleteObusPTab(obusP); // On supprime l'obus dans le tableau de pointeurs d'obus pour ne plus le traiter
 	}
 	// Un tank ENNEMI a tiré sur la bombe à protéger
-	else if (mat[obusP->pos_x][obusP->pos_y] == 'B' && obusP->camp == 'E'){
+	else if (fake_map[obusP->pos_x][obusP->pos_y] == 'B' && obusP->camp == 'E'){
 		pioupiouAlive = 0;
 		effacer_obus_terminal(obusP->pos_x, obusP->pos_y);
-		mat[obusP->pos_x][obusP->pos_y] = ' ';
+		fake_map[obusP->pos_x][obusP->pos_y] = ' ';
 		DeleteObusPTab(obusP);
 		system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosionFin.mp3");
 	}
 	// Collision avec un tank ou une brique non destructible (eau, roseau, limite de la map)
 	else{
-		if (mat[obusP->pos_x][obusP->pos_y] == '*' || mat[obusP->pos_x][obusP->pos_y] == 'T')
-			AttaquerTank(mat, obusP); // On cherche le tank et on l'attaque s'il y en a eu un de touché	
+		if (fake_map[obusP->pos_x][obusP->pos_y] == '*' || fake_map[obusP->pos_x][obusP->pos_y] == 'T')
+			AttaquerTank(obusP); // On cherche le tank et on l'attaque s'il y en a eu un de touché	
 		DeleteObusPTab(obusP); // On supprime l'obus qui a percuté un obstacle
 	}
 }
@@ -191,7 +191,7 @@ void shot_creator(struct TANK *tank){
 	}
 }
 
-void shot_manager(char **fake_map){
+void shot_manager(){
 	
 	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
 		if (TabPointeursObus[i] != NULL){
@@ -220,7 +220,7 @@ void shot_manager(char **fake_map){
 	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
 		if (TabPointeursObus[i] != NULL){
 			if (TabPointeursObus[i]->timingDeplacementObus%251 == 0){
-				animation_bullet(fake_map, TabPointeursObus[i]); // Animation par accoup de l'obus
+				animation_bullet(TabPointeursObus[i]); // Animation par accoup de l'obus
 			}
 		}
 	}

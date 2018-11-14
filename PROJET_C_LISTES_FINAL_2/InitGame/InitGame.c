@@ -66,6 +66,27 @@ void initialiserLaPartieSelonLeMode(){
 		repartitionTankEnnemis[1] = NBTANKMEDIUMDIFFICILE; // ... 10 tanks moyens
 		repartitionTankEnnemis[2] = NBTANKSTRONGDIFFICILE; // ... 10 tanks forts
 	}
+	
+	// Chargement de la fake_map
+	fake_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAPTERMINAL);
+	
+	// On initialise les carrosseries des tanks
+	init_carrosseries();
+
+	// On initialise une liste chaînée vide
+	head = NULL;
+	
+	// On initialise le tank du joueur
+	joueur = creer_tank_joueur(&head, 8, 80, 'D'); // On créé et initialise le TANKP du JOUEUR
+	
+	// On place le joueur sur le terminal et dans la fake map
+	affichage_tank_terminal(joueur);
+
+	// On créé quatre premiers tanks ennemis
+	creer_tank_ennemis(&head, 4, 1, 'C');
+	creer_tank_ennemis(&head, 30, 138, 'D');
+	creer_tank_ennemis(&head, 8, 130, 'D');
+	creer_tank_ennemis(&head, 33, 29, 'D');
 }
 
 void MenuSelectionMode(){

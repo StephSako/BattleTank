@@ -1,6 +1,6 @@
 #include "../Traiter_fichiers_texte/flux_fichier.h"
 
-struct TANK *creer_tank_joueur(char **fake_map, struct TANK** head, int pos_x, int pos_y, char direction){
+struct TANK *creer_tank_joueur(struct TANK** head, int pos_x, int pos_y, char direction){
 	// Créer et initialise le tank du joueur
 	struct TANK *tank = (struct TANK*) malloc(sizeof(struct TANK)); // On créé notre tank joueur
 	
@@ -38,11 +38,11 @@ struct TANK *creer_tank_joueur(char **fake_map, struct TANK** head, int pos_x, i
 	tank->suivant = (*head); 
     	(*head) = tank;
     	
-    	remplir_map_tank(fake_map, tank); // On remplit la fake map à la création pout être 'touchable'
+    	remplir_map_tank(tank); // On remplit la fake map à la création pout être 'touchable'
 	return (*head);
 }
 
-void creer_tank_ennemis(char **fake_map, struct TANK **head, int pos_x, int pos_y, char direction){
+void creer_tank_ennemis(struct TANK **head, int pos_x, int pos_y, char direction){
 
 	// Création du nouvel élément
 	struct TANK *newEnnemyTank = (struct TANK*) malloc(sizeof(struct TANK)); // On créé notre tank ennemi
@@ -93,13 +93,13 @@ void creer_tank_ennemis(char **fake_map, struct TANK **head, int pos_x, int pos_
 	// Insertion du nouveau tank ennemi au début de la liste chainées
 	newEnnemyTank->suivant = (*head);
     	(*head) = newEnnemyTank;
-    	remplir_map_tank(fake_map, newEnnemyTank); // On remplit la fake map avec le tank
+    	remplir_map_tank(newEnnemyTank); // On remplit la fake map avec le tank
     	affichage_tank_terminal(newEnnemyTank); // On affiche le nouveau tank ennemis sur le terminal
     	
     	nb_tank_wave++; // Un tank de plus dans la vague de tanks ennemis
 }
 
-void deplacer_tank_ennemis_terminal(char **fake_map){
+void deplacer_tank_ennemis_terminal(){
 
 	struct TANK *temp = head;
 	while (temp != NULL){ // On boucle sur tous les tanks de la liste chaînée	
@@ -139,7 +139,7 @@ void deplacer_tank_ennemis_terminal(char **fake_map){
 							case(2): temp->carrosserie = carrosserieSTH; break;
 							default: break;
 						} temp->direction = 'A';
-						deplacement_tank_haut(fake_map, temp); break; // On effectue le déplacement
+						deplacement_tank_haut(temp); break; // On effectue le déplacement
 						
 					case(1): // Vers le bas
 						switch(temp->blindage){
@@ -148,7 +148,7 @@ void deplacer_tank_ennemis_terminal(char **fake_map){
 							case(2): temp->carrosserie = carrosserieSTB; break;
 							default: break;
 						} temp->direction = 'B';
-						deplacement_tank_bas(fake_map, temp); break;
+						deplacement_tank_bas(temp); break;
 						
 					case(2): // Vers la droite
 						switch(temp->blindage){
@@ -157,7 +157,7 @@ void deplacer_tank_ennemis_terminal(char **fake_map){
 							case(2): temp->carrosserie = carrosserieSTD; break;
 							default: break;
 						} temp->direction = 'C';
-						deplacement_tank_droite(fake_map, temp); break;
+						deplacement_tank_droite(temp); break;
 						
 					case(3): // Vers la gauche
 						switch(temp->blindage){
@@ -166,7 +166,7 @@ void deplacer_tank_ennemis_terminal(char **fake_map){
 							case(2): temp->carrosserie = carrosserieSTG; break;
 							default: break;
 						} temp->direction = 'D';
-						deplacement_tank_gauche(fake_map, temp); break;
+						deplacement_tank_gauche(temp); break;
 
 					default : break;
 				}
@@ -185,7 +185,7 @@ void deplacer_tank_ennemis_terminal(char **fake_map){
 	}	
 }
 
-void deplacer_tank_joueur_terminal(char **fake_map, struct TANK *joueur){
+void deplacer_tank_joueur_terminal(struct TANK *joueur){
 
 	switch(joueur->direction){ // Selon la direction du tank du joueur
 		case('A'): // Vers le haut
@@ -194,28 +194,28 @@ void deplacer_tank_joueur_terminal(char **fake_map, struct TANK *joueur){
 				case(1): joueur->carrosserie = carrosserieMTH; break;
 				case(2): joueur->carrosserie = carrosserieSTH; break;
 				default: break;
-			} deplacement_tank_haut(fake_map, joueur); break; // On effectue le déplacement
+			} deplacement_tank_haut(joueur); break; // On effectue le déplacement
 			
 		case('B'): // Vers le bas
 			switch(joueur->blindage){
 				case(0): joueur->carrosserie = carrosserieWTB; break;
 				case(1): joueur->carrosserie = carrosserieMTB; break;
 				case(2): joueur->carrosserie = carrosserieSTB; break;
-			} deplacement_tank_bas(fake_map, joueur); break;
+			} deplacement_tank_bas(joueur); break;
 			
 		case('C'): // Vers la droite
 			switch(joueur->blindage){
 				case(0): joueur->carrosserie = carrosserieWTD; break;
 				case(1): joueur->carrosserie = carrosserieMTD; break;
 				case(2): joueur->carrosserie = carrosserieSTD; break;
-			} deplacement_tank_droite(fake_map, joueur); break;
+			} deplacement_tank_droite(joueur); break;
 			
 		case('D'): // Vers la gauche
 			switch(joueur->blindage){
 				case(0): joueur->carrosserie = carrosserieWTG; break;
 				case(1): joueur->carrosserie = carrosserieMTG; break;
 				case(2): joueur->carrosserie = carrosserieSTG; break;
-			} deplacement_tank_gauche(fake_map, joueur); break;
+			} deplacement_tank_gauche(joueur); break;
 
 		default : break;
 	}
