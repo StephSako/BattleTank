@@ -20,17 +20,13 @@ void init_terminal(){
 void quit_terminal(){
 	system("clear");
 	
-	if (pioupiouAlive == 1 && joueurMort == 0 && key != 'q' && mode != 3) // Le joueur a gagné
-		afficher_message(15, 60, "Vous avez gagné !!");
-	else if (pioupiouAlive == 0)
-		afficher_message(15, 48, "Vous avez perdu ... la bombe a explosé");
-	else if (joueurMort == 1)
-		afficher_message(15, 48, "Vous avez perdu ... vous êtes mort");
-	else { // Sinon le joueur a quitté
-		afficher_message(15, 60, "Vous quittez le jeu ...");
+	if (pioupiouAlive == 1 && joueurMort == 0 && key != 'q' && mode != 3) /* Le joueur a gagné*/ afficher_fichier(PATHMENUVICTOIRE);
+	else if (pioupiouAlive == 0) /* La bombe a explosé*/ afficher_fichier(PATHMENUEXPLOSION);
+	else if (joueurMort == 1) /* Le joueur est mort*/ afficher_fichier(PATHMENUMORT);
+	else { /* Le joueur a quitté*/ afficher_fichier(PATHMENUQUITTER);
 	}
-	fflush(stdout);
-	system("sleep 0.8");
+	
+	while ((key = key_pressed()) != ' '){}
 	system("setterm -cursor on");
 	system("stty echo");
 	system("clear");
@@ -50,26 +46,21 @@ void initialiserLaPartieSelonLeMode(){
 	
 	// On initialise la répartition des différents types de tanks ennemis
 	repartitionTankEnnemis = allocation_dyn_tab_repar_tank_ennemis();
+	true_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAPTERMINAL); // On initialise la map à afficher
+	affichage_mat(LONGUEURMAP, LARGEURMAP, true_map); // On l'affiche
 	
 	if (mode == 1){											// MODE TERMINAL FACILE
-		true_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAPTERMINAL); // On initialise la map à afficher
-		affichage_mat(LONGUEURMAP, LARGEURMAP, true_map); // On l'affiche
-		
 		NBTANKTOTAL = 20;
 		// On initialise la répartition des différents types de tanks ennemis
 		repartitionTankEnnemis[0] = NBTANKWEAKFACILE; // ... 8 tanks faibles
 		repartitionTankEnnemis[1] = NBTANKMEDIUMFACILE; // ... 7 tanks moyens
 		repartitionTankEnnemis[2] = NBTANKSTRONGFACILE; // ... 5 tanks forts
 	}
-	else if (mode == 2){										// MODE TERMINAL DIFFICILE
-		true_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAPTERMINAL);
-		affichage_mat(LONGUEURMAP, LARGEURMAP, true_map);
-		
+	else if (mode == 2){										// MODE TERMINAL DIFFICILE		
 		NBTANKTOTAL = 30;
 		repartitionTankEnnemis[0] = NBTANKWEAKDIFFICILE; // ... 10 tanks faibles
 		repartitionTankEnnemis[1] = NBTANKMEDIUMDIFFICILE; // ... 10 tanks moyens
 		repartitionTankEnnemis[2] = NBTANKSTRONGDIFFICILE; // ... 10 tanks forts
-		
 	}
 }
 

@@ -72,6 +72,10 @@ char **true_map; // Tableau contenant la map à afficher
 
 char *PATHMENU = "../Modèle/Fichiers_texte_menu/main_menu"; // Chemin du menu principal
 char *PATHMENUTERMINAL = "../Modèle/Fichiers_texte_menu/main_menu_difficulte"; // Chemin du menu terminal
+char *PATHMENUVICTOIRE = "../Modèle/Fichiers_texte_menu/menu_victoire"; // Chemin du menu quand le joueur est mort
+char *PATHMENUEXPLOSION = "../Modèle/Fichiers_texte_menu/menu_explosion"; // Chemin du menu quand la bombe a explosé
+char *PATHMENUMORT = "../Modèle/Fichiers_texte_menu/menu_mort"; // Chemin du menu quand le joueur est mort
+char *PATHMENUQUITTER = "../Modèle/Fichiers_texte_menu/menu_quitter"; // Chemin du menu quand le joueur a quitté
 
 /**********************************************************Structure du tank du joueur**********************************************************/
 
