@@ -1,4 +1,4 @@
-#include "InitGame.c"
+#include "GameManager.c"
 
 OBUSP * allocation_dyn_tab_obus();
 int * allocation_dyn_tab_repar_tank_ennemis();

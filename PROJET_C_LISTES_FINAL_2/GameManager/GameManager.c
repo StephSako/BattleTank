@@ -1,4 +1,4 @@
-#include "../TankEnnemis/TankEnnemis.h"
+#include "../TankManager/TankManager.h"
 
 OBUSP * allocation_dyn_tab_obus(){
 	return malloc(NBOBUSALLOWED * sizeof(OBUSP));
@@ -77,7 +77,7 @@ void initialiserLaPartieSelonLeMode(){
 	head = NULL;
 	
 	// On initialise le tank du joueur
-	joueur = creer_tank_joueur(&head, 8, 80, 'D'); // On créé et initialise le TANKP du JOUEUR
+	joueur = creer_tank_joueur(&head, 9, 74, 'B'); // On créé et initialise le TANKP du JOUEUR
 	
 	// On place le joueur sur le terminal et dans la fake map
 	affichage_tank_terminal(joueur);
@@ -90,6 +90,10 @@ void initialiserLaPartieSelonLeMode(){
 }
 
 void MenuSelectionMode(){
+
+	// On initialise la selection dans le menu
+	deplacement_choix(choix_x, choix_y);
+
 	while((key = key_pressed()) != 'q'){
 		if (key == 'A' || key == 'B'){ // Naviguer dans le menu = HAUT / BAS
 			effacer_choix(choix_x, choix_y);

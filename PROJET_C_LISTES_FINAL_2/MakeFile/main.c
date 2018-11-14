@@ -1,4 +1,4 @@
-#include "../InitGame/InitGame.h"
+#include "../GameManager/GameManager.h"
 
 /* La fake_map est comme un calque permettant de gérer en background les collisions avec les tanks et les obus
 alors que la true map est juste la représentation graphique de la map en temps réèl dans le terminal */
@@ -8,9 +8,6 @@ int main(){
 
 	// Chargement du menu
 	afficher_fichier(PATHMENU);
-	
-	// On initialise la selection dans le menu
-	deplacement_choix(choix_x, choix_y);
 	
 	MenuSelectionMode(); // Le menu de selection du mode de jeu se lance
 

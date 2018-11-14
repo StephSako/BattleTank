@@ -18,13 +18,13 @@ tirer_obus.o : ../Tirer/tirer_obus.h deplacement_objet.o
 flux_fichier.o : ../Traiter_fichiers_texte/flux_fichier.h tirer_obus.o
 	gcc -c -Werror -Wall ../Traiter_fichiers_texte/flux_fichier.c
 	
-TankEnnemis.o : ../TankEnnemis/TankEnnemis.h flux_fichier.o
-	gcc -c -Werror -Wall ../TankEnnemis/TankEnnemis.c
+TankManager.o : ../TankManager/TankManager.h flux_fichier.o
+	gcc -c -Werror -Wall ../TankManager/TankManager.c
 
-InitGame.o : ../InitGame/InitGame.h TankEnnemis.o
-	gcc -c -Werror -Wall ../InitGame/InitGame.c
+GameManager.o : ../GameManager/GameManager.h TankManager.o
+	gcc -c -Werror -Wall ../GameManager/GameManager.c
 
-main.o : main.c InitGame.o
+main.o : main.c GameManager.o
 	gcc -c -Werror -Wall main.c
 	
 AlesieaBattle : main.o

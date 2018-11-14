@@ -1,4 +1,4 @@
-#include "TankEnnemis.c"
+#include "TankManager.c"
 
 struct TANK *creer_tank_joueur(struct TANK **head, int pos_x, int pos_y, char direction);
 void creer_tank_ennemis(struct TANK **head, int pos_x, int pos_y, char direction);
