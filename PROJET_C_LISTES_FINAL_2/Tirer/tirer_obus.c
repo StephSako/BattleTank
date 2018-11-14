@@ -211,7 +211,7 @@ void shot_manager(char **fake_map){
 	
 	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
 		if (TabPointeursObus[i] != NULL){
-			if (TabPointeursObus[i]->timingDeplacementObus%500 == 0){			
+			if (TabPointeursObus[i]->timingDeplacementObus%500 == 0){		
 				// On efface et vide tous les obus de leurs anciennes positions
 				effacer_obus_terminal(TabPointeursObus[i]->pos_x, TabPointeursObus[i]->pos_y);
 				fake_map[TabPointeursObus[i]->pos_x][TabPointeursObus[i]->pos_y] = ' ';

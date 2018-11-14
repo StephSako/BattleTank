@@ -109,8 +109,14 @@ void deplacer_tank_ennemis_terminal(char **fake_map){
 			if (temp->timingDeplacement%5000 == 0){
 				int direction = -1;
 				
+				if (temp->pos_x == 30 && temp->pos_y > 130){ // On fait sortir entierement les tanks de leur SAS (bas droite)
+					direction = 3;
+				}
+				else if (temp->pos_x == 4 && temp->pos_y < 6){ // On fait sortir entierement les tanks de leur SAS (haut gauche)
+					direction = 2;
+				}
+				else if (temp->linearite < 5){
 				// On fais bouger le tank sur 5 cases de suite pour créer une mouvement plus naturel et éviter le sur-place
-				if (temp->linearite < 5){
 					switch(temp->direction){ // Selon la direction du tank ennemi
 						case('A'): direction = 0; break;
 						case('B'): direction = 1; break;

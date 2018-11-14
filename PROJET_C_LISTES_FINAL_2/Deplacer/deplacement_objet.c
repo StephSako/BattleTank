@@ -40,13 +40,14 @@ void deplacement_tank_droite(char **fake_map, struct TANK *joueur){
 
 	if (joueur->pos_y < (LARGEURMAP-1) && fake_map[joueur->pos_x][joueur->pos_y+5] == ' ' &&
 	fake_map[joueur->pos_x+1][joueur->pos_y+5] == ' ' &&
-	fake_map[joueur->pos_x+2][joueur->pos_y+5] == ' '){
-		effacer_tank_terminal(joueur);
-		
+	fake_map[joueur->pos_x+2][joueur->pos_y+5] == ' ' && 
+	(joueur->pos_x != 30 || joueur->pos_y != 131)){
+		effacer_tank_terminal(joueur);		
 		effacer_map_tank(fake_map, joueur);
+		
 		joueur->pos_y++;
-        	remplir_map_tank(fake_map, joueur);
-        	
+		
+        	remplir_map_tank(fake_map, joueur);        	
 		affichage_tank_terminal(joueur);
         }
 }
@@ -74,13 +75,14 @@ void deplacement_tank_gauche(char **fake_map, struct TANK *joueur){
 
         if (joueur->pos_y > 0 && fake_map[joueur->pos_x][joueur->pos_y-1] == ' ' &&
         fake_map[joueur->pos_x+1][joueur->pos_y-1] == ' ' &&
-        fake_map[joueur->pos_x+2][joueur->pos_y-1] == ' '){
-		effacer_tank_terminal(joueur);
-		
+        fake_map[joueur->pos_x+2][joueur->pos_y-1] == ' ' && 
+	(joueur->pos_x != 4 || joueur->pos_y != 9)){
+		effacer_tank_terminal(joueur);		
 		effacer_map_tank(fake_map, joueur);
+		
 		joueur->pos_y--;
-        	remplir_map_tank(fake_map, joueur);
-        	
+		
+        	remplir_map_tank(fake_map, joueur);        	
 		affichage_tank_terminal(joueur);
         }
 }
