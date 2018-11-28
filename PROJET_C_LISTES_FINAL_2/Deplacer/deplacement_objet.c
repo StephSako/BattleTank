@@ -41,7 +41,7 @@ void deplacement_tank_droite(struct TANK *joueur){
 	if (joueur->pos_y < (LARGEURMAP-1) && fake_map[joueur->pos_x][joueur->pos_y+5] == ' ' &&
 	fake_map[joueur->pos_x+1][joueur->pos_y+5] == ' ' &&
 	fake_map[joueur->pos_x+2][joueur->pos_y+5] == ' ' && 
-	(joueur->pos_x != 30 || joueur->pos_y != 131)){
+	(joueur->pos_x != 30 || joueur->pos_y != 131)){ // Eviter de rentrer dans la rampe de lancement des tanks ennemis pour eviter les spawnkill
 		effacer_tank_terminal(joueur);		
 		effacer_map_tank(joueur);
 		
@@ -76,7 +76,7 @@ void deplacement_tank_gauche(struct TANK *joueur){
         if (joueur->pos_y > 0 && fake_map[joueur->pos_x][joueur->pos_y-1] == ' ' &&
         fake_map[joueur->pos_x+1][joueur->pos_y-1] == ' ' &&
         fake_map[joueur->pos_x+2][joueur->pos_y-1] == ' ' && 
-	(joueur->pos_x != 4 || joueur->pos_y != 9)){
+	(joueur->pos_x != 4 || joueur->pos_y != 8)){
 		effacer_tank_terminal(joueur);		
 		effacer_map_tank(joueur);
 		

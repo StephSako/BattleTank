@@ -4,9 +4,7 @@ char **creer_charger_map(int nbL, int nbC, char *file_name){
 
 	char **mat = allocation_dyn_mat(nbL, nbC);
 	int car = 0, i = 0, j = 0;
-	
-	FILE* fichier = NULL;
-	fichier = fopen(file_name, "r");
+	FILE* fichier = fopen(file_name, "r");
 
 	if (fichier != NULL){
         	while (car != EOF && i < nbL && j < nbC){

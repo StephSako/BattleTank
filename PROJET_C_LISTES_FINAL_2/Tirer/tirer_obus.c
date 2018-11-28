@@ -109,18 +109,23 @@ void AttaquerTank(OBUSP obusP){
 }
 
 void animation_bullet(OBUSP obusP){ // Avec la nouvelle position
-
+	if ((obusP->pos_y == 135 && (obusP->pos_x == 30 || obusP->pos_x == 31 || obusP->pos_x == 32)) ||
+	(obusP->pos_y == 9 && (obusP->pos_x == 4 || obusP->pos_x == 5 || obusP->pos_x == 6))){ // Eviter le spawnkill
+		fake_map[obusP->pos_x][obusP->pos_y] = ' ';
+		effacer_obus_terminal(obusP->pos_x, obusP->pos_y);
+		DeleteObusPTab(obusP);
+	}
 	// L'obus avance dans le vide
-	if (fake_map[obusP->pos_x][obusP->pos_y] == ' '){
+	else if (fake_map[obusP->pos_x][obusP->pos_y] == ' '){
 		deplacement_obus_terminal(obusP);							// On affiche l'obus dans le terminal
-		fake_map[obusP->pos_x][obusP->pos_y] = '+';						// On ajoute l'obus dans la fake map
+		fake_map[obusP->pos_x][obusP->pos_y] = '+';					// On ajoute l'obus dans la fake map
 	}
 	// Collision avec une brique
 	else if (fake_map[obusP->pos_x][obusP->pos_y] == 'C' || fake_map[obusP->pos_x][obusP->pos_y] == 'P'){
 		
-		int son = 0; // On joue le bruitage ou pas ? (1 bruitage pour 3 briques pour ne pas déranger le joueur avec trop de bruitages)
+		int son = 0; // On joue le bruitage (1 bruitage pour 3 briques pour ne pas déranger le joueur avec trop de bruitages)
 		if (obusP->direction == 'A' || obusP->direction == 'B'){
-			for (int i = obusP->pos_y-1; i <= obusP->pos_y+1; i++){
+			for (int i = obusP->pos_y-2; i <= obusP->pos_y+2; i++){
 				if (fake_map[obusP->pos_x][i] == 'P' && obusP->provenance == 2){		// Tir tank superarmé sur une brique dur
 					fake_map[obusP->pos_x][i] = ' ';
 					effacer_obus_terminal(obusP->pos_x, i);
@@ -192,10 +197,17 @@ void shot_creator(struct TANK *tank){
 }
 
 void shot_manager(){
+	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
+		if (TabPointeursObus[i] != NULL){
+			if (TabPointeursObus[i]->timingDeplacementObus%251 == 0 && TabPointeursObus[i]->timingDeplacementObus != 0){
+				animation_bullet(TabPointeursObus[i]); // Animation par accoup de l'obus
+			}
+		}
+	}
 	
 	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
 		if (TabPointeursObus[i] != NULL){
-			if (TabPointeursObus[i]->timingDeplacementObus%500 == 0){		
+			if (TabPointeursObus[i]->timingDeplacementObus%500 == 0 && TabPointeursObus[i]->timingDeplacementObus != 0){		
 				// On efface et vide tous les obus de leurs anciennes positions
 				effacer_obus_terminal(TabPointeursObus[i]->pos_x, TabPointeursObus[i]->pos_y);
 				fake_map[TabPointeursObus[i]->pos_x][TabPointeursObus[i]->pos_y] = ' ';
@@ -214,14 +226,6 @@ void shot_manager(){
 					deplacement_obus_terminal(TabPointeursObus[i]); // Réaffiche l'obus en attendant son traitement
 				} TabPointeursObus[i]->timingDeplacementObus = 1;
 			} TabPointeursObus[i]->timingDeplacementObus++;
-		}
-	}
-	
-	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
-		if (TabPointeursObus[i] != NULL){
-			if (TabPointeursObus[i]->timingDeplacementObus%251 == 0){
-				animation_bullet(TabPointeursObus[i]); // Animation par accoup de l'obus
-			}
 		}
 	}
 }

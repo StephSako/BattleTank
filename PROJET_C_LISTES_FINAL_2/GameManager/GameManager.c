@@ -30,6 +30,7 @@ void quit_terminal(){
 	system("setterm -cursor on");
 	system("stty echo");
 	system("clear");
+	system("killall play");
 }
 
 void initialiserLaPartieSelonLeMode(){
@@ -87,6 +88,9 @@ void initialiserLaPartieSelonLeMode(){
 	creer_tank_ennemis(30, 138, 'D');
 	creer_tank_ennemis(8, 130, 'D');
 	creer_tank_ennemis(33, 29, 'D');
+	
+	// On lance la musique du jeu en lançant la partie
+	system("../Jouer_sons/./scriptSonsBoucle.sh ../Jouer_sons/terminator.mp3 ../Jouer_sons/find.mp3 ../Jouer_sons/angel_of_verdain.mp3");
 }
 
 void MenuSelectionMode(){
