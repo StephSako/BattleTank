@@ -20,12 +20,24 @@ void init_terminal(){
 void quit_terminal(){
 	system("clear");
 	
-	if (pioupiouAlive == 1 && joueurMort == 0 && key != 'q' && mode != 3) /* Le joueur a gagné*/ afficher_fichier(PATHMENUVICTOIRE);
-	else if (pioupiouAlive == 0) /* La bombe a explosé*/ afficher_fichier(PATHMENUEXPLOSION);
-	else if (joueurMort == 1) /* Le joueur est mort*/ afficher_fichier(PATHMENUMORT);
-	else { /* Le joueur a quitté*/ afficher_fichier(PATHMENUQUITTER);
+	if (pioupiouAlive == 1 && joueurMort == 0 && key != 'q' && mode != 3) { // Le joueur a gagné
+		system("../Jouer_sons/./scriptSonsBoucleUnique.sh ../Jouer_sons/victory.mp3");
+		printf("%s", YELLOW);
+		afficher_fichier(PATHMENUVICTOIRE);
+		printf("%s", YELLOW);
 	}
-	
+	else if (pioupiouAlive == 0) {  // La bombe a explosé
+		printf("%s", RED);
+		afficher_fichier(PATHMENUEXPLOSION);
+		printf("%s", NORMAL);
+	}
+	else if (joueurMort == 1) { // Le joueur est mort
+		printf("%s", RED);
+		afficher_fichier(PATHMENUMORT);
+		printf("%s", NORMAL);
+	}
+	else afficher_fichier(PATHMENUQUITTER); // Le joueur a quitté
+		
 	while ((key = key_pressed()) != ' '){}
 	system("setterm -cursor on");
 	system("stty echo");
