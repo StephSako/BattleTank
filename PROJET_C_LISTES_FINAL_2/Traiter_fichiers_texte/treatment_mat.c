@@ -52,7 +52,7 @@ void affichage_mat(int nbL, int nbC, char ** mat){
 				printf("%s", NORMAL);
 			}
 			else if (mat[i][j] == 'B'){
-				printf("%s☢", REDCLIGNOTANT);
+				printf("%s☢", RED);
 				printf("%s", NORMAL);
 			}
 			else printf("%c", mat[i][j]);

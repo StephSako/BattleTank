@@ -182,7 +182,7 @@ void deplacer_tank_ennemis_terminal(){
 			temp->timingDeplacement++;
 		}
 		temp = temp->suivant; // On passe au tank ennemi
-	}	
+	}
 }
 
 void deplacer_tank_joueur_terminal(struct TANK *joueur){

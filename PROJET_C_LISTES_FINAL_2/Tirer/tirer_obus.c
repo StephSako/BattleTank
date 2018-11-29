@@ -207,7 +207,7 @@ void shot_manager(){
 	
 	for (int i = 0; i < NBOBUSALLOWED; i++){ // On parcours le tableau de pointeurs d'obus relativement
 		if (TabPointeursObus[i] != NULL){
-			if (TabPointeursObus[i]->timingDeplacementObus%500 == 0 && TabPointeursObus[i]->timingDeplacementObus != 0){		
+			if (TabPointeursObus[i]->timingDeplacementObus%500 == 0){		
 				// On efface et vide tous les obus de leurs anciennes positions
 				effacer_obus_terminal(TabPointeursObus[i]->pos_x, TabPointeursObus[i]->pos_y);
 				fake_map[TabPointeursObus[i]->pos_x][TabPointeursObus[i]->pos_y] = ' ';
@@ -224,7 +224,7 @@ void shot_manager(){
 				// Permet d'éviter des clignotements de l'obus (car il y a un delai pour l'affichage comme pour l'effacement)
 				if (fake_map[TabPointeursObus[i]->pos_x][TabPointeursObus[i]->pos_y] == ' '){
 					deplacement_obus_terminal(TabPointeursObus[i]); // Réaffiche l'obus en attendant son traitement
-				} TabPointeursObus[i]->timingDeplacementObus = 1;
+				} TabPointeursObus[i]->timingDeplacementObus = 0;
 			} TabPointeursObus[i]->timingDeplacementObus++;
 		}
 	}

@@ -89,10 +89,10 @@ struct TANK{
 	
 	char **carrosserie;
 	int blindage;
-	int blindage_origine;
+	int blindage_origine; // 0 : tank ennemi faible, 1 : tank ennemi moyen, 2 : tank ennemi fort
 	int nb_impacts;
 	
-	char camp;
+	char camp; //'P' : tank joueur, 'E' : tank ennemi
 	int etat;
 	
 	int timingDeplacement;

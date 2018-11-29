@@ -1,11 +1,43 @@
 #include "../TankManager/TankManager.h"
 
-OBUSP * allocation_dyn_tab_obus(){
-	return malloc(NBOBUSALLOWED * sizeof(OBUSP));
+OBUSP * allocation_dyn_tab_obus(){ return malloc(NBOBUSALLOWED * sizeof(OBUSP)); }
+
+int * allocation_dyn_tab_repar_tank_ennemis(){ return malloc(3 * sizeof(int)); }
+
+int nb_tank_weak(){
+	struct TANK *temp = head; int nb_weak_tank = 0;
+	while (temp != NULL){ // On boucle sur tous les tanks de la liste chaînée
+		if (temp->blindage_origine == 0) nb_weak_tank++;
+		temp = temp->suivant; // On passe au tank ennemi
+	}
+	return nb_weak_tank+repartitionTankEnnemis[0];
 }
 
-int * allocation_dyn_tab_repar_tank_ennemis(){
-	return malloc(3 * sizeof(int));
+int nb_tank_medium(){
+	struct TANK *temp = head; int nb_medium_tank = 0;
+	while (temp != NULL){ // On boucle sur tous les tanks de la liste chaînée
+		if (temp->blindage_origine == 1) nb_medium_tank++;
+		temp = temp->suivant; // On passe au tank ennemi
+	}
+	return nb_medium_tank+repartitionTankEnnemis[1];
+}
+
+int nb_tank_strong(){
+	struct TANK *temp = head; int nb_strong_tank = 0;
+	while (temp != NULL){ // On boucle sur tous les tanks de la liste chaînée
+		if (temp->blindage_origine == 2) nb_strong_tank++;
+		temp = temp->suivant; // On passe au tank ennemi
+	}
+	return nb_strong_tank+repartitionTankEnnemis[2];
+}
+
+void afficher_nb_tanks_defaite(){
+	printf("%s", GREEN);
+	afficher_message_int(29, 75, nb_tank_weak());
+	printf("%s", YELLOW);
+	afficher_message_int(30, 75, nb_tank_medium());
+	printf("%s", RED);
+	afficher_message_int(31, 75, nb_tank_strong());
 }
 
 void init_terminal(){
@@ -29,16 +61,17 @@ void quit_terminal(){
 	else if (pioupiouAlive == 0) {  // La bombe a explosé
 		printf("%s", RED);
 		afficher_fichier(PATHMENUEXPLOSION);
-		printf("%s", NORMAL);
+		afficher_nb_tanks_defaite();
 	}
 	else if (joueurMort == 1) { // Le joueur est mort
 		printf("%s", RED);
 		afficher_fichier(PATHMENUMORT);
-		printf("%s", NORMAL);
+		afficher_nb_tanks_defaite();
 	}
 	else afficher_fichier(PATHMENUQUITTER); // Le joueur a quitté
+	printf("%s", NORMAL);
 		
-	while ((key = key_pressed()) != ' '){}
+	while ((key = key_pressed()) != 'q'){}
 	system("setterm -cursor on");
 	system("stty echo");
 	system("clear");
@@ -64,7 +97,7 @@ void initialiserLaPartieSelonLeMode(){
 	
 	if (mode == 1){											// MODE TERMINAL FACILE
 		NBTANKTOTAL = 20;
-		vieJoueur = 6;
+		vieJoueur = 4;
 		NBCOUPSABIMENT = 2;
 		// On initialise la répartition des différents types de tanks ennemis
 		repartitionTankEnnemis[0] = NBTANKWEAKFACILE; // ... 8 tanks faibles
@@ -73,7 +106,7 @@ void initialiserLaPartieSelonLeMode(){
 	}
 	else if (mode == 2){										// MODE TERMINAL DIFFICILE		
 		NBTANKTOTAL = 30;
-		vieJoueur = 3;
+		vieJoueur = 6;
 		NBCOUPSABIMENT = 3;
 		repartitionTankEnnemis[0] = NBTANKWEAKDIFFICILE; // ... 10 tanks faibles
 		repartitionTankEnnemis[1] = NBTANKMEDIUMDIFFICILE; // ... 10 tanks moyens

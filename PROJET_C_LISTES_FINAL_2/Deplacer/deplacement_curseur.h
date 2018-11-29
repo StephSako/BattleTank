@@ -7,6 +7,6 @@ void effacer_obus_terminal(int x, int y);
 void deplacement_obus_terminal(OBUSP obus);
 void deplacement_choix(int x, int y);
 void afficher_message(int x, int y, char* message);
-void afficher_message_nb_tank(int x, int y, int nb);
+void afficher_message_int(int x, int y, int nb);
 void afficher_message_vie(int x, int y, int vie);
 void effacer_choix(int x, int y);

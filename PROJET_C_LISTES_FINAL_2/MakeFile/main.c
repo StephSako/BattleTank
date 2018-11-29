@@ -19,7 +19,7 @@ int main(){
 		// Si le joueur ne quitte pas, que la bombe n'a pas explosé et que le joueur est encore vivant et qu'il y a encore des tanks en vie
 		while ((key = key_pressed()) != 'q' && pioupiouAlive == 1 && joueur->etat > 0 &&  NBTANKTOTAL > 0){
 		
-			afficher_message_nb_tank(1, 140, NBTANKTOTAL); // On affiche le nombre de tanks restant
+			afficher_message_int(1, 140, NBTANKTOTAL); // On affiche le nombre de tanks restant
 			afficher_message_vie(2, 140, vieJoueur); // On affiche la vie du joueur
 			if (NBTANKTOTAL < 10) afficher_message(1, 141, " "); // Régler un bug d'affichage
 			

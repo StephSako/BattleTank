@@ -50,7 +50,7 @@ void afficher_message(int x, int y, char* message){
 	printf("%s", message);
 }
 
-void afficher_message_nb_tank(int x, int y, int nb){
+void afficher_message_int(int x, int y, int nb){
 	gotoxy(x, y);
 	printf("%d", nb);
 }
