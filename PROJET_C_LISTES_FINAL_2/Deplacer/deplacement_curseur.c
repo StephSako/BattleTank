@@ -24,7 +24,9 @@ void effacer_tank_terminal(struct TANK *tank){
 	for (int i = 0; i < LONGUEURTANK; i++){
 		gotoxy(tank->pos_x + i, tank->pos_y);
 		for (int j = 0; j < LARGEURTANK; j++){
+			fflush(stdout); // Régler le bug d'affichage
 			printf(" ");
+			fflush(stdout);
 		}
 	}
 }

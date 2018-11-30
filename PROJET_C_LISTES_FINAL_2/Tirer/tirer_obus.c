@@ -209,7 +209,9 @@ void shot_manager(){
 		if (TabPointeursObus[i] != NULL){
 			if (TabPointeursObus[i]->timingDeplacementObus%500 == 0){		
 				// On efface et vide tous les obus de leurs anciennes positions
+				fflush(stdout); // Régler le bug d'affichage
 				effacer_obus_terminal(TabPointeursObus[i]->pos_x, TabPointeursObus[i]->pos_y);
+				fflush(stdout);
 				fake_map[TabPointeursObus[i]->pos_x][TabPointeursObus[i]->pos_y] = ' ';
 				
 				// On met à jour la position
