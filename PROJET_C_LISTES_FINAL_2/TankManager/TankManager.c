@@ -5,8 +5,12 @@ struct TANK *creer_tank_joueur(int pos_x, int pos_y, char direction){
 	struct TANK *tank = (struct TANK*) malloc(sizeof(struct TANK)); // On créé notre tank joueur
 	
 	// On initialise chaque attributs du tank joueur
-	tank->pos_x = pos_x; tank->pos_y = pos_y; tank->direction = direction; tank->blindage_origine = 1; tank->etat = 2; tank->linearite = 0;
-	tank->blindage =  tank->blindage_origine; tank->nb_impacts = 0; tank->camp = 'P'; tank->timingDeplacement = 0; tank->timingTir = 0;
+	tank->pos_x = pos_x; tank->pos_y = pos_y; tank->direction = direction; tank->etat = 2; tank->linearite = 0;
+	tank->nb_impacts = 0; tank->camp = 'P'; tank->timingDeplacement = 0; tank->timingTir = 0;
+	
+	if (mode == 1) tank->blindage_origine = 2;
+	else if (mode == 2) tank->blindage_origine = 1;
+	tank->blindage =  tank->blindage_origine;
 	
 	switch(tank->blindage_origine){
 		case(0):

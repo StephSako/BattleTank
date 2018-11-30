@@ -94,20 +94,21 @@ void initialiserLaPartieSelonLeMode(){
 	repartitionTankEnnemis = allocation_dyn_tab_repar_tank_ennemis();
 	true_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAPTERMINAL); // On initialise la map à afficher
 	affichage_mat(LONGUEURMAP, LARGEURMAP, true_map); // On l'affiche
+	wave = 4;
 	
 	if (mode == 1){											// MODE TERMINAL FACILE
-		NBTANKTOTAL = 20;
-		vieJoueur = 4;
+		NBTANKTOTAL = 15;
+		vieJoueur = 6;
 		NBCOUPSABIMENT = 2;
 		// On initialise la répartition des différents types de tanks ennemis
-		repartitionTankEnnemis[0] = NBTANKWEAKFACILE; // ... 8 tanks faibles
-		repartitionTankEnnemis[1] = NBTANKMEDIUMFACILE; // ... 7 tanks moyens
-		repartitionTankEnnemis[2] = NBTANKSTRONGFACILE; // ... 5 tanks forts
+		repartitionTankEnnemis[0] = NBTANKWEAKFACILE; // ... 6 tanks faibles
+		repartitionTankEnnemis[1] = NBTANKMEDIUMFACILE; // ... 5 tanks moyens
+		repartitionTankEnnemis[2] = NBTANKSTRONGFACILE; // ... 4 tanks forts
 	}
 	else if (mode == 2){										// MODE TERMINAL DIFFICILE		
-		NBTANKTOTAL = 30;
-		vieJoueur = 6;
-		NBCOUPSABIMENT = 3;
+		NBTANKTOTAL = 25;
+		vieJoueur = 3;
+		NBCOUPSABIMENT = 1;
 		repartitionTankEnnemis[0] = NBTANKWEAKDIFFICILE; // ... 10 tanks faibles
 		repartitionTankEnnemis[1] = NBTANKMEDIUMDIFFICILE; // ... 10 tanks moyens
 		repartitionTankEnnemis[2] = NBTANKSTRONGDIFFICILE; // ... 10 tanks forts

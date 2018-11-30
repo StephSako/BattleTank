@@ -37,15 +37,15 @@
 
 int NBOBUSALLOWED; // Nombre d'obus autorisé à apparaitre sur la map selon le mode choisi
 
-// 20 tanks ennemis en mode facile ou 30 tanks ennemis en mode difficile
+// 15 tanks ennemis en mode facile ou 30 tanks ennemis en mode difficile
 int NBTANKTOTAL;
-#define NBTANKWEAKFACILE 7 // Nombre total de tanks ennemis faibles
-#define NBTANKMEDIUMFACILE 7 // Nombre total de tanks ennemis moyens
-#define NBTANKSTRONGFACILE 6 // Nombre total de tanks ennemis forts
+#define NBTANKWEAKFACILE 6 // Nombre total de tanks ennemis faibles
+#define NBTANKMEDIUMFACILE 5 // Nombre total de tanks ennemis moyens
+#define NBTANKSTRONGFACILE 4 // Nombre total de tanks ennemis forts
 
 #define NBTANKWEAKDIFFICILE 10
-#define NBTANKMEDIUMDIFFICILE 10
-#define NBTANKSTRONGDIFFICILE 10
+#define NBTANKMEDIUMDIFFICILE 8
+#define NBTANKSTRONGDIFFICILE 7
 
 int NBCOUPSABIMENT; // Nombre de coups pour les blindages faibles se détruisent, et les blindages moyens et forts rétrogradent
 
@@ -115,6 +115,7 @@ int *repartitionTankEnnemis;
 
 // Nombre de tank total en mode facile à générer au cours de la partie par vague de 2
 int nb_tank_wave = 0;
+int wave;
 
 /***********************************************************************************************************************************************/
 

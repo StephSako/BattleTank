@@ -24,7 +24,7 @@ int main(){
 			if (NBTANKTOTAL < 10) afficher_message(1, 141, " "); // Régler un bug d'affichage
 			
 			// On lance des vagues de tanks par 4 tant qu'on peux en créer
-			if (nb_tank_wave < 4 && NBTANKTOTAL >= 2){
+			if (nb_tank_wave < wave && NBTANKTOTAL >= wave){
 				// On définit l'emplacement du prochain tank à générer
 				if (NBTANKTOTAL%2 == 0) creer_tank_ennemis(4, 1, 'C');
 				if (NBTANKTOTAL%2 != 0) creer_tank_ennemis(30, 138, 'D');
