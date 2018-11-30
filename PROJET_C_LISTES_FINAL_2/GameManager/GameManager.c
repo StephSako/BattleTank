@@ -45,6 +45,9 @@ void init_terminal(){
 	system("setterm -cursor off"); // On n'affiche pas le curseur clignotant dans le terminal
 	system("stty -echo"); // Ne pas afficher les lettres/codes flèches tappées dans le terminal
 	
+	// On lance la musique du jeu en lançant la partie
+	system("../Jouer_sons/./scriptSonsBoucle.sh ../Jouer_sons/terminator.mp3 ../Jouer_sons/find.mp3 ../Jouer_sons/angel_of_verdain.mp3");
+	
 	NBOBUSALLOWED = 50; // On initialise le nombre d'obus autorisés à apparaitre à l'écran
 	TabPointeursObus = allocation_dyn_tab_obus(); // Allocation dynamique du tableau de pointeurs d'obus
 }
@@ -134,9 +137,6 @@ void initialiserLaPartieSelonLeMode(){
 	creer_tank_ennemis(30, 138, 'D');
 	creer_tank_ennemis(8, 130, 'D');
 	creer_tank_ennemis(33, 29, 'D');
-	
-	// On lance la musique du jeu en lançant la partie
-	system("../Jouer_sons/./scriptSonsBoucle.sh ../Jouer_sons/terminator.mp3 ../Jouer_sons/find.mp3 ../Jouer_sons/angel_of_verdain.mp3");
 }
 
 void MenuSelectionMode(){
