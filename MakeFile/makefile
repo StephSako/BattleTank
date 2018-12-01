@@ -1,6 +1,6 @@
 lancement: AlesieaBattle EXECUTION clean
 
-key_pressed.o : ../Deplacer/key_pressed.h ../Modèle/tanktype.h
+key_pressed.o : ../Deplacer/key_pressed.h ../Modèle/mainHeader.h
 	gcc -c -Werror -Wall ../Deplacer/key_pressed.c
 	
 treatment_mat.o : ../Traiter_fichiers_texte/treatment_mat.h key_pressed.o
