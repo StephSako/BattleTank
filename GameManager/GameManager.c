@@ -56,6 +56,7 @@ void quit_terminal(){
 	system("clear");
 	
 	if (pioupiouAlive == 1 && joueurMort == 0 && key != 'q' && mode != 3) { // Le joueur a gagné
+		system("killall play");
 		system("../Jouer_sons/./scriptSonsBoucleUnique.sh ../Jouer_sons/victory.mp3");
 		printf("%s", YELLOW);
 		afficher_fichier(PATHMENUVICTOIRE);
