@@ -40,6 +40,27 @@ void afficher_nb_tanks_defaite(){
 	afficher_message_int(31, 75, nb_tank_strong());
 }
 
+void liberer_matrice_all(){
+	// On libère l'espace des map
+	lib_mat(LONGUEURMAP, fake_map);
+	lib_mat(LONGUEURMAP, true_map);
+	
+	// On libère les carrosserie
+	lib_mat(LONGUEURTANK, carrosserieWTH);
+	lib_mat(LONGUEURTANK, carrosserieWTG);
+	lib_mat(LONGUEURTANK, carrosserieWTD);
+	lib_mat(LONGUEURTANK, carrosserieWTB);
+	lib_mat(LONGUEURTANK, carrosserieMTH);
+	lib_mat(LONGUEURTANK, carrosserieMTG);
+	lib_mat(LONGUEURTANK, carrosserieMTD);
+	lib_mat(LONGUEURTANK, carrosserieMTB);
+	lib_mat(LONGUEURTANK, carrosserieSTH);
+	lib_mat(LONGUEURTANK, carrosserieSTG);
+	lib_mat(LONGUEURTANK, carrosserieSTD);
+	lib_mat(LONGUEURTANK, carrosserieSTB);
+	lib_mat(LONGUEURTANK, carrosserieTankDetruit);
+}
+
 void init_terminal(){
 	system("clear"); // On nettoie le terminal
 	system("setterm -cursor off"); // On n'affiche pas le curseur clignotant dans le terminal
@@ -61,16 +82,19 @@ void quit_terminal(){
 		printf("%s", YELLOW);
 		afficher_fichier(PATHMENUVICTOIRE);
 		printf("%s", YELLOW);
+		liberer_matrice_all();
 	}
 	else if (pioupiouAlive == 0) {  // La bombe a explosé
 		printf("%s", RED);
 		afficher_fichier(PATHMENUEXPLOSION);
 		afficher_nb_tanks_defaite();
+		liberer_matrice_all();
 	}
 	else if (joueurMort == 1) { // Le joueur est mort
 		printf("%s", RED);
 		afficher_fichier(PATHMENUMORT);
 		afficher_nb_tanks_defaite();
+		liberer_matrice_all();
 	}
 	else afficher_fichier(PATHMENUQUITTER); // Le joueur a quitté
 	printf("%s", NORMAL);
@@ -96,8 +120,8 @@ void initialiserLaPartieSelonLeMode(){
 	
 	// On initialise la répartition des différents types de tanks ennemis
 	repartitionTankEnnemis = allocation_dyn_tab_repar_tank_ennemis();
-	true_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAPTERMINAL); // On initialise la map à afficher
-	affichage_mat(LONGUEURMAP, LARGEURMAP, true_map); // On l'affiche
+	
+	// On définit le nombre de tanks par vague
 	wave = 4;
 	
 	if (mode == 1){											// MODE TERMINAL FACILE
@@ -119,6 +143,10 @@ void initialiserLaPartieSelonLeMode(){
 		repartitionTankEnnemis[1] = NBTANKMEDIUMDIFFICILE; // ... 8 tanks moyens
 		repartitionTankEnnemis[2] = NBTANKSTRONGDIFFICILE; // ... 7 tanks forts
 	}
+	
+	// Chargement de la map graphique
+	true_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAPTERMINAL); // On initialise la map à afficher
+	affichage_mat(LONGUEURMAP, LARGEURMAP, true_map); // On l'affiche
 	
 	// Chargement de la fake_map
 	fake_map = creer_charger_map(LONGUEURMAP, LARGEURMAP, PATHMAPTERMINAL);

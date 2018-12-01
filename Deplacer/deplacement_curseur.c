@@ -39,8 +39,8 @@ void deplacement_obus_terminal(OBUSP obus){
 
 void deplacement_choix(int x, int y){
 	gotoxy(x, y);
-	printf("%s►", RED); // Afficher le selecteur en rouge
-	printf("%s", NORMAL); // Remettre la couleur blanche d'écriture
+	printf("%s►", RED);	// Afficher le selecteur en rouge
+	printf("%s", NORMAL);	// Remettre la couleur blanche d'écriture
 }
 
 void afficher_string(int x, int y, char* message){

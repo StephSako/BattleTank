@@ -10,3 +10,4 @@ void MenuSelectionMode();
 int nb_tank_weak();
 int nb_tank_medium();
 int nb_tank_strong();
+void liberer_matrice_all();

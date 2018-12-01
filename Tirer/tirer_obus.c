@@ -21,19 +21,19 @@ void DeleteObusPTab(OBUSP obusPDeleted){
 }
 
 // Supprime le tank détruit de la liste chaînée
-void SupprimerTank(struct TANK **head, int position){
+void SupprimerTank(int position){
 	// La liste est vide
-	if (*head == NULL) return;
+	if (head == NULL) return;
 	
-	struct TANK* temp = *head; 
+	struct TANK* temp = head; 
 	// Si on veut supprimer le 1er tank de la liste
 	if (position == 0){
-		*head = temp->suivant;
+		head = temp->suivant;
 		free(temp);
 		return ;
 	}
 	
-	// On cherche le tank précédant du tank à supprimer
+	// On cherche le tank précédent du tank à supprimer
 	for (int i = 0; temp != NULL && i < position-1; i++) temp = temp->suivant; 
 
 	// Si position est supèrieure au nombre de tanks dans la liste
@@ -47,7 +47,7 @@ void SupprimerTank(struct TANK **head, int position){
 }
 
 void AttaquerTank(OBUSP obusP){	
-	int pos_xTankAttaque = 0, pos_yTankAttaque = 0; // Position du tank attaqué et à rechercher dans le tableau d'obus
+	int pos_xTankAttaque = 0, pos_yTankAttaque = 0; // Position du tank attaqué
 	switch(obusP->direction){
 		case('D') : for (int i = 0; i < 3; i++) if (fake_map[obusP->pos_x-i][obusP->pos_y-4] == '*') pos_xTankAttaque = obusP->pos_x-i;
 				pos_yTankAttaque = obusP->pos_y-4; break;
@@ -97,7 +97,7 @@ void AttaquerTank(OBUSP obusP){
 						
 						effacer_tank_terminal(temp); // On efface le tank dans le terminal
 						effacer_map_tank(temp); // On efface le tank dans la fake_map
-						SupprimerTank(&head, position);
+						SupprimerTank(position);
 						break;
 						
 					default : // Le tank n'est pas encore mort
@@ -114,8 +114,8 @@ void AttaquerTank(OBUSP obusP){
 }
 
 void animation_bullet(OBUSP obusP){ // Avec la nouvelle position
-	if ((obusP->pos_y == 135 && (obusP->pos_x == 30 || obusP->pos_x == 31 || obusP->pos_x == 32)) ||
-	(obusP->pos_y == 9 && (obusP->pos_x == 4 || obusP->pos_x == 5 || obusP->pos_x == 6))){ // Eviter le spawnkill
+	if ((obusP->pos_y == 136 && (obusP->pos_x == 30 || obusP->pos_x == 31 || obusP->pos_x == 32)) ||
+	(obusP->pos_y == 7 && (obusP->pos_x == 4 || obusP->pos_x == 5 || obusP->pos_x == 6))){ // Eviter le spawnkill
 		fake_map[obusP->pos_x][obusP->pos_y] = ' ';
 		effacer_obus_terminal(obusP->pos_x, obusP->pos_y);
 		DeleteObusPTab(obusP);

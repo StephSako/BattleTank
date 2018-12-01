@@ -1,4 +1,4 @@
-#include "../Modèle/tanktype.h"
+#include "../Modèle/mainHeader.h"
 
 char key_pressed(){
 
