@@ -110,7 +110,7 @@ void deplacer_tank_ennemis_terminal(){
 		if (temp->camp == 'E'){ // On ne boucle que sur les tanks ennemis
 
 			// On met un delai de changer de direction des tanks
-			if (temp->timingDeplacement%5000 == 0){
+			if (temp->timingDeplacement%rapiditeTanksEnnemis == 0){
 				int direction = -1;
 				
 				if (temp->pos_x == 30 && temp->pos_y > 130){ // On fait sortir entierement les tanks de leur SAS (bas droite)

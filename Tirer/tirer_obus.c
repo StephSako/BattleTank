@@ -71,7 +71,10 @@ void AttaquerTank(OBUSP obusP){
 		if (temp->pos_x == pos_xTankAttaque && temp->pos_y == pos_yTankAttaque && temp->camp != obusP->camp){ // On désactive le tir allier
 			
 			temp->nb_impacts++;			
-			if (temp->camp == 'P') vieJoueur--; // On enlève de la vie au joueur
+			if (temp->camp == 'P'){
+				vieJoueur--; // On enlève de la vie au joueur
+				afficher_message_vie(2, 140, vieJoueur); // On affiche la vie du joueur
+			}
 
 			if(temp->nb_impacts == NBCOUPSABIMENT){ // A partir de NBCOUPSABIMENT pour chaque blindage, la carrosserie s'abîme
 				switch(temp->blindage){
@@ -79,6 +82,8 @@ void AttaquerTank(OBUSP obusP){
 						system("../Jouer_sons/./scriptSons.sh ../Jouer_sons/explosion.mp3");
 						temp->carrosserie = carrosserieTankDetruit; // On change la carrosserie du tank
 						NBTANKTOTAL--; // Un tank de moins à créé
+						afficher_message_int(1, 140, NBTANKTOTAL); // On affiche le nombre de tanks restant
+						if (NBTANKTOTAL < 10) afficher_string(1, 141, " "); // Régler un bug d'affichage
 						nb_tank_wave--; // Un tank de moins dans la vague : il faut en créér un autre
 						temp->etat = 0; // Le tank est mort
 						if (temp->camp == 'P') joueurMort = 1;
@@ -209,9 +214,7 @@ void shot_manager(){
 		if (TabPointeursObus[i] != NULL){
 			if (TabPointeursObus[i]->timingDeplacementObus%500 == 0){		
 				// On efface et vide tous les obus de leurs anciennes positions
-				fflush(stdout); // Régler le bug d'affichage
 				effacer_obus_terminal(TabPointeursObus[i]->pos_x, TabPointeursObus[i]->pos_y);
-				fflush(stdout);
 				fake_map[TabPointeursObus[i]->pos_x][TabPointeursObus[i]->pos_y] = ' ';
 				
 				// On met à jour la position

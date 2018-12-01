@@ -49,6 +49,8 @@ int NBTANKTOTAL;
 
 int NBCOUPSABIMENT; // Nombre de coups pour les blindages faibles se détruisent, et les blindages moyens et forts rétrogradent
 
+int rapiditeTanksEnnemis;
+
 char **fake_map;
 
 // Position du selecteur de choix dans le menu

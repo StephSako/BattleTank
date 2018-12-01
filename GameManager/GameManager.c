@@ -84,13 +84,13 @@ void quit_terminal(){
 void initialiserLaPartieSelonLeMode(){
 
 	system("clear");
-	afficher_message(15, 60, "Lancement du jeu .\n");
+	afficher_string(15, 60, "Lancement du jeu .\n");
 	system("sleep 0.4");
-	afficher_message(15, 78, ".\n");
+	afficher_string(15, 78, ".\n");
 	system("sleep 0.4");
-	afficher_message(15, 79, ".\n");
+	afficher_string(15, 79, ".\n");
 	system("sleep 0.4");
-	afficher_message(20, 63, "C'est parti !\n");
+	afficher_string(20, 63, "C'est parti !\n");
 	system("sleep 0.5");
 	
 	// On initialise la répartition des différents types de tanks ennemis
@@ -101,6 +101,7 @@ void initialiserLaPartieSelonLeMode(){
 	
 	if (mode == 1){											// MODE TERMINAL FACILE
 		NBTANKTOTAL = 15;
+		rapiditeTanksEnnemis = 7500;
 		vieJoueur = 6;
 		NBCOUPSABIMENT = 2;
 		// On initialise la répartition des différents types de tanks ennemis
@@ -110,6 +111,7 @@ void initialiserLaPartieSelonLeMode(){
 	}
 	else if (mode == 2){										// MODE TERMINAL DIFFICILE		
 		NBTANKTOTAL = 25;
+		rapiditeTanksEnnemis = 5000;
 		vieJoueur = 3;
 		NBCOUPSABIMENT = 1;
 		repartitionTankEnnemis[0] = NBTANKWEAKDIFFICILE; // ... 10 tanks faibles
@@ -137,6 +139,9 @@ void initialiserLaPartieSelonLeMode(){
 	creer_tank_ennemis(30, 138, 'D');
 	creer_tank_ennemis(8, 130, 'D');
 	creer_tank_ennemis(33, 29, 'D');
+	
+	afficher_message_int(1, 140, NBTANKTOTAL); // On affiche le nombre de tanks restant
+	afficher_message_vie(2, 140, vieJoueur); // On affiche la vie du joueur
 }
 
 void MenuSelectionMode(){

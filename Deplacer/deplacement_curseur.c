@@ -23,11 +23,7 @@ void affichage_tank_terminal(struct TANK *tank){
 void effacer_tank_terminal(struct TANK *tank){	
 	for (int i = 0; i < LONGUEURTANK; i++){
 		gotoxy(tank->pos_x + i, tank->pos_y);
-		for (int j = 0; j < LARGEURTANK; j++){
-			fflush(stdout); // Régler le bug d'affichage
-			printf(" ");
-			fflush(stdout);
-		}
+		for (int j = 0; j < LARGEURTANK; j++) printf(" ");
 	}
 }
 
@@ -47,7 +43,7 @@ void deplacement_choix(int x, int y){
 	printf("%s", NORMAL); // Remettre la couleur blanche d'écriture
 }
 
-void afficher_message(int x, int y, char* message){
+void afficher_string(int x, int y, char* message){
 	gotoxy(x, y);
 	printf("%s", message);
 }
