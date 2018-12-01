@@ -116,8 +116,8 @@ void initialiserLaPartieSelonLeMode(){
 		vieJoueur = 3;
 		NBCOUPSABIMENT = 1;
 		repartitionTankEnnemis[0] = NBTANKWEAKDIFFICILE; // ... 10 tanks faibles
-		repartitionTankEnnemis[1] = NBTANKMEDIUMDIFFICILE; // ... 10 tanks moyens
-		repartitionTankEnnemis[2] = NBTANKSTRONGDIFFICILE; // ... 10 tanks forts
+		repartitionTankEnnemis[1] = NBTANKMEDIUMDIFFICILE; // ... 8 tanks moyens
+		repartitionTankEnnemis[2] = NBTANKSTRONGDIFFICILE; // ... 7 tanks forts
 	}
 	
 	// Chargement de la fake_map
