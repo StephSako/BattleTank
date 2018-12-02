@@ -66,6 +66,9 @@ void init_terminal(){
 	system("setterm -cursor off"); // On n'affiche pas le curseur clignotant dans le terminal
 	system("stty -echo"); // Ne pas afficher les lettres/codes flèches tappées dans le terminal
 	
+	// On donne les droits à l'execution des scripts pour lire les musiques
+	system("chmod 777 ../Jouer_sons/*");
+	
 	// On lance la musique du jeu en lançant la partie
 	system("../Jouer_sons/./scriptSonsBoucle.sh ../Jouer_sons/terminator.mp3 ../Jouer_sons/find.mp3 ../Jouer_sons/angel_of_verdain.mp3");
 	
