@@ -1,2 +1,2 @@
 # BattleTank-Projet-C-3A-ESIEA
-ALESIEA video game - C Projetc - ESIEA
+ALESIEA video game - C Project - ESIEA
